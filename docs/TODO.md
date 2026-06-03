@@ -31,8 +31,8 @@
 | Step | Title | Status |
 |---------|---------|---------|
 | 1️⃣ | GitHub Repository Setup | ✅ |
-| 2️⃣ | Monolithic Architecture Setup | 🎯 |
-| 3️⃣ | TailwindCSS Setup | 📌 |
+| 2️⃣ | Monolithic Architecture Setup | ✅ |
+| 3️⃣ | TailwindCSS Setup | 🎯 |
 | 4️⃣ | Pre-commit Tools Setup | 📌 |
 | 5️⃣ | Core App Implementation | 📌 |
 | 6️⃣ | Account App Implementation | 📌 |
