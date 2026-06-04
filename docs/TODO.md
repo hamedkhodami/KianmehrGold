@@ -34,9 +34,9 @@
 | 2️⃣ | Monolithic Architecture Setup | ✅ |
 | 3️⃣ | TailwindCSS Setup | ✅ |
 | 4️⃣ | Pre-commit Tools Setup | ✅ |
-| 5️⃣ | Core App Implementation | 🎯 |
-| 6️⃣ | Account App Implementation | 📌 |
-| 7️⃣ | Wallet App Implementation | 📌 |
+| 5️⃣ | Core App Implementation | ✅ |
+| 6️⃣ | Account App Implementation | ✅ |
+| 7️⃣ | Wallet App Implementation | 🎯 |
 | 8️⃣ | Product App Implementation | 📌 |
 | 9️⃣ | Order App Implementation | 📌 |
 | 🔟 | Payment App Implementation | 📌 |
@@ -58,7 +58,7 @@
 
 ## core
 
-* [🔗]
+* models line-34
 
 
 ## accounts

@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # apps
+    "apps.core.apps.CoreConfig",
+    "apps.account.apps.AccountConfig",
 ]
 
 MIDDLEWARE = [
@@ -132,7 +135,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # ---Auth-------------------------------------------------------
-# AUTH_USER_MODEL = "account.User"
+AUTH_USER_MODEL = "account.User"
 # ---------------------------------------------------------------
 
 
@@ -142,5 +145,18 @@ REDIS_CONFIG = {
     "HOST": os.getenv("REDIS_HOST", "localhost"),
     "PORT": os.getenv("REDIS_PORT", "6379"),
     "CHANNEL_NAME": os.getenv("REDIS_CHANNEL_NAME", "market_price"),
+}
+# ---------------------------------------------------------------
+
+
+# ---Caches------------------------------------------------------
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis:{REDIS_CONFIG['HOST']}:{REDIS_CONFIG['PORT']}/{REDIS_CONFIG['DB']}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
 }
 # ---------------------------------------------------------------
