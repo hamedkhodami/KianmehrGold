@@ -36,14 +36,14 @@
 | 4️⃣ | Pre-commit Tools Setup | ✅ |
 | 5️⃣ | Core App Implementation | ✅ |
 | 6️⃣ | Account App Implementation | ✅ |
-| 7️⃣ | Wallet App Implementation | 🎯 |
-| 8️⃣ | Product App Implementation | 📌 |
-| 9️⃣ | Order App Implementation | 📌 |
-| 🔟 | Payment App Implementation | 📌 |
-| 1️⃣1️⃣ | Notification App Implementation | 📌 |
-| 1️⃣2️⃣ | Dashboard App Implementation | 📌 |
-| 1️⃣3️⃣ | Public App Implementation | 📌 |
-| 1️⃣4️⃣ | Rosetta Integration | 📌 |
+| 7️⃣ | Wallet App Implementation | ✅ |
+| 8️⃣ | Product App Implementation | ✅ |
+| 9️⃣ | Order App Implementation | ✅ |
+| 🔟 | Payment App Implementation | ✅ |
+| 1️⃣1️⃣ | Notification App Implementation | ✅ |
+| 1️⃣2️⃣ | Dashboard App Implementation | ✅ |
+| 1️⃣3️⃣ | Public App Implementation | ✅ |
+| 1️⃣4️⃣ | Rosetta Integration | 🎯 |
 | 1️⃣5️⃣ | Define Phase 3 Roadmap | 📌 |
 
 ---
@@ -71,7 +71,7 @@
 
 ## product
 
-* [🔗] 
+* models line-22 
 
 ## order
 

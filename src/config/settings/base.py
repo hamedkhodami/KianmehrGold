@@ -41,6 +41,16 @@ INSTALLED_APPS = [
     # apps
     "apps.core.apps.CoreConfig",
     "apps.account.apps.AccountConfig",
+    "apps.wallet.apps.WalletConfig",
+    "apps.product.apps.ProductConfig",
+    "apps.order.apps.OrderConfig",
+    "apps.payment.apps.PaymentConfig",
+    "apps.notification.apps.NotificationConfig",
+    "apps.dashboard.apps.DashboardConfig",
+    "apps.public.apps.PublicConfig",
+    # Django modules
+    "ckeditor",
+    "ckeditor_uploader",
 ]
 
 MIDDLEWARE = [
@@ -157,6 +167,47 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
+    }
+}
+# ---------------------------------------------------------------
+
+
+# ---CKEDITOR----------------------------------------------------
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    "default": {
+        "height": 400,
+        "width": "100%",
+        "allowedContent": True,
+        "extraPlugins": ",".join(
+            [
+                "codesnippet",
+                "image2",
+                "colorbutton",
+                "justify",
+                "font",
+            ]
+        ),
+        "toolbar": [
+            {"name": "document", "items": ["Source", "Preview"]},
+            {"name": "clipboard", "items": ["Undo", "Redo"]},
+            {"name": "basicstyles", "items": ["Bold", "Italic", "Underline"]},
+            {
+                "name": "paragraph",
+                "items": [
+                    "NumberedList",
+                    "BulletedList",
+                    "JustifyLeft",
+                    "JustifyCenter",
+                    "JustifyRight",
+                ],
+            },
+            {"name": "insert", "items": ["Image", "Table", "HorizontalRule"]},
+            {"name": "styles", "items": ["Format", "Font", "FontSize"]},
+            {"name": "colors", "items": ["TextColor", "BGColor"]},
+        ],
     }
 }
 # ---------------------------------------------------------------
