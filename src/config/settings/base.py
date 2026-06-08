@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "apps.dashboard.apps.DashboardConfig",
     "apps.public.apps.PublicConfig",
     # Django modules
+    "rosetta",
     "ckeditor",
     "ckeditor_uploader",
 ]
@@ -210,4 +211,13 @@ CKEDITOR_CONFIGS = {
         ],
     }
 }
+# ---------------------------------------------------------------
+
+
+# --ROSETTA------------------------------------------------------
+def rosetta_access_control_function(u):
+    return u.is_staff
+
+
+ROSETTA_ACCESS_CONTROL_FUNCTION = rosetta_access_control_function
 # ---------------------------------------------------------------

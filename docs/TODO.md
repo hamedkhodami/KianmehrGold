@@ -43,8 +43,8 @@
 | 1️⃣1️⃣ | Notification App Implementation | ✅ |
 | 1️⃣2️⃣ | Dashboard App Implementation | ✅ |
 | 1️⃣3️⃣ | Public App Implementation | ✅ |
-| 1️⃣4️⃣ | Rosetta Integration | 🎯 |
-| 1️⃣5️⃣ | Define Phase 3 Roadmap | 📌 |
+| 1️⃣4️⃣ | Rosetta Integration | ✅ |
+| 1️⃣5️⃣ | Define Phase 3 Roadmap | 🎯 |
 
 ---
 
