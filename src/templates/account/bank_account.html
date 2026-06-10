@@ -1,0 +1,30 @@
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Bank Account Information" %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div>
+        <label>{% trans "Bank Name" %}</label>
+        <input type="text" name="bank_name" value="{{ form.bank_name.value }}">
+    </div>
+
+    <div>
+        <label>{% trans "Card Number" %}</label>
+        <input type="text" name="card_number" value="{{ form.card_number.value }}">
+    </div>
+
+    <div>
+        <label>{% trans "IBAN (Sheba)" %}</label>
+        <input type="text" name="iban" value="{{ form.iban.value }}">
+    </div>
+
+    <button type="submit">
+        {% trans "Save changes" %}
+    </button>
+</form>
+
+{% endblock %}

@@ -221,3 +221,11 @@ def rosetta_access_control_function(u):
 
 ROSETTA_ACCESS_CONTROL_FUNCTION = rosetta_access_control_function
 # ---------------------------------------------------------------
+
+
+# ---SMS config# ------------------------------------------------
+SMS_CONFIG = {
+    "API_KEY": os.getenv("SMS_CONFIG_API_KEY"),
+    "ORIGINATOR": os.getenv("SMS_CONFIG_ORIGINATOR"),
+}
+# ---------------------------------------------------------------

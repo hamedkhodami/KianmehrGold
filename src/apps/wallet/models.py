@@ -104,7 +104,7 @@ class GoldInventoryModel(BaseModel):
 class CoinInventoryModel(BaseModel):
     Type = CoinTypeEnum
 
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         "account.User",
         on_delete=models.CASCADE,
         related_name="coin_inventories",

@@ -1,0 +1,17 @@
+{% extends "base/base_sign.html" %}
+{% load i18n %}
+
+{% block body %}
+
+<h1>{% trans "Enter verification code" %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>{% trans "Verification code" %}</label>
+    <input type="text" name="code">
+
+    <button type="submit">{% trans "Confirm" %}</button>
+</form>
+
+{% endblock %}

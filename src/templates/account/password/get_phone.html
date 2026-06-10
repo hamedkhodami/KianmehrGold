@@ -1,0 +1,17 @@
+{% extends "base/base_sign.html" %}
+{% load i18n %}
+
+{% block body %}
+
+<h1>{% trans "Reset Password" %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>{% trans "Phone number" %}</label>
+    <input type="text" name="phone_number">
+
+    <button type="submit">{% trans "Send code" %}</button>
+</form>
+
+{% endblock %}

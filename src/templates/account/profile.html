@@ -1,0 +1,41 @@
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Edit Profile" %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div>
+        <label>{% trans "First name" %}</label>
+        <input type="text" name="first_name" value="{{ form.first_name.value }}">
+    </div>
+
+    <div>
+        <label>{% trans "Last name" %}</label>
+        <input type="text" name="last_name" value="{{ form.last_name.value }}">
+    </div>
+
+    <div>
+        <label>{% trans "Phone number" %}</label>
+        <input type="text" name="phone_number" value="{{ form.phone_number.value }}">
+    </div>
+
+    <div>
+        <label>{% trans "National code" %}</label>
+        <input type="text" name="national_code" value="{{ form.national_code.value }}">
+    </div>
+
+    <div>
+        <label>{% trans "Email" %}</label>
+        <input type="email" name="email" value="{{ form.email.value }}">
+    </div>
+
+    <button type="submit">
+        {% trans "Save changes" %}
+    </button>
+
+</form>
+
+{% endblock %}

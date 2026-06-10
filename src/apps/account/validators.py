@@ -1,6 +1,7 @@
 import re
 
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 
 def validate_card_number(value: str) -> None:
@@ -11,10 +12,10 @@ def validate_card_number(value: str) -> None:
     value = value.replace("-", "").replace(" ", "")
 
     if not value.isdigit():
-        raise ValidationError("Card number must contain only digits.")
+        raise ValidationError(_("Card number must contain only digits."))
 
     if len(value) != 16:
-        raise ValidationError("Card number must be 16 digits.")
+        raise ValidationError(_("Card number must be 16 digits."))
 
     total = 0
 

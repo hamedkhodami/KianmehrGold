@@ -1,0 +1,20 @@
+{% extends "base/base_sign.html" %}
+{% load i18n %}
+
+{% block body %}
+
+<h1>{% trans "Set new password" %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>{% trans "New password" %}</label>
+    <input type="password" name="password">
+
+    <label>{% trans "Repeat password" %}</label>
+    <input type="password" name="password2">
+
+    <button type="submit">{% trans "Change password" %}</button>
+</form>
+
+{% endblock %}

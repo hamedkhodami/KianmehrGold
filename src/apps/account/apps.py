@@ -8,4 +8,4 @@ class AccountConfig(AppConfig):
     verbose_name = _("Account")
 
     def ready(self):
-        pass
+        from . import signals  # noqa: F401

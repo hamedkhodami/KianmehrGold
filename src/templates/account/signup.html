@@ -1,0 +1,51 @@
+{% extends "base/base_sign.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Sign up" %}
+{% endblock %}
+
+{% block body %}
+
+<div class="signup-container">
+
+    <h1>{% trans "Create an account" %}</h1>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Phone Number -->
+        <div>
+            <label for="id_phone_number">{% trans "Phone number" %}</label>
+            <input type="text" name="phone_number" id="id_phone_number"
+                   value="{{ form.phone_number.value }}">
+        </div>
+
+        <!-- Password -->
+        <div>
+            <label for="id_password1">{% trans "Password" %}</label>
+            <input type="password" name="password1" id="id_password1">
+        </div>
+
+        <!-- Password Repeat -->
+        <div>
+            <label for="id_password2">{% trans "Repeat password" %}</label>
+            <input type="password" name="password2" id="id_password2">
+        </div>
+
+        <!-- Submit -->
+        <button type="submit">
+            {% trans "Register" %}
+        </button>
+    </form>
+
+    <!-- Link to Login -->
+    <p>
+        {% trans "Already have an account?" %}
+        <a href="{% url 'account:login' %}">{% trans "Login" %}</a>
+    </p>
+
+</div>
+
+{% endblock %}

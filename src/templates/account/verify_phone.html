@@ -1,0 +1,35 @@
+{% extends "base/base_sign.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Verify Phone Number" %}
+{% endblock %}
+
+{% block body %}
+
+<div class="verify-container">
+
+    <h1>{% trans "Enter verification code" %}</h1>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div>
+            <label for="id_code">{% trans "Verification code" %}</label>
+            <input type="text" name="code" id="id_code">
+        </div>
+
+        <button type="submit">
+            {% trans "Verify" %}
+        </button>
+    </form>
+
+    <p>
+        <a href="{% url 'account:send_code' %}">
+            {% trans "Resend code" %}
+        </a>
+    </p>
+
+</div>
+
+{% endblock %}
