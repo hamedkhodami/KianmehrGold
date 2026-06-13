@@ -1,3 +1,5 @@
+import uuid
+
 from apps.core.models import BaseModel
 from apps.wallet.enums import (
     CoinTypeEnum,
@@ -46,6 +48,13 @@ class WalletTransactionModel(BaseModel):
         _("Description"), max_length=200, blank=True, null=True
     )
     is_success = models.BooleanField(_("Success"), default=True)
+    reference_id = models.CharField(
+        _("Reference ID"),
+        max_length=50,
+        unique=True,
+        db_index=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = _("Wallet Transaction")
@@ -55,6 +64,12 @@ class WalletTransactionModel(BaseModel):
         return (
             f"{self.wallet.user.phone_number} - {self.amount} - {self.transaction_type}"
         )
+
+    def save(self, *args, **kwargs):
+        if not self.reference_id:
+            self.reference_id = f"WTX-{uuid.uuid4().hex[:10].upper()}"
+
+        super().save(*args, **kwargs)
 
 
 class WithdrawRequestModel(BaseModel):

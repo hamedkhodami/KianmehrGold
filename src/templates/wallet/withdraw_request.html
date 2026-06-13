@@ -1,0 +1,45 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Withdraw from Wallet" %}</h1>
+
+<div class="wallet-balance-box">
+    <p>
+        {% trans "Current Balance" %}: {{ request.user.wallet.balance }}
+    </p>
+</div>
+
+<form method="post" class="withdraw-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="withdraw-amount">{% trans "Amount" %}</label>
+        <input
+            type="number"
+            id="withdraw-amount"
+            name="amount"
+            class="form-control"
+            value="{{ form.amount.value|default:'' }}"
+            placeholder="{% trans 'Enter amount' %}"
+        >
+        {% if form.amount.errors %}
+            <div class="error">
+                {{ form.amount.errors }}
+            </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        {% trans "Submit Withdraw Request" %}
+    </button>
+</form>
+
+<hr>
+
+<a href="{% url 'wallet:wallet_dashboard' %}">
+    {% trans "Back to Wallet" %}
+</a>
+
+{% endblock %}

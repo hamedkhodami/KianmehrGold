@@ -1,0 +1,59 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Withdraw Request Details" %}</h1>
+
+<div>
+    <label>{% trans "User" %}:</label>
+    <span>{{ withdraw_request.user.phone_number }}</span>
+</div>
+
+<div>
+    <label>{% trans "Amount" %}:</label>
+    <span>{{ withdraw_request.amount }}</span>
+</div>
+
+<div>
+    <label>{% trans "Card Number" %}:</label>
+    <span>
+        {% if bank_account %}
+            {{ bank_account.card_number }}
+        {% else %}
+            {% trans "No bank account" %}
+        {% endif %}
+    </span>
+</div>
+
+<div>
+    <label>{% trans "IBAN" %}:</label>
+    <span>
+        {% if bank_account %}
+            {{ bank_account.iban }}
+        {% else %}
+            -
+        {% endif %}
+    </span>
+</div>
+
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div>
+        <label for="admin_note">{% trans "Admin Note" %}</label>
+        <textarea id="admin_note" name="admin_note"></textarea>
+    </div>
+
+    <button type="submit" name="action" value="approve">
+        {% trans "Approve" %}
+    </button>
+
+    <button type="submit" name="action" value="reject">
+        {% trans "Reject" %}
+    </button>
+</form>
+
+{% endblock %}

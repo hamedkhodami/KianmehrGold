@@ -54,5 +54,4 @@ class Notification(BaseModel):
             return ""
 
     def get_image_url(self):
-        if self.image:
-            return self.image.url
+        return self.image.url if self.image else ""

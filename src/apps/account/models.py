@@ -91,5 +91,5 @@ class UserBankAccount(BaseModel):
         verbose_name = "Bank Account"
         verbose_name_plural = "Bank Accounts"
 
-    def str(self):
+    def __str__(self):
         return f"{self.bank_name} " f"({self.card_number[-4:]})"

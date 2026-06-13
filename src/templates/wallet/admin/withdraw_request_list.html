@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Withdraw Requests" %}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>{% trans "User" %}</th>
+            <th>{% trans "Amount" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Details" %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for req in requests %}
+        {% with bank=req.user.bank_accounts.first %}
+        <tr>
+            <td>{{ req.user.phone_number }}</td>
+            <td>{{ req.amount }}</td>
+            <td>{{ req.status }}</td>
+
+            <td>
+                {% if req.status == "pending" %}
+                    <a href="{% url 'wallet:admin_withdraw_request_detail' req.pk %}">
+                        {% trans "View" %}
+                    </a>
+                {% else %}
+                    <span style="color: #999;">
+                        {% trans "Not Available" %}
+                    </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endwith %}
+        {% empty %}
+        <tr>
+            <td colspan="6">{% trans "No withdraw requests found." %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

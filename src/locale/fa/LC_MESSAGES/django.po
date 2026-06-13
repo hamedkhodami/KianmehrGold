@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 15:34+0330\n"
-"PO-Revision-Date: 2026-06-08 15:59+0330\n"
+"POT-Creation-Date: 2026-06-13 08:33+0330\n"
+"PO-Revision-Date: 2026-06-13 08:38+0330\n"
 "Last-Translator: None None <None>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -54,10 +54,13 @@ msgid "Customer"
 msgstr "مشتری"
 
 #: .\apps\account\forms.py:12 .\apps\account\models.py:19
+#: .\templates\account\password\get_phone.html:11
+#: .\templates\account\profile.html:21 .\templates\account\signup.html:20
 msgid "Phone number"
 msgstr "شماره تماس"
 
-#: .\apps\account\forms.py:13
+#: .\apps\account\forms.py:13 .\templates\account\login.html:27
+#: .\templates\account\signup.html:27
 msgid "Password"
 msgstr "رمز عبور"
 
@@ -65,27 +68,66 @@ msgstr "رمز عبور"
 msgid "Password repeat"
 msgstr "تکرار رمز عبور"
 
-#: .\apps\account\forms.py:25
+#: .\apps\account\forms.py:25 .\apps\account\forms.py:69
+#: .\apps\account\forms.py:108 .\apps\account\forms.py:156
 msgid "Enter a valid phone number"
 msgstr "شماره تماس معتبری وارد کنید"
 
-#: .\apps\account\forms.py:34
+#: .\apps\account\forms.py:28
+msgid "This phone number is already registered."
+msgstr ""
+
+#: .\apps\account\forms.py:37 .\apps\account\forms.py:134
 msgid "Passwords are not match."
 msgstr "رمزهای عبور مطابقت ندارند."
+
+#: .\apps\account\forms.py:53
+msgid "09__"
+msgstr ""
+
+#: .\apps\account\forms.py:75
+msgid "Phone number or password is incorrect"
+msgstr ""
+
+#: .\apps\account\forms.py:87
+#| msgid "Enter a valid phone number"
+msgid "Enter a valid code"
+msgstr "شماره تماس معتبری وارد کنید"
+
+#: .\apps\account\forms.py:114
+#| msgid "Users must have a phone number!"
+msgid "No user found with this phone number"
+msgstr "کاربران باید شماره تلفن داشته باشند!"
+
+#: .\apps\account\forms.py:164
+msgid "This phone number is already taken"
+msgstr ""
+
+#: .\apps\account\forms.py:175
+msgid "This email is already taken"
+msgstr ""
+
+#: .\apps\account\forms.py:182
+msgid "National code must be numeric"
+msgstr ""
+
+#: .\apps\account\forms.py:184
+msgid "National code must be 10 digits"
+msgstr ""
 
 #: .\apps\account\managers.py:8
 msgid "Users must have a phone number!"
 msgstr "کاربران باید شماره تلفن داشته باشند!"
 
-#: .\apps\account\models.py:21
+#: .\apps\account\models.py:21 .\templates\account\profile.html:31
 msgid "Email"
 msgstr "ایمیل"
 
-#: .\apps\account\models.py:24
+#: .\apps\account\models.py:24 .\templates\account\profile.html:11
 msgid "First name"
 msgstr "نام"
 
-#: .\apps\account\models.py:26
+#: .\apps\account\models.py:26 .\templates\account\profile.html:16
 msgid "Last name"
 msgstr "نام خانوادگی"
 
@@ -102,7 +144,7 @@ msgstr "نقش"
 msgid "Active"
 msgstr "فعال"
 
-#: .\apps\account\models.py:35
+#: .\apps\account\models.py:35 .\templates\account\verify_phone.html:23
 msgid "Verify"
 msgstr "تأیید کنید"
 
@@ -121,9 +163,68 @@ msgstr "کاربران"
 msgid "No Name"
 msgstr "بدون نام"
 
-#: .\apps\account\models.py:69
+#: .\apps\account\models.py:69 .\templates\account\bank_account.html:11
 msgid "Bank Name"
 msgstr "نام بانک"
+
+#: .\apps\account\validators.py:15
+msgid "Card number must contain only digits."
+msgstr ""
+
+#: .\apps\account\validators.py:18
+msgid "Card number must be 16 digits."
+msgstr ""
+
+#: .\apps\account\views.py:36
+#| msgid "Verifications"
+msgid "Verification Code"
+msgstr "تاییدیه ها"
+
+#: .\apps\account\views.py:69
+msgid "Login successful"
+msgstr ""
+
+#: .\apps\account\views.py:86
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: .\apps\account\views.py:92 .\apps\account\views.py:128
+#: .\apps\account\views.py:185 .\apps\account\views.py:214
+msgid "There is an issue! please try again"
+msgstr ""
+
+#: .\apps\account\views.py:96
+msgid "Please wait before requesting another code."
+msgstr ""
+
+#: .\apps\account\views.py:106
+msgid "Phone number verification code"
+msgstr ""
+
+#: .\apps\account\views.py:112
+msgid "Code sent to you"
+msgstr ""
+
+#: .\apps\account\views.py:132 .\apps\account\views.py:189
+msgid "Entered code is not correct"
+msgstr ""
+
+#: .\apps\account\views.py:142
+msgid "Register done successful"
+msgstr ""
+
+#: .\apps\account\views.py:224
+#| msgid "Password repeat"
+msgid "Password successfully reset"
+msgstr "تکرار رمز عبور"
+
+#: .\apps\account\views.py:244
+msgid "Profile updated successfully"
+msgstr ""
+
+#: .\apps\account\views.py:272
+msgid "Bank account updated successfully"
+msgstr ""
 
 #: .\apps\core\models.py:12
 msgid "Creation Time"
@@ -141,36 +242,95 @@ msgstr "حذف شده است"
 msgid "Deleted Time"
 msgstr "زمان حذف"
 
-#: .\apps\core\utils.py:16
+#: .\apps\core\utils.py:20
 msgid "years ago"
 msgstr "سال گذشته"
 
-#: .\apps\core\utils.py:17
+#: .\apps\core\utils.py:21
 msgid "months ago"
 msgstr "ماه گذشته"
 
-#: .\apps\core\utils.py:18
+#: .\apps\core\utils.py:22
 msgid "days ago"
 msgstr "روز گذشته"
 
-#: .\apps\core\utils.py:19
+#: .\apps\core\utils.py:23
 msgid "hours ago"
 msgstr "ساعت گذشته"
 
-#: .\apps\core\utils.py:20
+#: .\apps\core\utils.py:24
 msgid "minutes ago"
 msgstr "دقیقه گذشته"
 
-#: .\apps\core\utils.py:29
+#: .\apps\core\utils.py:33
 msgid "Moments ago"
 msgstr "لحظاتی پیش"
+
+#: .\apps\core\utils.py:65 .\apps\core\utils.py:79
+msgid "Entered data is not correct."
+msgstr ""
 
 #: .\apps\dashboard\apps.py:8
 msgid "Dashboard"
 msgstr "داشبورد"
 
-#: .\apps\notification\apps.py:8
+#: .\apps\notification\apps.py:8 .\apps\notification\models.py:34
 msgid "Notification"
+msgstr "اعلان"
+
+#: .\apps\notification\enums.py:6
+#| msgid "Verifications"
+msgid "Mobile Verification Code"
+msgstr "تاییدیه ها"
+
+#: .\apps\notification\enums.py:7
+#| msgid "Order Items"
+msgid "Order Status"
+msgstr "سفارش اقلام"
+
+#: .\apps\notification\enums.py:8 .\apps\wallet\models.py:51
+msgid "Wallet Transaction"
+msgstr "تراکنش کیف پول"
+
+#: .\apps\notification\enums.py:9
+#| msgid "Admin Note"
+msgid "Admin Alert"
+msgstr "یادداشت ادمین"
+
+#: .\apps\notification\models.py:14
+#| msgid "Notification"
+msgid "Notification Type"
+msgstr "اعلان"
+
+#: .\apps\notification\models.py:15
+#| msgid "Notification"
+msgid "Notif title"
+msgstr "اعلان"
+
+#: .\apps\notification\models.py:16
+#| msgid "Meta Description"
+msgid "Notif description"
+msgstr "توضیحات متا"
+
+#: .\apps\notification\models.py:21
+msgid "KeyWord args"
+msgstr ""
+
+#: .\apps\notification\models.py:22
+msgid "Send Notify"
+msgstr ""
+
+#: .\apps\notification\models.py:26
+msgid "To user"
+msgstr ""
+
+#: .\apps\notification\models.py:30
+msgid "Is showing"
+msgstr ""
+
+#: .\apps\notification\models.py:35
+#| msgid "Notification"
+msgid "Notifications"
 msgstr "اعلان"
 
 #: .\apps\order\admin.py:39
@@ -217,7 +377,7 @@ msgid "Completed"
 msgstr "کامل شده"
 
 #: .\apps\order\enums.py:13 .\apps\wallet\apps.py:8 .\apps\wallet\models.py:23
-#: .\apps\wallet\models.py:37
+#: .\apps\wallet\models.py:37 .\templates\wallet\wallet.html:6
 msgid "Wallet"
 msgstr "کیف پول"
 
@@ -239,7 +399,8 @@ msgstr "فروش"
 
 #: .\apps\order\models.py:21 .\apps\payment\models.py:35
 #: .\apps\payment\models.py:73 .\apps\product\models.py:49
-#: .\apps\wallet\models.py:71
+#: .\apps\wallet\models.py:71 .\templates\wallet\wallet.html:38
+#: .\templates\wallet\wallet_transaction_detail.html:11
 msgid "Status"
 msgstr "وضعیت"
 
@@ -299,6 +460,9 @@ msgstr "شماره فاکتور"
 #: .\apps\order\models.py:109 .\apps\payment\models.py:32
 #: .\apps\payment\models.py:70 .\apps\wallet\models.py:39
 #: .\apps\wallet\models.py:69 .\apps\wallet\models.py:118
+#: .\templates\wallet\wallet.html:36
+#: .\templates\wallet\wallet_transaction_detail.html:9
+#: .\templates\wallet\withdraw_request.html:18
 msgid "Amount"
 msgstr "مقدار"
 
@@ -340,10 +504,13 @@ msgid "Payment"
 msgstr "پرداخت"
 
 #: .\apps\payment\enums.py:7 .\apps\wallet\models.py:48
+#: .\templates\wallet\wallet.html:50
+#: .\templates\wallet\wallet_transaction_detail.html:13
 msgid "Success"
 msgstr "موفق"
 
-#: .\apps\payment\enums.py:8
+#: .\apps\payment\enums.py:8 .\templates\wallet\wallet.html:52
+#: .\templates\wallet\wallet_transaction_detail.html:15
 msgid "Failed"
 msgstr "ناموفق"
 
@@ -423,6 +590,7 @@ msgstr "برچسب"
 
 #: .\apps\product\models.py:11 .\apps\product\models.py:52
 #: .\apps\wallet\models.py:46
+#: .\templates\wallet\wallet_transaction_detail.html:18
 msgid "Description"
 msgstr "توضیحات"
 
@@ -621,7 +789,16 @@ msgstr "تمام سکه"
 msgid "Emai"
 msgstr "سکه امامی"
 
-#: .\apps\wallet\models.py:19
+#: .\apps\wallet\forms.py:26
+#| msgid "Order payment must have an order."
+msgid "The amount must be greater than zero."
+msgstr "مقدار باید بزرگتر از صفر باشد."
+
+#: .\apps\wallet\forms.py:29
+msgid "There are not enough wallet balances."
+msgstr ""
+
+#: .\apps\wallet\models.py:19 .\templates\wallet\wallet.html:11
 msgid "Balance"
 msgstr "موجودی"
 
@@ -633,11 +810,7 @@ msgstr "کیف پول ها"
 msgid "Transaction Type"
 msgstr "نوع معامله"
 
-#: .\apps\wallet\models.py:51
-msgid "Wallet Transaction"
-msgstr "تراکنش کیف پول"
-
-#: .\apps\wallet\models.py:52
+#: .\apps\wallet\models.py:52 .\templates\wallet\wallet.html:31
 msgid "Wallet Transactions"
 msgstr "تراکنش‌های کیف پول"
 
@@ -672,3 +845,192 @@ msgstr "موجودی سکه"
 #: .\apps\wallet\models.py:122
 msgid "Coin Inventories"
 msgstr "موجودی های سکه"
+
+#: .\apps\wallet\views.py:51
+msgid "Your withdrawal request has been registered."
+msgstr ""
+
+#: .\templates\account\bank_account.html:5
+#| msgid "Bank Information"
+msgid "Bank Account Information"
+msgstr "اطلاعات حساب بانکی"
+
+#: .\templates\account\bank_account.html:16
+msgid "Card Number"
+msgstr ""
+
+#: .\templates\account\bank_account.html:21
+msgid "IBAN (Sheba)"
+msgstr ""
+
+#: .\templates\account\bank_account.html:26
+#: .\templates\account\profile.html:36
+msgid "Save changes"
+msgstr ""
+
+#: .\templates\account\login.html:7 .\templates\account\login.html:14
+#: .\templates\account\login.html:41 .\templates\account\login.html:53
+#: .\templates\account\signup.html:46
+msgid "Login"
+msgstr ""
+
+#: .\templates\account\login.html:21
+#| msgid "Phone number"
+msgid "Phone Number"
+msgstr "شماره تماس"
+
+#: .\templates\account\login.html:35
+msgid "Remember me"
+msgstr ""
+
+#: .\templates\account\login.html:47
+msgid "Don't have an account?"
+msgstr ""
+
+#: .\templates\account\login.html:48 .\templates\account\signup.html:39
+msgid "Register"
+msgstr ""
+
+#: .\templates\account\login.html:52
+#| msgid "Password"
+msgid "Forget Password"
+msgstr "فراموشی رمز عبور"
+
+#: .\templates\account\password\get_phone.html:6
+#| msgid "Password"
+msgid "Reset Password"
+msgstr "بازیابی رمز عبور"
+
+#: .\templates\account\password\get_phone.html:14
+msgid "Send code"
+msgstr ""
+
+#: .\templates\account\password\reset_pass_complete.html:6
+msgid "Set new password"
+msgstr ""
+
+#: .\templates\account\password\reset_pass_complete.html:11
+#| msgid "Password"
+msgid "New password"
+msgstr "رمز عبور جدید"
+
+#: .\templates\account\password\reset_pass_complete.html:14
+#: .\templates\account\signup.html:33
+#| msgid "Password"
+msgid "Repeat password"
+msgstr "تکرار رمز عبور"
+
+#: .\templates\account\password\reset_pass_complete.html:17
+#| msgid "Password"
+msgid "Change password"
+msgstr " تغییر رمز عبور"
+
+#: .\templates\account\password\reset_pass_confirm.html:6
+#: .\templates\account\verify_phone.html:12
+#| msgid "Verifications"
+msgid "Enter verification code"
+msgstr "کد تایید را وارد کنید"
+
+#: .\templates\account\password\reset_pass_confirm.html:11
+#: .\templates\account\verify_phone.html:18
+#| msgid "Verifications"
+msgid "Verification code"
+msgstr "تاییدیه ها"
+
+#: .\templates\account\password\reset_pass_confirm.html:14
+msgid "Confirm"
+msgstr ""
+
+#: .\templates\account\profile.html:5
+#| msgid "Unit Price"
+msgid "Edit Profile"
+msgstr "قیمت واحد"
+
+#: .\templates\account\profile.html:26
+#| msgid "National Code"
+msgid "National code"
+msgstr "کدملی"
+
+#: .\templates\account\signup.html:6
+msgid "Sign up"
+msgstr ""
+
+#: .\templates\account\signup.html:13
+msgid "Create an account"
+msgstr ""
+
+#: .\templates\account\signup.html:45
+msgid "Already have an account?"
+msgstr ""
+
+#: .\templates\account\verify_phone.html:5
+#| msgid "Phone number"
+msgid "Verify Phone Number"
+msgstr "تایید شماره تماس"
+
+#: .\templates\account\verify_phone.html:29
+msgid "Resend code"
+msgstr ""
+
+#: .\templates\public\index.html:6
+msgid "Home"
+msgstr ""
+
+#: .\templates\wallet\wallet.html:20
+msgid "Increase Wallet Balance"
+msgstr ""
+
+#: .\templates\wallet\wallet.html:24
+#: .\templates\wallet\withdraw_request.html:6
+#| msgid "Withdraw Request"
+msgid "Withdraw from Wallet"
+msgstr "درخواست برداشت از کیف پول"
+
+#: .\templates\wallet\wallet.html:37
+#: .\templates\wallet\wallet_transaction_detail.html:10
+#| msgid "Coin Type"
+msgid "Type"
+msgstr "نوع سکه"
+
+#: .\templates\wallet\wallet.html:39
+msgid "Details"
+msgstr ""
+
+#: .\templates\wallet\wallet.html:57
+msgid "View"
+msgstr ""
+
+#: .\templates\wallet\wallet.html:63
+msgid "No transactions found."
+msgstr ""
+
+#: .\templates\wallet\wallet_transaction_detail.html:6
+#| msgid "Transaction Type"
+msgid "Transaction Details"
+msgstr "نوع معامله"
+
+#: .\templates\wallet\wallet_transaction_detail.html:19
+#| msgid "Dates"
+msgid "Date"
+msgstr "تاریخ ها"
+
+#: .\templates\wallet\wallet_transaction_detail.html:25
+#: .\templates\wallet\withdraw_request.html:42
+#| msgid "Wallet"
+msgid "Back to Wallet"
+msgstr "کیف پول"
+
+#: .\templates\wallet\withdraw_request.html:10
+#| msgid "Balance"
+msgid "Current Balance"
+msgstr "موجودی"
+
+#: .\templates\wallet\withdraw_request.html:25
+#| msgid "Wage Amount"
+msgid "Enter amount"
+msgstr "مقدار را وارد کنید"
+
+#: .\templates\wallet\withdraw_request.html:35
+#| msgid "Withdraw Request"
+msgid "Submit Withdraw Request"
+msgstr "درخواست برداشت"

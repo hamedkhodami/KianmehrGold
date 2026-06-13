@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Withdraw Requests" %}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>{% trans "Amount" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Admin Note" %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for req in withdraw_requests %}
+        <tr>
+            <td>{{ req.amount }}</td>
+            <td>{{ req.status }}</td>
+            <td>{{ req.admin_note|default:"-" }}</td>
+
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">{% trans "No withdraw requests found." %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

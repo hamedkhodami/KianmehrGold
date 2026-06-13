@@ -21,11 +21,20 @@ This document helps frontend developers identify:
 
 ## accounts
 
-* Frontend implementation has not started yet. 
+* Login page → templates/account/login.html
+* Registration page → templates/account/register.html
+* Forgot password page → templates/account/password/rest_pass_complete.html
+* Personal information management page → templates/account/profile.html
+* Bank information management page → templates/account/bank_account.html
 
 ## wallet
 
-* Frontend implementation has not started yet.
+* Wallet dashboard page → templates/wallet.html
+* Wallet withdrawal request page → templates/wallet/withdraw_request.html
+* Wallet transaction details page → templates/wallet/wallet_transaction_detail.html
+* Admin withdrawal requests page → templates/wallet/admin/withdraw_request_list.html
+* Admin withdrawal requests page → templates/wallet/admin/withdraw_request_detail.html
+* withdrawal review page → templates/wallet/partials/withdraw_request_table.html
 
 ## product
 

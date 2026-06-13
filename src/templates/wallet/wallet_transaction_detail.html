@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Transaction Details" %}</h1>
+
+<div>
+    <p><strong>{% trans "Amount" %}:</strong> {{ transaction.amount }}</p>
+    <p><strong>{% trans "Type" %}:</strong> {{ transaction.transaction_type }}</p>
+    <p><strong>{% trans "Status" %}:</strong>
+        {% if transaction.is_success %}
+            {% trans "Success" %}
+        {% else %}
+            {% trans "Failed" %}
+        {% endif %}
+    </p>
+    <p><strong>{% trans "Description" %}:</strong> {{ transaction.description|default:"-" }}</p>
+    <p><strong>{% trans "Date" %}:</strong> {{ transaction.created_at }}</p>
+</div>
+
+<hr>
+
+<a href="{% url 'wallet:wallet_dashboard' %}">
+    {% trans "Back to Wallet" %}
+</a>
+
+{% endblock %}
