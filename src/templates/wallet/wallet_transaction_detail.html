@@ -1,5 +1,6 @@
-{% extends "base/base.html" %}
+{% extends "base/base_dashboard.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 
@@ -16,6 +17,7 @@
         {% endif %}
     </p>
     <p><strong>{% trans "Description" %}:</strong> {{ transaction.description|default:"-" }}</p>
+    <p><strong>{% trans "Reference ID" %}:</strong> {{ transaction.reference_id }}</p>
     <p><strong>{% trans "Date" %}:</strong> {{ transaction.created_at }}</p>
 </div>
 
