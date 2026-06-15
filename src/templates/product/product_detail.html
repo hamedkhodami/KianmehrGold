@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title%}
+    {{ product.title }}
+{% endblock %}
+
+    {% block extra_style %}
+        <style>
+    .buy-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .buy-btn:hover {
+        background: #0056b3;
+    }
+</style>
+    {% endblock %}
+
+
+{% block content %}
+<!-- تصویر محصول -->
+{% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.title }}" width="250">
+{% endif %}
+
+<hr>
+
+<!-- توضیحات -->
+<div>
+    <h3>{% trans "Description" %}</h3>
+    <p>{{ product.description|default:_("No description available.") }}</p>
+</div>
+
+<hr>
+
+<!-- وزن -->
+<div>
+    <h3>{% trans "Weight" %}</h3>
+    <p>{{ product.weight }} g</p>
+</div>
+
+<hr>
+
+<div>
+    <h3>{% trans "Final Price" %}</h3>
+    <p>{{ product.final_price }}</p>
+</div>
+
+<!-- دکمه خرید -->
+<form action="{% url 'product:product_buy' product.slug %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="buy-btn">
+        {% trans "Buy Now" %}
+    </button>
+</form>
+
+{% endblock %}

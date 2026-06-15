@@ -1,5 +1,4 @@
 from apps.wallet.models import (
-    CoinInventoryModel,
     GoldInventoryModel,
     WalletModel,
     WalletTransactionModel,
@@ -134,50 +133,6 @@ class WithdrawRequestAdmin(admin.ModelAdmin):
                     "amount",
                     "status",
                     "admin_note",
-                )
-            },
-        ),
-    )
-
-    autocomplete_fields = ("user",)
-
-    ordering = ("-created_at",)
-
-    date_hierarchy = "created_at"
-
-
-@admin.register(CoinInventoryModel)
-class CoinInventoryAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "user",
-        "coin_type",
-        "amount",
-    )
-
-    list_display_links = (
-        "id",
-        "user",
-    )
-
-    list_filter = ("created_at",)
-
-    readonly_fields = (
-        "created_at",
-        "updated_at",
-    )
-
-    fieldsets = (
-        (
-            _("User Information"),
-            {"fields": ("user",)},
-        ),
-        (
-            _("Other Information"),
-            {
-                "fields": (
-                    "coin_type",
-                    "amount",
                 )
             },
         ),

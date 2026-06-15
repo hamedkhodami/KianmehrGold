@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rosetta",
     "ckeditor",
     "ckeditor_uploader",
+    "django_q",
 ]
 
 MIDDLEWARE = [
@@ -154,7 +155,7 @@ AUTH_USER_MODEL = "account.User"
 REDIS_CONFIG = {
     "DB": int(os.getenv("REDIS_DB", 0)),
     "HOST": os.getenv("REDIS_HOST", "localhost"),
-    "PORT": os.getenv("REDIS_PORT", "6379"),
+    "PORT": int(os.getenv("REDIS_PORT", 6379)),
     "CHANNEL_NAME": os.getenv("REDIS_CHANNEL_NAME", "market_price"),
 }
 # ---------------------------------------------------------------
@@ -223,9 +224,14 @@ ROSETTA_ACCESS_CONTROL_FUNCTION = rosetta_access_control_function
 # ---------------------------------------------------------------
 
 
-# ---SMS config# ------------------------------------------------
+# ---SMS config -------------------------------------------------
 SMS_CONFIG = {
     "API_KEY": os.getenv("SMS_CONFIG_API_KEY"),
     "ORIGINATOR": os.getenv("SMS_CONFIG_ORIGINATOR"),
 }
+# ---------------------------------------------------------------
+
+
+# ---GOLD API ---------------------------------------------------
+GOLD_API_KEY = os.getenv("GOLD_API_KEY")
 # ---------------------------------------------------------------

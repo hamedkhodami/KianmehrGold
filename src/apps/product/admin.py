@@ -31,6 +31,7 @@ class ProductAdmin(admin.ModelAdmin):
         "weight",
         "wage_percent",
         "tax_percent",
+        "stock",
         "status",
         "created_at",
     )
@@ -42,7 +43,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Product Information"),
-            {"fields": ("category", "title", "slug", "image", "description")},
+            {"fields": ("category", "title", "slug", "image", "description", "stock")},
         ),
         (
             _("Pricing Information"),
@@ -60,8 +61,6 @@ class CoinAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "coin_type",
-        "buy_price",
-        "sell_price",
         "weight",
         "stock",
         "is_active",
@@ -77,7 +76,6 @@ class CoinAdmin(admin.ModelAdmin):
             _("Coin Information"),
             {"fields": ("coin_type", "image", "weight", "stock", "is_active")},
         ),
-        (_("Pricing Information"), {"fields": ("buy_price", "sell_price")}),
         (_("System Information"), {"fields": ("created_at", "updated_at")}),
     )
 

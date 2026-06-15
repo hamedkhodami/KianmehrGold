@@ -29,6 +29,15 @@ class PaymentModel(BaseModel):
         verbose_name=_("Order"),
     )
 
+    product = models.ForeignKey(
+        "product.ProductModel",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="payments",
+        verbose_name=_("Product"),
+    )
+
     amount = models.DecimalField(_("Amount"), max_digits=18, decimal_places=0)
 
     status = models.CharField(
@@ -40,6 +49,26 @@ class PaymentModel(BaseModel):
     )
 
     ref_id = models.CharField(_("Reference ID"), max_length=255, blank=True, null=True)
+
+    expire_at = models.DateTimeField(_("Expire At"), null=True, blank=True)
+
+    locked_gold_price = models.DecimalField(
+        _("Locked Gold Price"),
+        max_digits=18,
+        decimal_places=0,
+        default=0,
+        null=True,
+        blank=True,
+    )
+    wage_amount = models.DecimalField(
+        _("Wage Amount"), max_digits=18, decimal_places=0, default=0
+    )
+    tax_amount = models.DecimalField(
+        _("Tax Amount"), max_digits=18, decimal_places=0, default=0
+    )
+    weight = models.DecimalField(
+        _("Weight"), max_digits=18, decimal_places=3, default=0
+    )
 
     class Meta:
         verbose_name = _("Payment")

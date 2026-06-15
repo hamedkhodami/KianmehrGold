@@ -1,0 +1,99 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title%}
+    {% trans "Products" %}
+{% endblock %}
+
+    {% block extra_style %}
+        <style>
+            .categories {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .category-item {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                text-decoration: none;
+                padding: 6px 10px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                background: #fafafa;
+            }
+
+            .category-item:hover {
+                background: #eee;
+            }
+
+            .category-item img {
+                border-radius: 4px;
+            }
+        </style>
+    {% endblock %}
+
+
+{% block content %}
+
+
+<!-- دسته‌بندی‌ها -->
+<div class="categories">
+    <h3>{% trans "Categories" %}</h3>
+
+    <a href="{% url 'product:product_list' %}" class="category-item">
+        <span>{% trans "All" %}</span>
+    </a>
+
+    {% for cat in categories %}
+        <a href="?category={{ cat.slug }}" class="category-item">
+            {% if cat.icon %}
+                <img src="{{ cat.icon.url }}" alt="{{ cat.title }}" width="32" height="32">
+            {% endif %}
+            <span>{{ cat.title }}</span>
+        </a>
+    {% endfor %}
+</div>
+
+<hr>
+
+<!-- فیلتر وضعیت -->
+<div>
+    <h3>{% trans "Status" %}</h3>
+
+    <a href="?status=available{% if current_category %}&category={{ current_category }}{% endif %}">
+        {% trans "Available" %}
+    </a>
+
+    <a href="?status=out_of_stock{% if current_category %}&category={{ current_category }}{% endif %}">
+        {% trans "Out Of Stock" %}
+    </a>
+</div>
+
+<hr>
+
+<!-- لیست محصولات -->
+<div>
+    {% for product in products %}
+    <a href="{% url 'product:product_detail' product.slug %}">
+        <div style="margin-bottom: 20px;">
+            <h4>{{ product.title }}</h4>
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}" width="120">
+            {% endif %}
+
+            <p>{% trans "Price" %}: {{ product.final_price }}</p>
+            <p>{% trans "Weight" %}: {{ product.weight }} g</p>
+            <p>{% trans "Status" %}: {{ product.get_status_display }}</p>
+        </div>
+    </a>
+    {% empty %}
+        <p>{% trans "No products found." %}</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -53,9 +53,9 @@
 |--------|--------|--------|--------|
 | 1️⃣ | Notification System Development | Implement notification infrastructure, SMS services, and notification management system |✅ |
 | 2️⃣ | Account App Development | Implement authentication workflows, profile management, permissions, and user-related business logic | ✅ |
-| 3️⃣ | Wallet App Development | Implement wallet operations, transactions, balance management, and withdrawal request workflows | 🎯 |
-| 4️⃣ | Product App Development | Implement jewelry, coin, and melted gold business logic, inventory management, and pricing systems | 📌 |
-| 5️⃣ | Order App Development | Implement order workflows, order lifecycle, invoice generation, and order management processes | 📌 |
+| 3️⃣ | Wallet App Development | Implement wallet operations, transactions, balance management, and withdrawal request workflows | ✅ |
+| 4️⃣ | Product App Development | Implement jewelry, coin, and melted gold business logic, inventory management, and pricing systems | 🎯 |
+| 5️⃣ | Order App Development | Implement order workflows, order lifecycle, invoice generation, and order management processes | 🎯 |
 | 6️⃣ | Payment App Development | Implement payment gateways, wallet charging, callback handling, and financial transaction verification | 📌 |
 | 7️⃣ | Public App Development | Implement banners, articles, site settings, content management, and public-facing functionality | 📌 |
 | 8️⃣ | Dashboard Development | Implement customer and administrator dashboards, statistics, financial overviews, and management tools | 📌 |

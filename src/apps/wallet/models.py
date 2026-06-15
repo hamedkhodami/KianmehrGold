@@ -2,7 +2,6 @@ import uuid
 
 from apps.core.models import BaseModel
 from apps.wallet.enums import (
-    CoinTypeEnum,
     WalletTransactionTypeEnum,
     WithdrawStatusEnum,
 )
@@ -111,30 +110,6 @@ class GoldInventoryModel(BaseModel):
     class Meta:
         verbose_name = _("Gold Inventory")
         verbose_name_plural = _("Gold Inventories")
-
-    def __str__(self):
-        return f"{self.user.phone_number} - {self.amount}"
-
-
-class CoinInventoryModel(BaseModel):
-    Type = CoinTypeEnum
-
-    user = models.ForeignKey(
-        "account.User",
-        on_delete=models.CASCADE,
-        related_name="coin_inventories",
-        verbose_name=_("User"),
-    )
-    coin_type = models.CharField(
-        _("Coin Type"),
-        max_length=20,
-        choices=Type.choices,
-    )
-    amount = models.PositiveIntegerField(_("Amount"), default=0)
-
-    class Meta:
-        verbose_name = _("Coin Inventory")
-        verbose_name_plural = _("Coin Inventories")
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.amount}"

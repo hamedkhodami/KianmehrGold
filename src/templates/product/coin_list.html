@@ -1,0 +1,45 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title%}
+    {% trans "Coins" %}
+{% endblock %}
+
+{% block content %}
+
+<h2>{% trans "Coins" %}</h2>
+
+{% for coin in coins %}
+    <div style="margin-bottom: 20px; border: 1px solid #ddd; padding: 10px;">
+        <h3>{{ coin.get_coin_type_display }}</h3>
+
+        {% if coin.image %}
+            <img src="{{ coin.image.url }}" width="120">
+        {% endif %}
+
+        <p>{% trans "Weight" %}: {{ coin.weight }} g</p>
+
+        <p>
+            {% trans "Current Price" %}:
+            {% if coin.coin_type == "EMAMI" %}
+                {{ latest.emami_coin }}
+            {% elif coin.coin_type == "FULL" %}
+                {{ latest.full_coin }}
+            {% elif coin.coin_type == "HALF" %}
+                {{ latest.half_coin }}
+            {% elif coin.coin_type == "QUARTER" %}
+                {{ latest.quarter_coin }}
+            {% endif %}
+        </p>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" class="buy-btn">
+                {% trans "Buy Now" %}
+            </button>
+        </form>
+    </div>
+{% endfor %}
+
+{% endblock %}

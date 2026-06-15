@@ -16,5 +16,9 @@ class PaymentMethodEnum(TextChoices):
 
 
 class OrderTypeEnum(TextChoices):
-    BUY = "buy", _("Buy")
-    SELL = "sell", _("Sell")
+    BUY_PRODUCT = "buy_product", _("Buy Product")
+    SELL_PRODUCT = "sell_product", _("Sell Product")
+    BUY_COIN = "buy_coin", _("Buy Coin")
+    SELL_COIN = "sell_coin", _("Sell Coin")
+    BUY_MELTED_GOLD = "buy_melted_gold", _("Buy Melted Gold")
+    SELL_MELTED_GOLD = "sell_melted_gold", _("Sell Melted Gold")

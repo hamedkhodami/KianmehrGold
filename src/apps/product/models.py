@@ -1,7 +1,9 @@
 from apps.core.models import BaseModel
 from apps.product.enums import ProductStatusEnum
+from apps.product.service.pricing_service import PriceService
 from apps.wallet.enums import CoinTypeEnum
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
@@ -22,7 +24,6 @@ class CategoryModel(BaseModel):
 
 
 # TODO : complete final price in next phase
-# TODO : meta_title meta_description in phase4
 class ProductModel(BaseModel):
     Status = ProductStatusEnum
 
@@ -42,8 +43,10 @@ class ProductModel(BaseModel):
     )
 
     weight = models.DecimalField(_("Weight (grams)"), max_digits=10, decimal_places=3)
-    wage_percent = models.DecimalField(_("Wage (%)"), max_digits=5, decimal_places=4)
-    tax_percent = models.DecimalField(_("Tax (%)"), max_digits=5, decimal_places=4)
+    wage_percent = models.DecimalField(_("Wage (%)"), max_digits=5, decimal_places=2)
+    tax_percent = models.DecimalField(_("Tax (%)"), max_digits=5, decimal_places=2)
+
+    stock = models.PositiveIntegerField(default=0, verbose_name=_("Stock"))
 
     status = models.CharField(
         _("Status"), max_length=20, choices=Status.choices, default=Status.AVAILABLE
@@ -58,6 +61,29 @@ class ProductModel(BaseModel):
     def __str__(self):
         return self.title
 
+    @property
+    def final_price(self):
+        latest_price = GoldPriceModel.objects.last()
+        if not latest_price:
+            return None
+        return PriceService.calculate_final_price(
+            self.weight, self.wage_percent, self.tax_percent, latest_price.gold_melted
+        )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            while ProductModel.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
 
 class CoinModel(BaseModel):
     Type = CoinTypeEnum
@@ -66,10 +92,6 @@ class CoinModel(BaseModel):
     image = models.ImageField(
         _("Image"), upload_to="product/images", blank=True, null=True
     )
-
-    buy_price = models.DecimalField(_("Buy Price"), max_digits=18, decimal_places=0)
-    sell_price = models.DecimalField(_("Sell Price"), max_digits=18, decimal_places=0)
-
     weight = models.DecimalField(
         _("Weight (grams)"), max_digits=10, decimal_places=3, default=0
     )
@@ -83,8 +105,8 @@ class CoinModel(BaseModel):
         verbose_name_plural = _("Coins")
         unique_together = ("coin_type",)
 
-    def str(self):
-        return f"{self.coin_type} - {self.sell_price}"
+    def __str__(self):
+        return f"{self.coin_type}"
 
 
 class GoldPriceModel(BaseModel):
@@ -110,6 +132,8 @@ class GoldPriceModel(BaseModel):
     emami_coin = models.DecimalField(
         _("Emami Coin Price"), max_digits=18, decimal_places=0
     )
+
+    is_active = models.BooleanField(default=False, db_index=True)
 
     class Meta:
         verbose_name = _("Gold Price")

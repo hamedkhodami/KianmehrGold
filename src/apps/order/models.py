@@ -33,6 +33,8 @@ class OrderModel(BaseModel):
     total_amount = models.DecimalField(
         _("Total Amount"), max_digits=18, decimal_places=0, default=0
     )
+    expire_at = models.DateTimeField(_("Expire At"), null=True, blank=True)
+    locked_price_at = models.DateTimeField(_("Locked Price At"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("Order")
@@ -116,6 +118,16 @@ class InvoiceModel(BaseModel):
 
     is_paid = models.BooleanField(_("Paid"), default=False)
     paid_at = models.DateTimeField(_("Paid At"), blank=True, null=True)
+
+    locked_gold_price = models.DecimalField(
+        max_digits=18, decimal_places=0, null=True, blank=True
+    )
+
+    locked_coin_price = models.DecimalField(
+        max_digits=18, decimal_places=0, null=True, blank=True
+    )
+
+    weight = models.DecimalField(max_digits=18, decimal_places=3, default=0)
 
     class Meta:
         verbose_name = _("Invoice")
