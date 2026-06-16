@@ -78,7 +78,7 @@
 <!-- لیست محصولات -->
 <div>
     {% for product in products %}
-    <a href="{% url 'product:product_detail' product.slug %}">
+    <a href="{% url 'product:product_detail' product.id product.slug %}">
         <div style="margin-bottom: 20px;">
             <h4>{{ product.title }}</h4>
 

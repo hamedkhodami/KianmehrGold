@@ -3,7 +3,7 @@ from apps.payment.enums import PaymentStatusEnum
 from apps.payment.models import PaymentModel
 from django.contrib import messages
 from django.db import transaction
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -73,3 +73,11 @@ def gateway_callback(request):
 
     messages.success(request, _("Payment successful. Your purchase is completed."))
     return redirect("product:product_detail", slug=product.slug)
+
+
+# TODO: delete this after get real gateway
+def fake_gateway(request):
+    authority = request.GET.get("authority")
+
+    # این صفحه فقط یک دکمه دارد که پرداخت موفق را شبیه‌سازی می‌کند
+    return render(request, "payment/fake_gateway.html", {"authority": authority})

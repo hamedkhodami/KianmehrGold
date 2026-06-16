@@ -1,10 +1,9 @@
 from apps.core.models import BaseModel
-from apps.product.enums import ProductStatusEnum
+from apps.product.enums import CoinTypeEnum, ProductStatusEnum
 from apps.product.service.pricing_service import PriceService
-from apps.wallet.enums import CoinTypeEnum
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from slugify import slugify
 
 
 class CategoryModel(BaseModel):
@@ -22,6 +21,20 @@ class CategoryModel(BaseModel):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title, separator="-", allow_unicode=True)
+            slug = base_slug
+            counter = 1
+
+            while CategoryModel.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
 
 # TODO : complete final price in next phase
 class ProductModel(BaseModel):
@@ -29,7 +42,7 @@ class ProductModel(BaseModel):
 
     category = models.ForeignKey(
         "product.CategoryModel",
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         related_name="products",
         verbose_name=_("Category"),
@@ -63,16 +76,17 @@ class ProductModel(BaseModel):
 
     @property
     def final_price(self):
-        latest_price = GoldPriceModel.objects.last()
+        latest_price = GoldPriceModel.objects.filter(is_active=True).last()
         if not latest_price:
             return None
+
         return PriceService.calculate_final_price(
             self.weight, self.wage_percent, self.tax_percent, latest_price.gold_melted
         )
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(self.title)
+            base_slug = slugify(self.title, separator="-", allow_unicode=True)
             slug = base_slug
             counter = 1
 
@@ -82,11 +96,17 @@ class ProductModel(BaseModel):
 
             self.slug = slug
 
+        if self.stock <= 0:
+            self.status = ProductStatusEnum.OUT_OF_STOCK
+        else:
+            self.status = ProductStatusEnum.AVAILABLE
+
         super().save(*args, **kwargs)
 
 
 class CoinModel(BaseModel):
     Type = CoinTypeEnum
+    Status = ProductStatusEnum
 
     coin_type = models.CharField(_("Coin Type"), max_length=20, choices=Type.choices)
     image = models.ImageField(
@@ -98,6 +118,10 @@ class CoinModel(BaseModel):
 
     stock = models.PositiveIntegerField(_("Stock"), default=0)
 
+    status = models.CharField(
+        _("Status"), max_length=20, choices=Status.choices, default=Status.AVAILABLE
+    )
+
     is_active = models.BooleanField(_("Active"), default=True)
 
     class Meta:
@@ -107,6 +131,29 @@ class CoinModel(BaseModel):
 
     def __str__(self):
         return f"{self.coin_type}"
+
+    @property
+    def final_price(self):
+        latest = GoldPriceModel.objects.filter(is_active=True).last()
+        if not latest:
+            return None
+
+        mapping = {
+            CoinTypeEnum.EMAMI: latest.emami_coin,
+            CoinTypeEnum.FULL: latest.full_coin,
+            CoinTypeEnum.HALF: latest.half_coin,
+            CoinTypeEnum.QUARTER: latest.quarter_coin,
+        }
+
+        return mapping.get(self.coin_type)
+
+    def save(self, *args, **kwargs):
+        if self.stock <= 0:
+            self.status = ProductStatusEnum.OUT_OF_STOCK
+        else:
+            self.status = ProductStatusEnum.AVAILABLE
+
+        super().save(*args, **kwargs)
 
 
 class GoldPriceModel(BaseModel):

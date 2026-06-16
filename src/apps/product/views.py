@@ -1,7 +1,6 @@
 from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
 from apps.payment.models import PaymentModel
 from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
-from apps.product.service.pricing_service import PriceService
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -49,23 +48,20 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
 class ProductBuyView(LoginRequiredMixin, View):
 
+    def get(self, request, id, slug):
+        # جلوگیری از خرید با GET
+        return redirect("product:product_detail", id=id, slug=slug)
+
     @transaction.atomic
-    def post(self, request, slug):
+    def post(self, request, id, slug):
+        product = ProductModel.objects.select_for_update().get(id=id)
 
-        product = ProductModel.objects.select_for_update().get(slug=slug)
-
-        latest_gold = GoldPriceModel.objects.get(is_active=True)
-
-        final_price = PriceService.calculate_final_price(
-            weight=product.weight,
-            wage_percent=product.wage_percent,
-            tax_percent=product.tax_percent,
-            gold_price=latest_gold.gold_melted,
-        )
-
+        final_price = product.final_price
         if final_price is None:
             messages.error(request, _("Price is not available right now."))
-            return redirect("product:product_detail", slug=slug)
+            return redirect("product:product_detail", id=id, slug=slug)
+
+        latest_gold = GoldPriceModel.objects.filter(is_active=True).last()
 
         base = product.weight * latest_gold.gold_melted
         wage_amount = base * (product.wage_percent / 100)
@@ -73,7 +69,7 @@ class ProductBuyView(LoginRequiredMixin, View):
 
         payment = PaymentModel.objects.create(
             user=request.user,
-            payment_type=PaymentTypeEnum.ORDER,  # یا نوع جدید مثلاً PRODUCT_PURCHASE
+            payment_type=PaymentTypeEnum.ORDER,
             amount=final_price,
             status=PaymentStatusEnum.PENDING,
             expire_at=timezone.now() + timedelta(minutes=5),
@@ -95,3 +91,30 @@ class CoinListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return CoinModel.objects.filter(is_active=True).order_by("coin_type")
+
+
+class CoinBuyView(LoginRequiredMixin, View):
+    @transaction.atomic
+    def post(self, request, coin_uuid):
+        coin = CoinModel.objects.select_for_update().get(id=coin_uuid)
+
+        if coin.stock <= 0:
+            messages.error(request, _("Coin is out of stock."))
+            return redirect("product:coin_list")
+
+        locked_price = coin.final_price
+        if locked_price is None:
+            return redirect("product:coin_list")
+
+        payment = PaymentModel.objects.create(
+            user=request.user,
+            payment_type=PaymentTypeEnum.ORDER,
+            amount=locked_price,
+            status=PaymentStatusEnum.PENDING,
+            expire_at=timezone.now() + timedelta(minutes=5),
+            product=None,
+            locked_coin_price=locked_price,
+            weight=coin.weight,
+        )
+
+        return redirect(reverse("payment:gateway_start", args=[payment.id]))

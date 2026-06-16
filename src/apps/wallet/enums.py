@@ -13,10 +13,3 @@ class WithdrawStatusEnum(TextChoices):
     PENDING = "pending", _("Pending")
     PAID = "paid", _("Paid")
     REJECTED = "rejected", _("Rejected")
-
-
-class CoinTypeEnum(TextChoices):
-    QUARTER = "quarter", _("Quarter")
-    HALF = "half", _("Half")
-    FULL = "full", _("Full")
-    EMAMI = "emai", _("Emai")

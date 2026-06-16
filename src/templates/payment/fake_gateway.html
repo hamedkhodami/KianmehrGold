@@ -1,0 +1,13 @@
+<h2>درگاه پرداخت تستی</h2>
+
+<p>Authority: {{ authority }}</p>
+
+<a href="{% url 'payment:gateway_callback' %}?authority={{ authority }}&status=success">
+    پرداخت موفق
+</a>
+
+<br><br>
+
+<a href="{% url 'payment:gateway_callback' %}?authority={{ authority }}&status=failed">
+    پرداخت ناموفق
+</a>

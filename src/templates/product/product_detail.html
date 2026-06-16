@@ -54,11 +54,19 @@
 </div>
 
 <!-- دکمه خرید -->
-<form action="{% url 'product:product_buy' product.slug %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="buy-btn">
-        {% trans "Buy Now" %}
-    </button>
-</form>
+{% if product.status == "available" %}
+    <!-- دکمه خرید -->
+    <form action="{% url 'product:product_buy' product.id product.slug %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="buy-btn">
+            {% trans "Buy Now" %}
+        </button>
+    </form>
+{% else %}
+    <!-- پیام موجود نیست -->
+    <span class="out-of-stock">
+        {% trans "Out of Stock" %}
+    </span>
+{% endif %}
 
 {% endblock %}

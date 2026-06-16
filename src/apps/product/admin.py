@@ -9,7 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ("id", "title")
     search_fields = ("title", "slug")
     list_filter = ("created_at",)
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "slug")
 
     fieldsets = (
         (
@@ -29,6 +29,7 @@ class ProductAdmin(admin.ModelAdmin):
         "title",
         "category",
         "weight",
+        "slug",
         "wage_percent",
         "tax_percent",
         "stock",
@@ -38,7 +39,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ("id", "title")
     search_fields = ("title", "slug", "description")
     list_filter = ("status", "category", "created_at")
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "status", "slug")
 
     fieldsets = (
         (
@@ -63,13 +64,14 @@ class CoinAdmin(admin.ModelAdmin):
         "coin_type",
         "weight",
         "stock",
+        "status",
         "is_active",
         "created_at",
     )
     list_display_links = ("id", "coin_type")
     search_fields = ("coin_type",)
     list_filter = ("coin_type", "is_active", "created_at")
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "status")
 
     fieldsets = (
         (

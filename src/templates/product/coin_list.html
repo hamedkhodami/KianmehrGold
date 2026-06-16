@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title%}
+{% block title %}
     {% trans "Coins" %}
 {% endblock %}
 
@@ -22,23 +22,23 @@
 
         <p>
             {% trans "Current Price" %}:
-            {% if coin.coin_type == "EMAMI" %}
-                {{ latest.emami_coin }}
-            {% elif coin.coin_type == "FULL" %}
-                {{ latest.full_coin }}
-            {% elif coin.coin_type == "HALF" %}
-                {{ latest.half_coin }}
-            {% elif coin.coin_type == "QUARTER" %}
-                {{ latest.quarter_coin }}
-            {% endif %}
+            {{ coin.final_price|default:"-" }}
         </p>
 
-        <form action="" method="post">
-            {% csrf_token %}
-            <button type="submit" class="buy-btn">
-                {% trans "Buy Now" %}
-            </button>
-        </form>
+        {% if coin.status == "available" %}
+            <form action="{% url 'product:coin_buy' coin.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="buy-btn">
+                    {% trans "Buy Now" %}
+                </button>
+            </form>
+        {% else %}
+            <span class="out-of-stock">
+                {% trans "Out of Stock" %}
+            </span>
+        {% endif %}
+
+
     </div>
 {% endfor %}
 

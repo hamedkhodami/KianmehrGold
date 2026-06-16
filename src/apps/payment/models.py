@@ -60,6 +60,16 @@ class PaymentModel(BaseModel):
         null=True,
         blank=True,
     )
+
+    locked_coin_price = models.DecimalField(
+        _("Locked Coin Price"),
+        max_digits=18,
+        decimal_places=0,
+        default=0,
+        null=True,
+        blank=True,
+    )
+
     wage_amount = models.DecimalField(
         _("Wage Amount"), max_digits=18, decimal_places=0, default=0
     )
