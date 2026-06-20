@@ -1,14 +1,26 @@
+from datetime import timedelta
+
 from apps.notification.enums import NotificationEnums
 from apps.notification.utils import create_notify_for_admins
+from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
+from apps.payment.models import PaymentModel, WalletChargeModel
 from apps.wallet import forms, models
 from apps.wallet.models import WithdrawRequestModel
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db import transaction
+from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    FormView,
+    ListView,
+    TemplateView,
+)
 
 
 class WalletDashboardView(LoginRequiredMixin, TemplateView):
@@ -90,3 +102,31 @@ class WithdrawRequestListView(LoginRequiredMixin, ListView):
         return WithdrawRequestModel.objects.filter(user=self.request.user).order_by(
             "-created_at"
         )
+
+
+class WalletChargeView(LoginRequiredMixin, FormView):
+
+    template_name = "wallet/charge.html"
+
+    form_class = forms.WalletChargeForm
+
+    @transaction.atomic
+    def form_valid(self, form):
+        amount = form.cleaned_data["amount"]
+
+        payment = PaymentModel.objects.create(
+            user=self.request.user,
+            payment_type=PaymentTypeEnum.WALLET_CHARGE,
+            amount=amount,
+            status=PaymentStatusEnum.PENDING,
+            expire_at=timezone.now() + timedelta(minutes=10),
+        )
+
+        wallet_charge = WalletChargeModel.objects.create(
+            user=self.request.user,
+            amount=amount,
+            status=PaymentStatusEnum.PENDING,
+            payment=payment,
+        )
+
+        return redirect(reverse("payment:gateway_start", args=[payment.id]))

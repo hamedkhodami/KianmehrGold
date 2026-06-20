@@ -83,6 +83,9 @@ class OrderItemModel(BaseModel):
     def clean(self):
         super().clean()
 
+        if self.gold_amount > 0:
+            return
+
         if not self.product and not self.coin:
             raise ValidationError(_("You must select either a product or a coin."))
 

@@ -1,0 +1,59 @@
+{% extends "base/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Requests" %}
+{% endblock %}
+
+
+{% block content %}
+
+<h2>{% trans "My Sell Requests (Melted Gold)" %}</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "Gold Amount (g)" %}</th>
+            <th>{% trans "Total Price" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Date" %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for order in page_obj %}
+            {% with item=order.items.first %}
+            <tr>
+                <td>{{ item.gold_amount }}</td>
+                <td>{{ item.total_price }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endwith %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{# Pagination #}
+<div class="pagination">
+    <span class="step-links">
+
+        {% if page_obj.has_previous %}
+            <a href="?page=1">{% trans "First" %}</a>
+            <a href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+        {% endif %}
+
+        <span class="current">
+            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}</a>
+        {% endif %}
+
+    </span>
+</div>
+
+{% endblock %}

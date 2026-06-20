@@ -235,3 +235,14 @@ SMS_CONFIG = {
 # ---GOLD API ---------------------------------------------------
 GOLD_API_KEY = os.getenv("GOLD_API_KEY")
 # ---------------------------------------------------------------
+
+
+# ---GATEWAY ----------------------------------------------------
+BPM_TERMINAL_ID = os.getenv("BPM_TERMINAL_ID")
+
+BPM_USERNAME = os.getenv("BPM_USERNAME")
+
+BPM_PASSWORD = os.getenv("BPM_PASSWORD")
+
+BPM_CALLBACK_URL = os.getenv("BPM_CALLBACK_URL")
+# ---------------------------------------------------------------

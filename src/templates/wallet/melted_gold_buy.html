@@ -1,0 +1,83 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Buy Melted Gold" %}
+{% endblock %}
+
+{% block content %}
+
+<h2>{% trans "Buy Melted Gold" %}</h2>
+
+{# --- این بخش استاتیک است و باید بعداً توسط تیم محتوا تکمیل شود --- #}
+<div class="steps-box">
+    <h3>{% trans "Purchase Steps" %}</h3>
+    <ul>
+        <li>{% trans "Enter the amount you want to spend" %}</li>
+        <li>{% trans "System calculates how much gold you can buy" %}</li>
+        <li>{% trans "Confirm purchase" %}</li>
+        <li>{% trans "Gold is added to your inventory" %}</li>
+    </ul>
+</div>
+{# -------------------------------------------------------------- #}
+
+<div class="form-group">
+    <label for="amount">{% trans "Amount (Toman)" %}</label>
+    <input type="number" id="amount" class="input-field" min="1000000">
+</div>
+
+<div id="gold-result" class="result-box" style="display:none;">
+    <p>
+        {% trans "You can buy" %}:
+        <span id="gold-amount"></span>
+        {% trans "grams of gold" %}
+    </p>
+</div>
+
+<form id="buy-form" method="post" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="amount" id="final-amount">
+    <button type="submit" class="btn btn-primary">
+        {% trans "Buy with Wallet" %}
+    </button>
+</form>
+
+
+
+{% endblock %}
+
+  {% block extra_script %}
+
+    <script>
+    document.getElementById("amount").addEventListener("input", function() {
+        let amount = this.value;
+
+        if (amount < 1000000) {
+            document.getElementById("gold-result").style.display = "none";
+            document.getElementById("buy-form").style.display = "none";
+            return;
+        }
+
+        fetch("{% url 'wallet:api_calc_gold' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "amount=" + amount
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("gold-amount").innerText = data.gold_amount;
+                document.getElementById("gold-result").style.display = "block";
+
+                document.getElementById("final-amount").value = amount;
+                document.getElementById("buy-form").style.display = "block";
+            }
+        });
+    });
+    </script>
+
+  {% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Sell Melted Gold Requests" %}
+{% endblock %}
+
+{% block content %}
+
+<h2>{% trans "Sell Melted Gold Requests" %}</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "User" %}</th>
+            <th>{% trans "Gold Amount (g)" %}</th>
+            <th>{% trans "Total Price" %}</th>
+            <th>{% trans "Wallet Balance" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for order in page_obj %}
+            {% with item=order.items.first %}
+            <tr>
+                <td>
+                    <a href="{% url 'account:admin_user_detail' order.user.id %}">
+                        {{ order.user.phone_number }}
+                    </a>
+                </td>
+                <td>{{ item.gold_amount }}</td>
+                <td>{{ item.total_price }}</td>
+                <td>{{ order.user.wallet.balance }}</td>
+                <td>{{ order.status }}</td>
+
+                <td>
+                    {% if order.status == "pending" %}
+                        <form method="post" action="{% url 'order:admin_sell_approve' order.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn btn-success">{% trans "Approve" %}</button>
+                        </form>
+
+                        <form method="post" action="{% url 'order:admin_sell_reject' order.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn btn-danger">{% trans "Reject" %}</button>
+                        </form>
+                    {% else %}
+                        <span>{% trans "Processed" %}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endwith %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{# 🔥 Pagination #}
+<div class="pagination">
+    <span class="step-links">
+
+        {% if page_obj.has_previous %}
+            <a href="?page=1">{% trans "First" %}</a>
+            <a href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+        {% endif %}
+
+        <span class="current">
+            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}</a>
+        {% endif %}
+
+    </span>
+</div>
+
+{% endblock %}
+
+

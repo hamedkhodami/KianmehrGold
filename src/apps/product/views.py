@@ -1,3 +1,5 @@
+from apps.order.enums import OrderStatusEnum, OrderTypeEnum, PaymentMethodEnum
+from apps.order.models import OrderItemModel, OrderModel
 from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
 from apps.payment.models import PaymentModel
 from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
@@ -49,35 +51,54 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 class ProductBuyView(LoginRequiredMixin, View):
 
     def get(self, request, id, slug):
-        # جلوگیری از خرید با GET
         return redirect("product:product_detail", id=id, slug=slug)
 
     @transaction.atomic
     def post(self, request, id, slug):
+
         product = ProductModel.objects.select_for_update().get(id=id)
 
+        if product.stock <= 0:
+
+            messages.error(request, _("Product is out of stock."))
+
+            return redirect("product:product_detail", id=id, slug=slug)
+
         final_price = product.final_price
+
         if final_price is None:
+
             messages.error(request, _("Price is not available right now."))
+
             return redirect("product:product_detail", id=id, slug=slug)
 
         latest_gold = GoldPriceModel.objects.filter(is_active=True).last()
 
-        base = product.weight * latest_gold.gold_melted
-        wage_amount = base * (product.wage_percent / 100)
-        tax_amount = (base + wage_amount) * (product.tax_percent / 100)
+        order = OrderModel.objects.create(
+            user=request.user,
+            status=OrderStatusEnum.PENDING,
+            payment_method=PaymentMethodEnum.GATEWAY,
+            order_type=OrderTypeEnum.BUY_PRODUCT,
+            total_amount=final_price,
+            expire_at=timezone.now() + timedelta(minutes=5),
+            locked_price_at=timezone.now(),
+        )
+
+        OrderItemModel.objects.create(
+            order=order,
+            product=product,
+            quantity=1,
+            unit_price=final_price,
+            total_price=final_price,
+        )
 
         payment = PaymentModel.objects.create(
             user=request.user,
+            order=order,
             payment_type=PaymentTypeEnum.ORDER,
             amount=final_price,
             status=PaymentStatusEnum.PENDING,
-            expire_at=timezone.now() + timedelta(minutes=5),
-            product=product,
-            locked_gold_price=latest_gold.gold_melted,
-            wage_amount=wage_amount,
-            tax_amount=tax_amount,
-            weight=product.weight,
+            expire_at=order.expire_at,
         )
 
         return redirect(reverse("payment:gateway_start", args=[payment.id]))
@@ -94,27 +115,51 @@ class CoinListView(LoginRequiredMixin, ListView):
 
 
 class CoinBuyView(LoginRequiredMixin, View):
+
     @transaction.atomic
     def post(self, request, coin_uuid):
+
         coin = CoinModel.objects.select_for_update().get(id=coin_uuid)
 
         if coin.stock <= 0:
+
             messages.error(request, _("Coin is out of stock."))
+
             return redirect("product:coin_list")
 
         locked_price = coin.final_price
+
         if locked_price is None:
+
+            messages.error(request, _("Coin price is not available."))
+
             return redirect("product:coin_list")
+
+        order = OrderModel.objects.create(
+            user=request.user,
+            status=OrderStatusEnum.PENDING,
+            payment_method=PaymentMethodEnum.GATEWAY,
+            order_type=OrderTypeEnum.BUY_COIN,
+            total_amount=locked_price,
+            expire_at=timezone.now() + timedelta(minutes=5),
+            locked_price_at=timezone.now(),
+        )
+
+        OrderItemModel.objects.create(
+            order=order,
+            coin=coin,
+            quantity=1,
+            unit_price=locked_price,
+            total_price=locked_price,
+        )
 
         payment = PaymentModel.objects.create(
             user=request.user,
+            order=order,
             payment_type=PaymentTypeEnum.ORDER,
             amount=locked_price,
             status=PaymentStatusEnum.PENDING,
-            expire_at=timezone.now() + timedelta(minutes=5),
-            product=None,
-            locked_coin_price=locked_price,
-            weight=coin.weight,
+            expire_at=order.expire_at,
         )
 
         return redirect(reverse("payment:gateway_start", args=[payment.id]))

@@ -31,3 +31,26 @@ class WithdrawRequestForm(forms.ModelForm):
             raise forms.ValidationError(_("There are not enough wallet balances."))
 
         return amount
+
+
+class WalletChargeForm(forms.Form):
+
+    amount = forms.IntegerField(min_value=10000, label="Amount")
+
+
+class MeltedGoldBuyForm(forms.Form):
+    amount = forms.DecimalField(
+        label=_("Amount"),
+        min_value=1000000,
+        decimal_places=0,
+        max_digits=18,
+    )
+
+
+class SellMeltedGoldForm(forms.Form):
+    gold_amount = forms.DecimalField(
+        label=_("Amount"),
+        min_value=0.01,
+        decimal_places=3,
+        max_digits=18,
+    )

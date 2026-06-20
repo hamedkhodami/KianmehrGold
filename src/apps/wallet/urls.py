@@ -1,4 +1,4 @@
-from apps.wallet.views import admin, wallet
+from apps.wallet.views import admin, api, gold, wallet
 from django.urls import path
 
 app_name = "wallet"
@@ -20,6 +20,7 @@ urlpatterns = [
         wallet.WithdrawRequestListView.as_view(),
         name="withdraw_requests",
     ),
+    path("charge/", wallet.WalletChargeView.as_view(), name="charge"),
     path(
         "admin/withdraw-requests/",
         admin.AdminWithdrawRequestListView.as_view(),
@@ -29,5 +30,17 @@ urlpatterns = [
         "admin/withdraw-requests/<uuid:pk>/",
         admin.AdminWithdrawRequestDetailView.as_view(),
         name="admin_withdraw_request_detail",
+    ),
+    path("melted-gold/buy/", gold.MeltedGoldBuyView.as_view(), name="melted_gold_buy"),
+    path(
+        "sell-melted-gold/", gold.SellMeltedGoldView.as_view(), name="sell_melted_gold"
+    ),
+    # AJAX APIs
+    path("api/gold-price/", api.api_get_gold_price, name="api_gold_price"),
+    path("api/calc-gold/", api.api_calculate_gold_amount, name="api_calc_gold"),
+    path(
+        "api/calc-sell-melted-gold/",
+        api.api_calc_sell_melted_gold,
+        name="api_calc_sell_melted_gold",
     ),
 ]

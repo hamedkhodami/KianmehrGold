@@ -1,11 +1,11 @@
-from apps.payment import views
+from apps.payment.views import callback, gateway
 from django.urls import path
 
 app_name = "payment"
 
 urlpatterns = [
-    path("gateway/start/<uuid:payment_id>/", views.gateway_start, name="gateway_start"),
-    path("gateway/callback/", views.gateway_callback, name="gateway_callback"),
-    # TODO: delete this after get real gateway
-    path("fake-gateway/", views.fake_gateway, name="fake_gateway"),
+    path(
+        "gateway/start/<uuid:payment_id>/", gateway.gateway_start, name="gateway_start"
+    ),
+    path("gateway/callback/", callback.gateway_callback, name="gateway_callback"),
 ]

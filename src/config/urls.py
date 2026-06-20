@@ -12,6 +12,7 @@ urlpatterns = [
     path("wallet/", include("apps.wallet.urls", namespace="wallet")),
     path("product/", include("apps.product.urls", namespace="product")),
     path("payment/", include("apps.payment.urls", namespace="payment")),
+    path("order/", include("apps.order.urls", namespace="order")),
 ]
 
 # --- Static files ---

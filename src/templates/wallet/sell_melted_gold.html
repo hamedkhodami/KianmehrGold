@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Sell Melted Gold" %}
+{% endblock %}
+
+{% block content %}
+
+<p>
+    {% trans "Your gold inventory" %}: 
+    <strong>{{ inventory }} {% trans "grams" %}</strong>
+</p>
+
+<div class="form-group">
+    <label for="gold_amount">{% trans "Gold Amount (grams)" %}</label>
+    <input type="number" id="gold_amount" class="input-field" min="0.1" step="0.001">
+</div>
+
+<div id="sell-result" style="display:none;">
+    <p>
+        {% trans "Estimated Price" %}: 
+        <span id="sell-price"></span> {% trans "Toman" %}
+    </p>
+</div>
+
+<form id="sell-form" method="post" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="gold_amount" id="final-gold-amount">
+    <button type="submit" class="btn btn-danger">
+        {% trans "Submit Sell Request" %}
+    </button>
+</form>
+
+{% endblock %}
+
+{% block extra_script %}
+<script>
+document.getElementById("gold_amount").addEventListener("input", function() {
+    let gold_amount = this.value;
+
+    if (gold_amount <= 0) {
+        document.getElementById("sell-result").style.display = "none";
+        document.getElementById("sell-form").style.display = "none";
+        return;
+    }
+
+    fetch("{% url 'wallet:api_calc_sell_melted_gold' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "gold_amount=" + gold_amount
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("sell-price").innerText = data.total_price;
+            document.getElementById("sell-result").style.display = "block";
+
+            document.getElementById("final-gold-amount").value = gold_amount;
+            document.getElementById("sell-form").style.display = "block";
+        }
+    });
+});
+</script>
+{% endblock %}
+

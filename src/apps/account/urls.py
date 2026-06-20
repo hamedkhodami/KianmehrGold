@@ -28,4 +28,9 @@ urlpatterns = [
     ),
     path("profile/", views.UserProfileView.as_view(), name="profile"),
     path("bank-account/", views.UserBankAccountView.as_view(), name="bank_account"),
+    path(
+        "admin/user/<uuid:user_id>/",
+        views.AdminUserDetailView.as_view(),
+        name="admin_user_detail",
+    ),
 ]
