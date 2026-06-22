@@ -70,7 +70,7 @@ class MeltedGoldBuyView(LoginRequiredMixin, View):
         return redirect("wallet:melted_gold_buy")
 
 
-class SellMeltedGoldView(View):
+class SellMeltedGoldView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = forms.SellMeltedGoldForm()

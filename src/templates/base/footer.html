@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- Enamad Section -->
+        <div class="footer-section footer-enamad">
+            <h4>{% trans "Trust Seal" %}</h4>
+            <div class="enamad-logo">
+                <img src="#" alt="{% trans 'Enamad Logo' %}">
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="footer-section footer-about">
+            <h4>{% trans "About Us" %}</h4>
+            <p>
+                {% trans "Your company description will be placed here. This text is temporary and will be replaced by the content team." %}
+            </p>
+        </div>
+
+        <!-- Developer Section -->
+        <div class="footer-section footer-developer">
+            <h4>{% trans "Developed By" %}</h4>
+            <p>
+                {% trans "Your development company name will be placed here." %}
+            </p>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="footer-section footer-contact">
+            <h4>{% trans "Contact Us" %}</h4>
+            <ul>
+                <li>{% trans "Phone" %}: <a href="#">#</a></li>
+                <li>{% trans "Email" %}: <a href="#">#</a></li>
+                <li>{% trans "Address" %}: <span>#</span></li>
+            </ul>
+        </div>
+
+    </div>
+</footer>

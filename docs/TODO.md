@@ -58,9 +58,9 @@
 | 5️⃣ | Order App Development | Implement order workflows, order lifecycle, invoice generation, and order management processes | ✅ |
 | 6️⃣ | Payment App Development | Implement payment gateways, wallet charging, callback handling, and financial transaction verification | ✅ |
 | 7️⃣ | Public App Development | Implement banners, articles, site settings, content management, and public-facing functionality | ✅ |
-| 8️⃣ | Dashboard Development | Implement customer and administrator dashboards, statistics, financial overviews, and management tools | 🎯 |
-| 9️⃣ | Rosetta Integration & Translations | Implement translations and manage multilingual content throughout the project |📌 |
-| 🔟 | Final Review & Refactoring | Review business logic, optimize code structure, improve maintainability, and fix discovered issues | 📌 |
+| 8️⃣ | Dashboard Development | Implement customer and administrator dashboards, statistics, financial overviews, and management tools | ✅ |
+| 9️⃣ | Rosetta Integration & Translations | Implement translations and manage multilingual content throughout the project |✅ |
+| 🔟 | Final Review & Refactoring | Review business logic, optimize code structure, improve maintainability, and fix discovered issues | 🎯 |
 | 1️⃣1️⃣ | Define Phase 4 Roadmap | Define frontend implementation strategy, UI architecture, and design roadmap | 📌 |
 
 ---

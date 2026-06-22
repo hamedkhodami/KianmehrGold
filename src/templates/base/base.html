@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <html lang="en">
 
 <head>
@@ -15,9 +17,12 @@
 
 <body>
 
+  {% include 'base/header.html' %}
+
 {% block content %}
 {% endblock %}
 
+  {% include 'base/footer.html' %}
 
   <script src="{% static 'public/js/signup-in.js' %}"></script>
 

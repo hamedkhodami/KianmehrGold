@@ -78,7 +78,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
     search_fields = ("title", "slug", "meta_title", "meta_description")
 
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "slug")
 
     fieldsets = (
         (

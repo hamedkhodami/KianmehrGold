@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block content %}
+
+<section class="article-detail">
+
+    <!-- Title -->
+    <h1 class="article-title">{{ article.title }}</h1>
+
+    <!-- Publish Date -->
+    <p class="article-date">
+        {% trans "Published on" %}: {{ article.created_at|date:"Y-m-d H:i" }}
+    </p>
+
+    <!-- Image -->
+    {% if article.image %}
+        <div class="article-image">
+            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        </div>
+    {% endif %}
+
+    <!-- Full Content -->
+    <div class="article-content">
+        {{ article.content|safe }}
+    </div>
+
+</section>
+
+{% endblock %}

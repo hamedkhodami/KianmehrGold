@@ -14,7 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView, View
 
 
-class ProductListView(LoginRequiredMixin, ListView):
+class ProductListView(ListView):
     model = ProductModel
     template_name = "product/product_list.html"
     context_object_name = "products"
@@ -42,7 +42,7 @@ class ProductListView(LoginRequiredMixin, ListView):
         return context
 
 
-class ProductDetailView(LoginRequiredMixin, DetailView):
+class ProductDetailView(DetailView):
     model = ProductModel
     template_name = "product/product_detail.html"
     context_object_name = "product"
@@ -104,7 +104,7 @@ class ProductBuyView(LoginRequiredMixin, View):
         return redirect(reverse("payment:gateway_start", args=[payment.id]))
 
 
-class CoinListView(LoginRequiredMixin, ListView):
+class CoinListView(ListView):
     model = CoinModel
     template_name = "product/coin_list.html"
     context_object_name = "coins"

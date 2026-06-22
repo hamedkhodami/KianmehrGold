@@ -1,13 +1,124 @@
-<!DOCTYPE html>
+{% extends "base/base.html" %}
 {% load i18n %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% trans "Home" %}</title>
-</head>
-<body>
+{% load static %}
 
-hi
+{% block title %}
+    {% trans "Home" %}
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+<!-- BANNERS -->
+<section class="container mx-auto mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        {% for banner in banners %}
+            <div class="rounded overflow-hidden shadow bg-white">
+                <img src="{{ banner.image.url }}" alt="{{ banner.alt_text }}" class="w-full h-48 object-cover">
+            </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+<!-- LAST PRODUCTS -->
+<section class="container mx-auto mt-12">
+    <h2 class="text-xl font-bold mb-4">{% trans "Latest Products" %}</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+
+        {% for product in products %}
+            <a href="{% url 'product:product_detail' product.id product.slug %}">
+                <div class="border rounded-lg p-4 shadow bg-white">
+
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="w-full h-40 object-cover rounded">
+                    {% endif %}
+
+                    <h3 class="mt-3 font-semibold">{{ product.title }}</h3>
+
+                    <p class="text-green-600 font-bold mt-2">
+                        {% if product.final_price %}
+                            {{ product.final_price }} {% trans "Toman" %}
+                        {% else %}
+                            {% trans "Price not available" %}
+                        {% endif %}
+                    </p>
+
+                </div>
+            </a>
+        {% endfor %}
+
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="{% url 'product:product_list' %}" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            {% trans "View All Products" %}
+        </a>
+    </div>
+</section>
+
+
+<!-- TWO SECTIONS: MELTED GOLD + COIN -->
+<section class="container mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    <!-- Melted Gold -->
+    <div class="p-6 border rounded-lg shadow bg-white">
+        <h3 class="text-lg font-bold mb-3">{% trans "Melted Gold Section" %}</h3>
+        <p class="text-gray-600 mb-4">
+            {% trans "Short description will be added by content team." %}
+        </p>
+        <a href="{% url 'wallet:melted_gold_buy' %}" class="px-5 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+            {% trans "Go to Page" %}
+        </a>
+    </div>
+
+    <!-- Coin Section -->
+    <div class="p-6 border rounded-lg shadow bg-white">
+        <h3 class="text-lg font-bold mb-3">{% trans "Coin Purchase Section" %}</h3>
+        <p class="text-gray-600 mb-4">
+            {% trans "Short description will be added by content team." %}
+        </p>
+        <a href="{% url 'product:coin_list' %}" class="px-5 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+            {% trans "Go to Page" %}
+        </a>
+    </div>
+
+</section>
+
+
+<!-- LAST ARTICLES -->
+<section class="container mx-auto mt-16">
+    <h2 class="text-xl font-bold mb-4">{% trans "Latest Articles" %}</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {% for article in articles %}
+            <a href="{% url 'public:article_detail' article.id article.slug %}">
+                <div class="border rounded-lg p-4 shadow bg-white">
+
+                    {% if article.image %}
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded">
+                    {% endif %}
+
+                    <h3 class="mt-3 font-semibold">{{ article.title }}</h3>
+
+                    <p class="text-gray-600 mt-2">
+                        {{ article.content|striptags|truncatechars:150|safe  }}
+                    </p>
+
+                </div>
+            </a>
+        {% endfor %}
+
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="#" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            {% trans "View All Articles" %}
+        </a>
+    </div>
+</section>
+
+{% endblock %}

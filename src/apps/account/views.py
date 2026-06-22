@@ -51,7 +51,7 @@ class RegisterView(LogoutRequiredMixin, FormView):
 class LoginView(LogoutRequiredMixin, FormView):
     template_name = "account/login.html"
     form_class = forms.LoginForm
-    success_url = "/"
+    success_url = reverse_lazy("dashboard:dashboard")
 
     def remember_me(self, form):
         if not form.cleaned_data.get("remember_me"):
@@ -119,7 +119,7 @@ class SendCodeView(LogoutRequiredMixin, View):
 class VerifyPhoneNumberView(LogoutRequiredMixin, FormView):
     template_name = "account/verify_phone.html"
     form_class = forms.VerifyPhoneNumberForm
-    success_url = reverse_lazy("public:home")
+    success_url = reverse_lazy("dashboard:dashboard")
 
     def form_valid(self, form):
         code = form.cleaned_data["code"]

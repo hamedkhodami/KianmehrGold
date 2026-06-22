@@ -1,0 +1,12 @@
+{% load i18n %}
+
+
+{% block content %}
+
+  {% if role == "admin" %}
+    {% include "dashboard/dashboard_admin.html" %}
+
+  {% elif role == "customer" %}
+    {% include "dashboard/dashboard_customer.html" %}
+  {% endif %}
+{% endblock %}

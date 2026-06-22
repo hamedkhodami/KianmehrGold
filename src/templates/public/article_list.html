@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Articles" %}
+{% endblock %}
+
+{% block content %}
+
+<section class="articles-section">
+
+    <h1>{% trans "Articles" %}</h1>
+
+    <div class="articles-wrapper">
+
+        {% for article in page_obj %}
+            <div class="article-card">
+                <a href="{% url 'public:article_detail' article.id article.slug %}">
+                    <!-- Image -->
+                    {% if article.image %}
+                        <div class="article-image">
+                            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                        </div>
+                    {% endif %}
+
+                    <!-- Title -->
+                    <h2 class="article-title">
+                        <a href="#">{{ article.title }}</a>
+                    </h2>
+
+                    <!-- Short Description -->
+                    <p class="article-description">
+                        {{ article.content|striptags|truncatechars:50|safe  }}
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- Pagination -->
+    {% include 'base/pagination.html' %}
+
+</section>
+
+{% endblock %}
