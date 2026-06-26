@@ -1,0 +1,63 @@
+{% extends "base/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "My Invoices" %}
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-xl font-bold mb-4">
+    {% trans "My Invoices" %}
+</h2>
+
+<table class="w-full border">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="p-2">{% trans "Invoice Number" %}</th>
+            <th class="p-2">{% trans "Amount" %}</th>
+            <th class="p-2">{% trans "Status" %}</th>
+            <th class="p-2">{% trans "Paid At" %}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for invoice in page_obj %}
+        <tr class="border-t">
+            <td class="p-2">{{ invoice.invoice_number }}</td>
+            <td class="p-2">{{ invoice.amount }}</td>
+            <td class="p-2">
+                {% if invoice.is_paid %}
+                    <span class="text-green-600">{% trans "Paid" %}</span>
+                {% else %}
+                    <span class="text-red-600">{% trans "Not Paid" %}</span>
+                {% endif %}
+            </td>
+            <td class="p-2">
+                {{ invoice.paid_at|date:"Y-m-d H:i" }}
+            </td>
+            <td class="p-2">
+                <button
+                    hx-get="{% url 'order:invoice_detail' invoice.id %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="text-blue-600 underline"
+                >
+                    {% trans "View" %}
+                </button>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="p-4 text-center text-gray-500">
+                {% trans "No invoices found." %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include 'base/pagination.html' %}
+
+{% endblock %}

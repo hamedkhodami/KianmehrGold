@@ -1,0 +1,79 @@
+{% extends "base/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Invoice Details" %}
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-xl font-bold mb-4">
+    {% trans "Invoice Details" %}
+</h2>
+
+<div class="space-y-2">
+
+    <p>
+        <strong>{% trans "Invoice Number" %}:</strong>
+        {{ invoice.invoice_number }}
+    </p>
+
+    <p>
+        <strong>{% trans "Amount" %}:</strong>
+        {{ invoice.amount }}
+    </p>
+
+    <p>
+        <strong>{% trans "Tax Amount" %}:</strong>
+        {{ invoice.tax_amount }}
+    </p>
+
+    <p>
+        <strong>{% trans "Wage Amount" %}:</strong>
+        {{ invoice.wage_amount }}
+    </p>
+
+    <p>
+        <strong>{% trans "Weight" %}:</strong>
+        {{ invoice.weight }}
+    </p>
+
+    <p>
+        <strong>{% trans "Status" %}:</strong>
+        {% if invoice.is_paid %}
+            <span class="text-green-600">{% trans "Paid" %}</span>
+        {% else %}
+            <span class="text-red-600">{% trans "Not Paid" %}</span>
+        {% endif %}
+    </p>
+
+    <p>
+        <strong>{% trans "Paid At" %}:</strong>
+        {{ invoice.paid_at|date:"Y-m-d H:i" }}
+    </p>
+
+    <p>
+        <strong>{% trans "Locked Gold Price" %}:</strong>
+        {{ invoice.locked_gold_price }}
+    </p>
+
+    <p>
+        <strong>{% trans "Locked Coin Price" %}:</strong>
+        {{ invoice.locked_coin_price }}
+    </p>
+
+</div>
+
+<hr class="my-4">
+
+<!-- دکمه خروجی PDF -->
+<a
+        href="{% url 'order:invoice_pdf' invoice.id %}"
+        class="px-4 py-2 bg-blue-600 text-white rounded"
+        target="_blank"
+>
+    {% trans "Download PDF" %}
+</a>
+
+{% endblock %}

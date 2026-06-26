@@ -1,6 +1,7 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
+{% load price_filters %}
 
 {% block content %}
 
@@ -20,8 +21,17 @@
         {% for req in requests %}
         {% with bank=req.user.bank_accounts.first %}
         <tr>
-            <td>{{ req.user.phone_number }}</td>
-            <td>{{ req.amount }}</td>
+            <td>
+                <a
+                    href="{% url 'account:admin_user_detail' req.user.id %}"
+                    class="text-blue-600 hover:underline"
+                >
+                    {{ req.user.phone_number }}
+                </a>
+            </td>
+
+            <td>{{ req.amount|comma }}</td>
+
             <td>{{ req.status }}</td>
 
             <td>
@@ -30,7 +40,7 @@
                         {% trans "View" %}
                     </a>
                 {% else %}
-                    <span style="color: #999;">
+                    <span class="text-gray-400">
                         {% trans "Not Available" %}
                     </span>
                 {% endif %}

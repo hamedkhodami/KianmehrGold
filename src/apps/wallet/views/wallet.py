@@ -57,7 +57,7 @@ class WithdrawRequestCreateView(LoginRequiredMixin, CreateView):
     model = models.WithdrawRequestModel
     form_class = forms.WithdrawRequestForm
     template_name = "wallet/withdraw_request.html"
-    success_url = reverse_lazy("wallet:wallet_dashboard")
+    success_url = reverse_lazy("dashboard:dashboard")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

@@ -1,1 +1,116 @@
-dashboard_customer
+{% extends "base/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Dashboard Customer" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-100 min-h-screen p-4 space-y-3">
+
+        <ul class="space-y-3">
+
+            <li>
+                <a href="{% url 'public:index' %}" class="block text-right p-2 bg-white rounded shadow">
+                    {% trans "Home" %}
+                </a>
+            </li>
+
+            <li>
+                <button
+                    hx-get="{% url 'account:profile' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "Profile" %}
+                </button>
+            </li>
+
+            <li>
+                <button
+                    hx-get="{% url 'account:bank_account' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "Bank Account" %}
+                </button>
+            </li>
+
+            <li>
+                <button
+                    hx-get="{% url 'order:user_sell_list' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "My Melted Gold Sales" %}
+                </button>
+            </li>
+
+            <li>
+                <button
+                    hx-get="{% url 'wallet:wallet_dashboard' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "My Wallet" %}
+                </button>
+            </li>
+
+            <li>
+                <button
+                    hx-get="{% url 'wallet:sell_melted_gold' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "Sell Melted Gold" %}
+                </button>
+            </li>
+
+            <li>
+                <button
+                    hx-get="{% url 'order:invoice_list' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "My Invoices" %}
+                </button>
+            </li>
+
+            <li>
+                <form
+                    method="post"
+                    action="{% url 'account:logout' %}"
+                    class="w-full"
+                >
+                    {% csrf_token %}
+                    <button type="submit" class="w-full text-right p-2 bg-white rounded shadow">
+                            {% trans "Logout" %}
+                    </button>
+                </form>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Content -->
+    <main class="flex-1 p-6" id="dashboard-content">
+        <p class="text-gray-600">
+            {% trans "Please select an item from the menu." %}
+        </p>
+    </main>
+
+</div>
+
+{% endblock %}

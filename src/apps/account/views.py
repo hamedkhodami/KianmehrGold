@@ -10,7 +10,7 @@ from apps.notification.enums import NotificationEnums
 from apps.notification.models import Notification
 from apps.wallet.models import WalletTransactionModel
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render, reverse
@@ -18,6 +18,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import FormView
+
+
+class LogoutView(View):
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect("account:login")
 
 
 class RegisterView(LogoutRequiredMixin, FormView):
@@ -235,7 +241,7 @@ class ResetPassCompleteView(LogoutRequiredMixin, FormView):
 class UserProfileView(LoginRequiredMixin, FormView):
     template_name = "account/profile.html"
     form_class = forms.UserProfileForm
-    success_url = reverse_lazy("account:profile")
+    success_url = reverse_lazy("dashboard:dashboard")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -255,7 +261,7 @@ class UserProfileView(LoginRequiredMixin, FormView):
 class UserBankAccountView(LoginRequiredMixin, FormView):
     template_name = "account/bank_account.html"
     form_class = forms.UserBankAccountForm
-    success_url = reverse_lazy("account:bank_account")
+    success_url = reverse_lazy("dashboard:dashboard")
 
     def get_bank_account(self):
         bank_account = self.request.user.bank_accounts.first()

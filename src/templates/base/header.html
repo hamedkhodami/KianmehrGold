@@ -1,34 +1,102 @@
 {% load static %}
 {% load i18n %}
 
-<header class="header">
-    <div class="header-container">
+<header class="w-full bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-        <!-- Left: Logo -->
-        <div class="header-left">
-            <a href="#" class="header-logo">{% trans "Logo" %}</a>
+        <!-- Logo -->
+        <div class="flex items-center">
+            <a href="{% url 'public:index' %}" class="text-xl font-bold text-gray-800">
+                {% trans "Logo" %}
+            </a>
         </div>
 
-        <!-- Center: Menu -->
-        <div class="header-center">
-            <ul class="menu">
-                <li><a href="{% url 'public:index' %}">{% trans "Home" %}</a></li>
-                <li><a href="{% url 'public:about_us' %}">{% trans "About Us" %}</a></li>
-                <li><a href="{% url 'product:product_list' %}">{% trans "Store" %}</a></li>
-                <li><a href="{% url 'wallet:melted_gold_buy' %}">{% trans "Molten gold" %}</a></li>
-                <li><a href="{% url 'product:coin_list' %}">{% trans "Coins" %}</a></li>
-            </ul>
-        </div>
+        <!-- Menu (Desktop) -->
+        <nav class="hidden md:flex space-x-6 space-x-reverse text-gray-700">
 
-        <!-- Right: User -->
-        <div class="header-right">
+            <a href="{% url 'public:index' %}" class="hover:text-black">
+                {% trans "Home" %}
+            </a>
+
+            <a href="{% url 'public:about_us' %}" class="hover:text-black">
+                {% trans "About Us" %}
+            </a>
+
+            <a href="{% url 'product:product_list' %}" class="hover:text-black">
+                {% trans "Store" %}
+            </a>
+
+            <a href="{% url 'wallet:melted_gold_buy' %}" class="hover:text-black">
+                {% trans "Molten gold" %}
+            </a>
+
+            <a href="{% url 'product:coin_list' %}" class="hover:text-black">
+                {% trans "Coins" %}
+            </a>
+
+        </nav>
+
+        <!-- User -->
+        <div class="flex items-center space-x-3 space-x-reverse">
+
             {% if request.user.is_authenticated %}
-                <a href="{% url 'dashboard:dashboard' %}" class="btn-dashboard">{% trans "Dashboard" %}</a>
+                <a href="{% url 'dashboard:dashboard' %}"
+                   class="px-4 py-1 bg-gray-800 text-white rounded hover:bg-black">
+                    {% trans "Dashboard" %}
+                </a>
             {% else %}
-                <a href="{% url 'account:login' %}" class="btn-login">{% trans "Login" %}</a>
-                <a href="{% url 'account:register' %}" class="btn-register">{% trans "Register" %}</a>
+                <a href="{% url 'account:login' %}"
+                   class="px-4 py-1 border border-gray-400 rounded hover:bg-gray-100">
+                    {% trans "Login" %}
+                </a>
+
+                <a href="{% url 'account:register' %}"
+                   class="px-4 py-1 bg-gray-800 text-white rounded hover:bg-black">
+                    {% trans "Register" %}
+                </a>
             {% endif %}
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl">
+                ☰
+            </button>
+
         </div>
 
     </div>
+
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="md:hidden hidden bg-white border-t py-3 px-4 space-y-3 text-gray-700">
+
+        <a href="{% url 'public:index' %}" class="block">
+            {% trans "Home" %}
+        </a>
+
+        <a href="{% url 'public:about_us' %}" class="block">
+            {% trans "About Us" %}
+        </a>
+
+        <a href="{% url 'product:product_list' %}" class="block">
+            {% trans "Store" %}
+        </a>
+
+        <a href="{% url 'wallet:melted_gold_buy' %}" class="block">
+            {% trans "Molten gold" %}
+        </a>
+
+        <a href="{% url 'product:coin_list' %}" class="block">
+            {% trans "Coins" %}
+        </a>
+
+    </nav>
+
 </header>
+
+<script>
+    const btn = document.getElementById("mobile-menu-btn");
+    const menu = document.getElementById("mobile-menu");
+
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+</script>

@@ -6,7 +6,7 @@
 
 <h1>{% trans "Bank Account Information" %}</h1>
 
-<form method="post">
+<form method="post" action="{% url 'account:bank_account' %}">
     {% csrf_token %}
 
     <div>

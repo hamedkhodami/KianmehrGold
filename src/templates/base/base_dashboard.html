@@ -18,11 +18,12 @@
 {% block content %}
 {% endblock %}
 
+<script src="{% static 'public/js/signup-in.js' %}"></script>
+<script src="{% static 'public/js/main.js' %}"></script>
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
 
-  <script src="{% static 'public/js/signup-in.js' %}"></script>
-
-  {% block extra_script %}
-  {% endblock %}
+{% block extra_script %}
+{% endblock %}
 
 </body>
 </html>

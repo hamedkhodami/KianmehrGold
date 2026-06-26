@@ -24,4 +24,9 @@ urlpatterns = [
         views.UserSellMeltedGoldListView.as_view(),
         name="user_sell_list",
     ),
+    path("invoices/", views.UserInvoiceListView.as_view(), name="invoice_list"),
+    path(
+        "invoices/<uuid:pk>/", views.InvoiceDetailView.as_view(), name="invoice_detail"
+    ),
+    path("invoices/<uuid:pk>/pdf/", views.InvoicePDFView.as_view(), name="invoice_pdf"),
 ]

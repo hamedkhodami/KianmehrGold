@@ -1,41 +1,46 @@
-{% load static %}
 {% load i18n %}
+{% load static %}
 
+<footer class="w-full bg-gray-100 border-t mt-10">
+    <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-8">
 
-<footer class="footer">
-    <div class="footer-container">
-
-        <!-- Enamad Section -->
-        <div class="footer-section footer-enamad">
-            <h4>{% trans "Trust Seal" %}</h4>
-            <div class="enamad-logo">
-                <img src="#" alt="{% trans 'Enamad Logo' %}">
+        <!-- Enamad -->
+        <div>
+            <h4 class="font-semibold mb-3">{% trans "Trust Seal" %}</h4>
+            <div>
+                <img src="#" alt="{% trans 'Enamad Logo' %}" class="w-24 h-auto">
             </div>
         </div>
 
-        <!-- About Section -->
-        <div class="footer-section footer-about">
-            <h4>{% trans "About Us" %}</h4>
-            <p>
+        <!-- About -->
+        <div>
+            <h4 class="font-semibold mb-3">{% trans "About Us" %}</h4>
+            <p class="text-sm text-gray-600 leading-6">
                 {% trans "Your company description will be placed here. This text is temporary and will be replaced by the content team." %}
             </p>
         </div>
 
-        <!-- Developer Section -->
-        <div class="footer-section footer-developer">
-            <h4>{% trans "Developed By" %}</h4>
-            <p>
+        <!-- Developer -->
+        <div>
+            <h4 class="font-semibold mb-3">{% trans "Developed By" %}</h4>
+            <p class="text-sm text-gray-600">
                 {% trans "Your development company name will be placed here." %}
             </p>
         </div>
 
-        <!-- Contact Section -->
-        <div class="footer-section footer-contact">
-            <h4>{% trans "Contact Us" %}</h4>
-            <ul>
-                <li>{% trans "Phone" %}: <a href="#">#</a></li>
-                <li>{% trans "Email" %}: <a href="#">#</a></li>
-                <li>{% trans "Address" %}: <span>#</span></li>
+        <!-- Contact -->
+        <div>
+            <h4 class="font-semibold mb-3">{% trans "Contact Us" %}</h4>
+            <ul class="text-sm text-gray-600 space-y-2">
+                <li>
+                    {% trans "Phone" %}: <a href="#" class="text-blue-600">#</a>
+                </li>
+                <li>
+                    {% trans "Email" %}: <a href="#" class="text-blue-600">#</a>
+                </li>
+                <li>
+                    {% trans "Address" %}: <span>#</span>
+                </li>
             </ul>
         </div>
 

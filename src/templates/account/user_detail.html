@@ -1,6 +1,8 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
+{% load price_filters %}
+
 
 {% block title %}
     {% trans "User Profile" %}: {{ user_obj.full_name }} ({{ user_obj.phone_number }})
@@ -24,7 +26,7 @@
 <hr>
 
 <h3>{% trans "Wallet" %}</h3>
-<p>{% trans "Balance" %}: {{ wallet.balance }}</p>
+<p>{% trans "Balance" %}: {{ wallet.balance|comma }}</p>
 
 <h4>{% trans "Wallet Transactions" %}</h4>
 <table class="table">
@@ -39,7 +41,7 @@
     <tbody>
         {% for tx in wallet_tx_page %}
         <tr>
-            <td>{{ tx.amount }}</td>
+            <td>{{ tx.amount|comma }}</td>
             <td>{{ tx.transaction_type }}</td>
             <td>{{ tx.description }}</td>
             <td>{{ tx.created_at|date:"Y-m-d H:i" }}</td>
@@ -53,7 +55,7 @@
 <hr>
 
 <h3>{% trans "Gold Inventory" %}</h3>
-<p>{{ gold_inventory.amount }} {% trans "grams" %}</p>
+<p>{{ gold_inventory.amount|comma }} {% trans "grams" %}</p>
 
 <hr>
 
@@ -92,7 +94,7 @@
     <tbody>
         {% for p in payments_page %}
         <tr>
-            <td>{{ p.amount }}</td>
+            <td>{{ p.amount|comma }}</td>
             <td>{{ p.status }}</td>
             <td>{{ p.payment_type }}</td>
             <td>{{ p.created_at|date:"Y-m-d H:i" }}</td>
@@ -119,7 +121,7 @@
         {% for o in orders_page %}
         <tr>
             <td>{{ o.order_type }}</td>
-            <td>{{ o.total_amount }}</td>
+            <td>{{ o.total_amount|comma }}</td>
             <td>{{ o.status }}</td>
             <td>{{ o.created_at|date:"Y-m-d H:i"}}</td>
         </tr>
@@ -143,7 +145,7 @@
     <tbody>
         {% for w in withdraws_page %}
         <tr>
-            <td>{{ w.amount }}</td>
+            <td>{{ w.amount|comma }}</td>
             <td>{{ w.status }}</td>
             <td>{{ w.created_at|date:"Y-m-d H:i" }}</td>
         </tr>

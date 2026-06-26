@@ -6,8 +6,8 @@
 |---------|---------|---------|
 | 1️⃣ | Planning & Architecture | ✅ |
 | 2️⃣ | Initial Implementation | ✅ |
-| 3️⃣ | Advanced Systems | 🎯 |
-| 4️⃣ | Frontend & UI | 📌 |
+| 3️⃣ | Advanced Systems | ✅ |
+| 4️⃣ | Frontend & UI |🎯 |
 | 5️⃣ | Testing & Optimization | 📌 |
 | 6️⃣ | Deployment & Release | 📌 |
 
@@ -60,10 +60,23 @@
 | 7️⃣ | Public App Development | Implement banners, articles, site settings, content management, and public-facing functionality | ✅ |
 | 8️⃣ | Dashboard Development | Implement customer and administrator dashboards, statistics, financial overviews, and management tools | ✅ |
 | 9️⃣ | Rosetta Integration & Translations | Implement translations and manage multilingual content throughout the project |✅ |
-| 🔟 | Final Review & Refactoring | Review business logic, optimize code structure, improve maintainability, and fix discovered issues | 🎯 |
-| 1️⃣1️⃣ | Define Phase 4 Roadmap | Define frontend implementation strategy, UI architecture, and design roadmap | 📌 |
+| 🔟 | Final Review & Refactoring | Review business logic, optimize code structure, improve maintainability, and fix discovered issues | ✅ |
+| 1️⃣1️⃣ | Define Phase 4 Roadmap | Define frontend implementation strategy, UI architecture, and design roadmap | ✅ |
 
+
+# 🎨 Phase 4 – Frontend, Integrations & System Review
+
+| Step | Title | Description | Status |
+|--------|--------|-------------|--------|
+| 1️⃣ | Frontend Collaboration | Collaborate with frontend development, review templates, improve UI integration, and support frontend implementation throughout the phase | 🎯 |
+| 2️⃣ | System Review & Refinement | Review all templates, views, forms, services, and business logic to improve small details, consistency, usability, and overall code quality | 📌 |
+| 3️⃣ | Gold Price API Integration Testing | Connect to the real gold price API, validate pricing calculations, and verify production behavior | 📌 |
+| 4️⃣ | SMS Provider Integration Testing | Integrate the real IPPanel service, verify SMS delivery, notification flows, and production configurations | 📌 |
+| 5️⃣ | Payment Gateway Integration Testing | Integrate the real payment gateway (Beh Pardakht Mellat), verify callback, settlement, invoice generation, and payment workflows | 📌 |
+| 6️⃣ | Complete Internationalization | Finalize Rosetta translations, review multilingual content, and verify translated templates throughout the project | 📌 |
+| 7️⃣ | Final System Review & Phase 5 Planning | Perform a complete system review, resolve remaining issues, prepare production checklist, and define the roadmap for Phase 5 | 📌 |
 ---
+
 ## 📌 Global TODO
 
 * [🔗]

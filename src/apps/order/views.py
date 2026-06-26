@@ -1,25 +1,28 @@
 from apps.account.mixins import AdminRequiredMixin
 from apps.order.enums import OrderStatusEnum, OrderTypeEnum
-from apps.order.models import OrderModel
+from apps.order.models import InvoiceModel, OrderModel
 from apps.wallet.enums import WalletTransactionTypeEnum
 from apps.wallet.models import GoldInventoryModel, WalletTransactionModel
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db import transaction
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from django.views import View
+from xhtml2pdf import pisa
 
 
-class AdminSellMeltedGoldListView(View):
+class AdminSellMeltedGoldListView(AdminRequiredMixin, View):
     def get(self, request):
 
         orders = OrderModel.objects.filter(
             order_type=OrderTypeEnum.SELL_MELTED_GOLD
         ).order_by("-created_at")
 
-        paginator = Paginator(orders, 1)
+        paginator = Paginator(orders, 10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
@@ -109,3 +112,38 @@ class UserSellMeltedGoldListView(LoginRequiredMixin, View):
                 "page_obj": page_obj,
             },
         )
+
+
+class UserInvoiceListView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        invoices = InvoiceModel.objects.filter(order__user=request.user).order_by(
+            "-created_at"
+        )
+
+        paginator = Paginator(invoices, 10)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, "order/invoice_list.html", {"page_obj": page_obj})
+
+
+class InvoiceDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        invoice = get_object_or_404(InvoiceModel, id=pk, order__user=request.user)
+        return render(request, "order/invoice_detail.html", {"invoice": invoice})
+
+
+class InvoicePDFView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        invoice = get_object_or_404(InvoiceModel, id=pk, order__user=request.user)
+        template = get_template("order/invoice/invoice_pdf.html")
+        html = template.render({"invoice": invoice})
+
+        response = HttpResponse(content_type="application/pdf")
+        response["Content-Disposition"] = (
+            f"attachment; filename={invoice.invoice_number}.pdf"
+        )
+        pisa_status = pisa.CreatePDF(html, dest=response)
+        if pisa_status.err:
+            return HttpResponse("Error generating PDF", status=500)
+        return response

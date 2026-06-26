@@ -1,72 +1,88 @@
 {% extends "base/base.html" %}
-{% load static %}
 {% load i18n %}
+{% load static %}
+{% load price_filters %}
 
-{% block title%}
+
+{% block title %}
     {{ product.title }}
 {% endblock %}
 
-    {% block extra_style %}
-        <style>
-    .buy-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background: #007bff;
-        color: white;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .buy-btn:hover {
-        background: #0056b3;
-    }
-</style>
-    {% endblock %}
-
-
 {% block content %}
-<!-- تصویر محصول -->
-{% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.title }}" width="250">
-{% endif %}
 
-<hr>
+<section class="max-w-4xl mx-auto px-4 py-10">
 
-<!-- توضیحات -->
-<div>
-    <h3>{% trans "Description" %}</h3>
-    <p>{{ product.description|default:_("No description available.") }}</p>
-</div>
+    <!-- Product Title -->
+    <h1 class="text-3xl font-bold mb-6">
+        {{ product.title }}
+    </h1>
 
-<hr>
+    <!-- Product Image -->
+    {% if product.image %}
+        <div class="mb-6">
+            <img
+                src="{{ product.image.url }}"
+                alt="{{ product.title }}"
+                class="w-full max-w-md rounded-lg shadow-sm"
+            >
+        </div>
+    {% endif %}
 
-<!-- وزن -->
-<div>
-    <h3>{% trans "Weight" %}</h3>
-    <p>{{ product.weight }} g</p>
-</div>
+    <!-- Description -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">
+            {% trans "Description" %}
+        </h3>
+        <p class="text-gray-700 leading-7">
+            {{ product.description|default:_("No description available.") }}
+        </p>
+    </div>
 
-<hr>
+    <!-- Weight -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">
+            {% trans "Weight" %}
+        </h3>
+        <p class="text-gray-700">
+            {{ product.weight }} g
+        </p>
+    </div>
 
-<div>
-    <h3>{% trans "Final Price" %}</h3>
-    <p>{{ product.final_price }}</p>
-</div>
+    <!-- Final Price -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">
+            {% trans "Final Price" %}
+        </h3>
+        <p class="text-gray-700">
+            {{ product.final_price|comma }} {% trans "Toman" %}
+        </p>
+    </div>
 
-<!-- دکمه خرید -->
-{% if product.status == "available" %}
-    <!-- دکمه خرید -->
-    <form action="{% url 'product:product_buy' product.id product.slug %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="buy-btn">
-            {% trans "Buy Now" %}
-        </button>
-    </form>
-{% else %}
-    <!-- پیام موجود نیست -->
-    <span class="out-of-stock">
-        {% trans "Out of Stock" %}
-    </span>
-{% endif %}
+    <!-- Buy Button -->
+    <div class="mt-8">
+
+        {% if product.status == "available" %}
+
+            <form action="{% url 'product:product_buy' product.id product.slug %}" method="post">
+                {% csrf_token %}
+                <button
+                    type="submit"
+                    class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                >
+                    {% trans "Buy Now" %}
+                </button>
+            </form>
+
+        {% else %}
+
+            <span class="text-red-600 font-semibold">
+                {% trans "Out of Stock" %}
+            </span>
+
+        {% endif %}
+
+    </div>
+
+</section>
 
 {% endblock %}
