@@ -68,7 +68,11 @@
             </td>
             <td>{{ tx.reference_id }}</td>
             <td>
-                <a href="{% url 'wallet:wallet_transaction_detail' tx.pk %}">
+                <a
+                    hx-get="{% url 'wallet:wallet_transaction_detail' tx.pk %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                >
                     {% trans "View" %}
                 </a>
             </td>
@@ -81,32 +85,39 @@
     </tbody>
 </table>
 
-<div>
+<div class="pagination">
 
-    {% if transactions.has_previous %}
-        <a href="?page=1">
-            First
+    {% if page_obj.has_previous %}
+
+        <a
+            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ page_obj.previous_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Previous" %}
         </a>
 
-        <a href="?page={{ transactions.previous_page_number }}">
-            Previous
-        </a>
     {% endif %}
 
     <span>
-        {{ transactions.number }}
-        /
-        {{ transactions.paginator.num_pages }}
+
+        {% trans "Page" %}
+        {{ page_obj.number }}
+        {% trans "of" %}
+        {{ page_obj.paginator.num_pages }}
+
     </span>
 
-    {% if transactions.has_next %}
-        <a href="?page={{ transactions.next_page_number }}">
-            Next
+    {% if page_obj.has_next %}
+
+        <a
+            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Next" %}
         </a>
 
-        <a href="?page={{ transactions.paginator.num_pages }}">
-            Last
-        </a>
     {% endif %}
 
 </div>

@@ -1,8 +1,3 @@
-from apps.account.mixins import AdminRequiredMixin
-from apps.order.enums import OrderStatusEnum, OrderTypeEnum
-from apps.order.models import InvoiceModel, OrderModel
-from apps.wallet.enums import WalletTransactionTypeEnum
-from apps.wallet.models import GoldInventoryModel, WalletTransactionModel
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -13,6 +8,12 @@ from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from django.views import View
 from xhtml2pdf import pisa
+
+from apps.account.mixins import AdminRequiredMixin
+from apps.order.enums import OrderStatusEnum, OrderTypeEnum
+from apps.order.models import InvoiceModel, OrderModel
+from apps.wallet.enums import WalletTransactionTypeEnum
+from apps.wallet.models import GoldInventoryModel, WalletTransactionModel
 
 
 class AdminSellMeltedGoldListView(AdminRequiredMixin, View):
@@ -65,7 +66,7 @@ class AdminApproveSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, Vie
         order.save()
 
         messages.success(request, _("Sell request approved"))
-        return redirect("order:admin_sell_list")
+        return redirect("dashboard:dashboard")
 
 
 class AdminRejectSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View):
@@ -91,7 +92,7 @@ class AdminRejectSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View
         order.save()
 
         messages.success(request, _("Sell request rejected"))
-        return redirect("order:admin_sell_list")
+        return redirect("dashboard:dashboard")
 
 
 class UserSellMeltedGoldListView(LoginRequiredMixin, View):

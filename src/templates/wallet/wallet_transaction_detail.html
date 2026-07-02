@@ -1,13 +1,16 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
+{% load price_filters %}
+{% load jalali %}
+
 
 {% block content %}
 
 <h1>{% trans "Transaction Details" %}</h1>
 
 <div>
-    <p><strong>{% trans "Amount" %}:</strong> {{ transaction.amount }}</p>
+    <p><strong>{% trans "Amount" %}:</strong> {{ transaction.amount|comma }}</p>
     <p><strong>{% trans "Type" %}:</strong> {{ transaction.transaction_type }}</p>
     <p><strong>{% trans "Status" %}:</strong>
         {% if transaction.is_success %}
@@ -18,13 +21,18 @@
     </p>
     <p><strong>{% trans "Description" %}:</strong> {{ transaction.description|default:"-" }}</p>
     <p><strong>{% trans "Reference ID" %}:</strong> {{ transaction.reference_id }}</p>
-    <p><strong>{% trans "Date" %}:</strong> {{ transaction.created_at }}</p>
+    <p><strong>{% trans "Date" %}:</strong> {{ transaction.created_at|jalali }}</p>
 </div>
 
 <hr>
 
-<a href="{% url 'wallet:wallet_dashboard' %}">
-    {% trans "Back to Wallet" %}
+<a
+        hx-get="{% url 'wallet:wallet_dashboard' %}"
+        hx-target="#dashboard-content"
+        hx-swap="innerHTML"
+        class="w-full text-right p-2 bg-white rounded shadow"
+    >
+        {% trans "My Wallet" %}
 </a>
 
 {% endblock %}

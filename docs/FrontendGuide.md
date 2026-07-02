@@ -19,58 +19,147 @@ This document helps frontend developers identify:
 
 # Current Status
 
+---
+
 ## accounts
 
-* Login page → templates/account/login.html
-* Registration page → templates/account/register.html
-* Forgot password page → templates/account/password/rest_pass_complete.html
-* Personal information management page → templates/account/profile.html
-* Bank information management page → templates/account/bank_account.html
+- Login page  
+  → `templates/account/login.html`  
+  **Status:** ❌ 
 
-## wallet
+- Registration page  
+  → `templates/account/signup.html`  
+  **Status:** ❌ 
 
-* Wallet dashboard page → templates/wallet.html
-* Wallet withdrawal request page → templates/wallet/withdraw_request.html
-* Wallet transaction details page → templates/wallet/wallet_transaction_detail.html
-* Admin withdrawal requests page → templates/wallet/admin/withdraw_request_list.html
-* Admin withdrawal requests page → templates/wallet/admin/withdraw_request_detail.html
-* withdrawal review page → templates/wallet/partials/withdraw_request_table.html
+- Forgot password pages  
+  → `templates/account/password/get_phone.html`  
+  → `templates/account/password/reset_pass_confirm.html`  
+  → `templates/account/password/reset_pass_complete.html`  
+  **Status:** ❌ 
 
-## product
+- Personal information page  
+  → `templates/account/profile.html`  
+  **Status:** ❌ 
 
-* Frontend implementation has not started yet. 
+- Bank information page  
+  → `templates/account/bank_account.html`  
+  **Status:** ❌ 
 
-## order
-
-* Frontend implementation has not started yet. 
-
-## payment
-
-* Frontend implementation has not started yet. 
-
-## notification
-
-* Frontend implementation has not started yet.
-
-## dashboard
-
-* Frontend implementation has not started yet. 
-
-## public
-
-* Frontend implementation has not started yet. 
+- Admin user detail page  
+  → `templates/account/user_detail.html`  
+  **Status:** ❌ 
 
 ---
 
-## Future Responsibilities
+## wallet
 
-Frontend developers will be responsible for:
+- Wallet dashboard page  
+  → `templates/wallet/wallet.html`  
+  **Status:** ❌ 
 
-- TailwindCSS implementation
-- Template development
-- Dashboard UI
-- Responsive design
-- User experience improvements
+- Wallet withdrawal request page  
+  → `templates/wallet/withdraw_request.html`  
+  **Status:** ❌ 
+
+- Wallet transaction details page  
+  → `templates/wallet/wallet_transaction_detail.html`  
+  **Status:** ❌ 
+
+- Admin withdrawal requests list page  
+  → `templates/wallet/admin/withdraw_request_list.html`  
+  **Status:** ❌ 
+
+- Admin withdrawal request detail page  
+  → `templates/wallet/admin/withdraw_request_detail.html`  
+  **Status:** ❌ 
+
+- Withdrawal review table partial  
+  → `templates/wallet/partials/withdraw_requests_table.html`  
+  **Status:** ❌ 
+
+---
+
+## product
+
+- Product list page  
+  → `templates/product/product_list.html`  
+  **Status:** ❌ 
+
+- Product detail page  
+  → `templates/product/product_detail.html`  
+  **Status:** ❌ 
+
+- Coin list page  
+  → `templates/product/coin_list.html`  
+  **Status:** ❌ 
+
+---
+
+## order
+
+- Invoice list page  
+  → `templates/order/invoice_list.html`  
+  **Status:** ❌ 
+
+- Invoice detail page  
+  → `templates/order/invoice_detail.html`  
+  **Status:** ❌ 
+
+- Sell melted gold list (admin)  
+  → `templates/order/sell_melted_gold_list.html`  
+  **Status:** ❌ 
+
+- Sell melted gold list (user)  
+  → `templates/order/user_sell_melted_gold_list.html`  
+  **Status:** ❌ 
+
+- Invoice PDF  
+  → `templates/order/invoice/invoice_pdf.html`  
+  **Status:** ❌ 
+
+---
+
+## payment
+
+- Fake gateway page  
+  → `templates/payment/gateway.html`  
+  **Status:** ❌ Backend Not Started – ❌ Frontend Not Started
+
+---
+
+## dashboard
+
+- Customer dashboard  
+  → `templates/dashboard/dashboard_customer.html`  
+  **Status:** ❌ 
+
+- Admin dashboard  
+  → `templates/dashboard/dashboard_admin.html`  
+  **Status:** ❌ 
+
+- Dashboard main  
+  → `templates/dashboard/dashboard.html`  
+  **Status:** ❌ 
+
+---
+
+## public
+
+- Homepage  
+  → `templates/public/index.html`  
+  **Status:** ❌ 
+
+- About us  
+  → `templates/public/about.html`  
+  **Status:** ❌ 
+
+- Article list  
+  → `templates/public/article_list.html`  
+  **Status:** ❌ 
+
+- Article detail  
+  → `templates/public/article_detail.html`  
+  **Status:** ❌
 
 ---
 
@@ -87,7 +176,3 @@ templates/
 - order/
 
 ---
-
-## Notes
-
-Do not start UI implementation before Phase 3 unless instructed by the backend team.

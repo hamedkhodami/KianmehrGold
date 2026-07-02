@@ -1,8 +1,9 @@
-from apps.core.models import BaseModel
-from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from apps.core.models import BaseModel
+from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
 
 
 class PaymentModel(BaseModel):

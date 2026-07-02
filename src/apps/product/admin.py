@@ -1,6 +1,7 @@
-from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
 from django.contrib import admin
 from django.utils.translation import gettext as _
+
+from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
 
 
 @admin.register(CategoryModel)

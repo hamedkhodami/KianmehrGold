@@ -1,23 +1,22 @@
 import random
 from random import randint
 
-from apps.account import forms
-from apps.account.mixins import LogoutRequiredMixin
-from apps.account.models import User, UserBankAccount
-from apps.account.services.otp_service import OTPService
-from apps.core.utils import toast_form_errors
-from apps.notification.enums import NotificationEnums
-from apps.notification.models import Notification
-from apps.wallet.models import WalletTransactionModel
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import FormView
+
+from apps.account import forms
+from apps.account.mixins import AdminRequiredMixin, LogoutRequiredMixin
+from apps.account.models import User, UserBankAccount
+from apps.account.services.otp_service import OTPService
+from apps.core.utils import toast_form_errors
+from apps.notification.enums import NotificationEnums
+from apps.notification.models import Notification
 
 
 class LogoutView(View):
@@ -255,7 +254,7 @@ class UserProfileView(LoginRequiredMixin, FormView):
 
     def form_invalid(self, form):
         toast_form_errors(self.request, form)
-        return super().form_invalid(form)
+        return redirect("dashboard:dashboard")
 
 
 class UserBankAccountView(LoginRequiredMixin, FormView):
@@ -283,10 +282,10 @@ class UserBankAccountView(LoginRequiredMixin, FormView):
 
     def form_invalid(self, form):
         toast_form_errors(self.request, form)
-        return super().form_invalid(form)
+        return redirect("dashboard:dashboard")
 
 
-class AdminUserDetailView(LoginRequiredMixin, View):
+class AdminUserDetailView(LoginRequiredMixin, AdminRequiredMixin, View):
     def get(self, request, user_id):
 
         user = get_object_or_404(User, id=user_id)
@@ -296,26 +295,6 @@ class AdminUserDetailView(LoginRequiredMixin, View):
 
         bank_accounts = user.bank_accounts.all()
 
-        wallet_tx = WalletTransactionModel.objects.filter(wallet=wallet).order_by(
-            "-created_at"
-        )
-        wallet_tx_page = Paginator(wallet_tx, 10).get_page(
-            request.GET.get("wallet_page")
-        )
-
-        payments = user.payments.order_by("-created_at")
-        payments_page = Paginator(payments, 10).get_page(
-            request.GET.get("payment_page")
-        )
-
-        orders = user.orders.order_by("-created_at")
-        orders_page = Paginator(orders, 10).get_page(request.GET.get("order_page"))
-
-        withdraws = user.withdraw_requests.order_by("-created_at")
-        withdraws_page = Paginator(withdraws, 10).get_page(
-            request.GET.get("withdraw_page")
-        )
-
         return render(
             request,
             "account/user_detail.html",
@@ -324,9 +303,5 @@ class AdminUserDetailView(LoginRequiredMixin, View):
                 "wallet": wallet,
                 "gold_inventory": gold_inventory,
                 "bank_accounts": bank_accounts,
-                "wallet_tx_page": wallet_tx_page,
-                "payments_page": payments_page,
-                "orders_page": orders_page,
-                "withdraws_page": withdraws_page,
             },
         )

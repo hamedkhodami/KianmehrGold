@@ -2,9 +2,24 @@
 {% load i18n %}
 {% load static %}
 
+
+
 {% block title %}
     {% trans "Dashboard Customer" %}
 {% endblock %}
+
+    {% block extra_style %}
+        <style>
+            .dashboard-message.success {
+                background-color: #d1fae5; /* green-100 */
+                color: #065f46; /* green-700 */
+            }
+            .dashboard-message.error {
+                background-color: #fee2e2; /* red-100 */
+                color: #991b1b; /* red-700 */
+            }
+        </style>
+    {% endblock %}
 
 {% block content %}
 
@@ -67,6 +82,17 @@
 
             <li>
                 <button
+                    hx-get="{% url 'wallet:withdraw_requests' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "Withdraw requests" %}
+                </button>
+            </li>
+
+            <li>
+                <button
                     hx-get="{% url 'wallet:sell_melted_gold' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
@@ -109,8 +135,28 @@
         <p class="text-gray-600">
             {% trans "Please select an item from the menu." %}
         </p>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </main>
 
 </div>
 
+{% endblock %}
+
+
+{% block extra_script %}
+<script>
+    setTimeout(function () {
+        document.querySelectorAll('.dashboard-message').forEach(function (msg) {
+            msg.style.transition = "opacity 0.5s";
+            msg.style.opacity = "0";
+            setTimeout(() => msg.remove(), 500);
+        });
+    }, 2000);
+</script>
 {% endblock %}

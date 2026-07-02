@@ -1,7 +1,9 @@
-from apps.account.enums import UserRoleEnum
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
+
+from apps.account.enums import UserRoleEnum
+
 
 User = get_user_model()
 

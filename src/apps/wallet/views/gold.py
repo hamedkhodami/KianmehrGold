@@ -1,10 +1,5 @@
 from decimal import Decimal
 
-from apps.order.enums import OrderStatusEnum, OrderTypeEnum, PaymentMethodEnum
-from apps.order.models import OrderItemModel, OrderModel
-from apps.product.models import GoldPriceModel
-from apps.wallet import forms, models
-from apps.wallet.enums import WalletTransactionTypeEnum
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -12,6 +7,12 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views import View
+
+from apps.order.enums import OrderStatusEnum, OrderTypeEnum, PaymentMethodEnum
+from apps.order.models import OrderItemModel, OrderModel
+from apps.product.models import GoldPriceModel
+from apps.wallet import forms, models
+from apps.wallet.enums import WalletTransactionTypeEnum
 
 
 class MeltedGoldBuyView(LoginRequiredMixin, View):
@@ -142,4 +143,4 @@ class SellMeltedGoldView(LoginRequiredMixin, View):
         )
 
         messages.success(request, _("Your sell request has been submitted"))
-        return redirect("wallet:sell_melted_gold")
+        return redirect("dashboard:dashboard")

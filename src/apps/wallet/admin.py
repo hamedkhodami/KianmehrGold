@@ -1,11 +1,12 @@
+from django.contrib import admin
+from django.utils.translation import gettext as _
+
 from apps.wallet.models import (
     GoldInventoryModel,
     WalletModel,
     WalletTransactionModel,
     WithdrawRequestModel,
 )
-from django.contrib import admin
-from django.utils.translation import gettext as _
 
 
 @admin.register(WalletModel)

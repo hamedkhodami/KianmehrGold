@@ -1,7 +1,8 @@
-from apps.notification import sms
-from apps.notification.models import Notification
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from apps.notification import sms
+from apps.notification.models import Notification
 
 
 def sms_notify_handler(notification, phone_number):

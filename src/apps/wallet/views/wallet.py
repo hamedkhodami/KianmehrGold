@@ -1,11 +1,5 @@
 from datetime import timedelta
 
-from apps.notification.enums import NotificationEnums
-from apps.notification.utils import create_notify_for_admins
-from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
-from apps.payment.models import PaymentModel, WalletChargeModel
-from apps.wallet import forms, models
-from apps.wallet.models import WithdrawRequestModel
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -22,6 +16,13 @@ from django.views.generic import (
     TemplateView,
 )
 
+from apps.notification.enums import NotificationEnums
+from apps.notification.utils import create_notify_for_admins
+from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
+from apps.payment.models import PaymentModel, WalletChargeModel
+from apps.wallet import forms, models
+from apps.wallet.models import WithdrawRequestModel
+
 
 class WalletDashboardView(LoginRequiredMixin, TemplateView):
     template_name = "wallet/wallet.html"
@@ -33,13 +34,14 @@ class WalletDashboardView(LoginRequiredMixin, TemplateView):
 
         transactions = wallet.transactions.defer("description").order_by("-created_at")
 
-        paginator = Paginator(transactions, 20)
+        paginator = Paginator(transactions, 10)
 
         page_number = self.request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
         context["wallet"] = wallet
         context["transactions"] = page_obj
+        context["page_obj"] = page_obj
 
         return context
 
@@ -96,7 +98,7 @@ class WithdrawRequestListView(LoginRequiredMixin, ListView):
     model = WithdrawRequestModel
     template_name = "wallet/partials/withdraw_requests_table.html"
     context_object_name = "withdraw_requests"
-    paginate_by = 20
+    paginate_by = 10
 
     def get_queryset(self):
         return WithdrawRequestModel.objects.filter(user=self.request.user).order_by(

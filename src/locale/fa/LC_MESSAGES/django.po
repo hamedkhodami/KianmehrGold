@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-26 14:54+0330\n"
+"POT-Creation-Date: 2026-06-29 16:13+0330\n"
 "PO-Revision-Date: 2026-06-26 15:21+0330\n"
 "Last-Translator: None None <None>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,7 +121,7 @@ msgid "You do not have permission to access this page."
 msgstr "شما اجازه دسترسی به این صفحه را ندارید."
 
 #: .\apps\account\models.py:21 .\templates\account\profile.html:33
-#: .\templates\account\user_detail.html:20 .\templates\base\footer.html:37
+#: .\templates\account\user_detail.html:23 .\templates\base\footer.html:39
 msgid "Email"
 msgstr "ایمیل"
 
@@ -133,7 +133,7 @@ msgstr "نام"
 msgid "Last name"
 msgstr "نام خانوادگی"
 
-#: .\apps\account\models.py:28 .\templates\account\user_detail.html:21
+#: .\apps\account\models.py:28 .\templates\account\user_detail.html:24
 msgid "National Code"
 msgstr "کدملی"
 
@@ -153,9 +153,9 @@ msgstr "تأیید کنید"
 #: .\apps\account\models.py:41 .\apps\order\models.py:17
 #: .\apps\payment\models.py:16 .\apps\payment\models.py:69
 #: .\apps\wallet\models.py:17 .\apps\wallet\models.py:81
-#: .\apps\wallet\models.py:104 .\templates\order\sell_melted_gold_list.html:16
+#: .\apps\wallet\models.py:104 .\templates\order\sell_melted_gold_list.html:18
 #: .\templates\wallet\admin\withdraw_request_detail.html:10
-#: .\templates\wallet\admin\withdraw_request_list.html:12
+#: .\templates\wallet\admin\withdraw_request_list.html:14
 msgid "User"
 msgstr "کاربر"
 
@@ -171,60 +171,62 @@ msgstr "بدون نام"
 msgid "Bank Name"
 msgstr "نام بانک"
 
-#: .\apps\account\validators.py:15
+#: .\apps\account\validators.py:13
 msgid "Card number must contain only digits."
 msgstr "شماره کارت باید فقط شامل ارقام باشد."
 
-#: .\apps\account\validators.py:18
-msgid "Card number must be 16 digits."
-msgstr "شماره کارت باید ۱۶ رقمی باشد."
+#: .\apps\account\validators.py:16
+#, fuzzy
+#| msgid "Card number must contain only digits."
+msgid "Card number must contain exactly 16 digits."
+msgstr "شماره کارت باید فقط شامل ارقام باشد."
 
-#: .\apps\account\views.py:43
+#: .\apps\account\views.py:45
 msgid "Verification Code"
 msgstr "تاییدیه ها"
 
-#: .\apps\account\views.py:76
+#: .\apps\account\views.py:78
 msgid "Login successful"
 msgstr "ورود با موفقیت"
 
-#: .\apps\account\views.py:93
+#: .\apps\account\views.py:95
 msgid "Session expired. Please try again."
 msgstr "زمان اعتبار جلسه به پایان رسید. لطفا دوباره امتحان کنید."
 
-#: .\apps\account\views.py:99 .\apps\account\views.py:135
-#: .\apps\account\views.py:192 .\apps\account\views.py:221
+#: .\apps\account\views.py:101 .\apps\account\views.py:137
+#: .\apps\account\views.py:194 .\apps\account\views.py:223
 msgid "There is an issue! please try again"
 msgstr "مشکلی پیش آمده است! لطفا دوباره امتحان کنید"
 
-#: .\apps\account\views.py:103
+#: .\apps\account\views.py:105
 msgid "Please wait before requesting another code."
 msgstr "لطفا قبل از درخواست کد دیگر صبر کنید."
 
-#: .\apps\account\views.py:113
+#: .\apps\account\views.py:115
 msgid "Phone number verification code"
 msgstr "کد تایید شماره تلفن"
 
-#: .\apps\account\views.py:119
+#: .\apps\account\views.py:121
 msgid "Code sent to you"
 msgstr "کد برای شما ارسال شد"
 
-#: .\apps\account\views.py:139 .\apps\account\views.py:196
+#: .\apps\account\views.py:141 .\apps\account\views.py:198
 msgid "Entered code is not correct"
 msgstr "کد وارد شده صحیح نیست"
 
-#: .\apps\account\views.py:149
+#: .\apps\account\views.py:151
 msgid "Register done successful"
 msgstr "ثبت نام با موفقیت انجام شد"
 
-#: .\apps\account\views.py:231
+#: .\apps\account\views.py:233
 msgid "Password successfully reset"
 msgstr "تکرار رمز عبور"
 
-#: .\apps\account\views.py:251
+#: .\apps\account\views.py:253
 msgid "Profile updated successfully"
 msgstr "پروفایل با موفقیت به روز شد"
 
-#: .\apps\account\views.py:279
+#: .\apps\account\views.py:281
 msgid "Bank account updated successfully"
 msgstr "حساب بانکی با موفقیت به روز شد"
 
@@ -272,7 +274,7 @@ msgstr "لحظاتی پیش"
 msgid "Entered data is not correct."
 msgstr "اطلاعات وارد شده صحیح نیست."
 
-#: .\apps\dashboard\apps.py:8 .\templates\base\header.html:26
+#: .\apps\dashboard\apps.py:8 .\templates\base\header.html:45
 msgid "Dashboard"
 msgstr "داشبورد"
 
@@ -332,12 +334,12 @@ msgstr "اعلان"
 msgid "Order Information"
 msgstr "اطلاعات سفارش"
 
-#: .\apps\order\admin.py:51 .\apps\order\admin.py:117
-#: .\apps\order\admin.py:182 .\apps\payment\admin.py:64
-#: .\apps\payment\admin.py:123 .\apps\product\admin.py:19
-#: .\apps\product\admin.py:53 .\apps\product\admin.py:81
-#: .\apps\product\admin.py:119 .\apps\public\admin.py:38
-#: .\apps\public\admin.py:58 .\apps\public\admin.py:105
+#: .\apps\order\admin.py:51 .\apps\order\admin.py:117 .\apps\order\admin.py:182
+#: .\apps\payment\admin.py:64 .\apps\payment\admin.py:123
+#: .\apps\product\admin.py:19 .\apps\product\admin.py:53
+#: .\apps\product\admin.py:81 .\apps\product\admin.py:119
+#: .\apps\public\admin.py:38 .\apps\public\admin.py:58
+#: .\apps\public\admin.py:105
 msgid "System Information"
 msgstr "اطلاعات سیستم"
 
@@ -358,9 +360,9 @@ msgstr "سفارش"
 msgid "Pending"
 msgstr "در انتظار"
 
-#: .\apps\order\enums.py:7 .\apps\order\models.py:122
-#: .\apps\wallet\enums.py:14 .\templates\order\invoice_detail.html:45
-#: .\templates\order\invoice_list.html:32
+#: .\apps\order\enums.py:7 .\apps\order\models.py:122 .\apps\wallet\enums.py:14
+#: .\templates\order\invoice_detail.html:47
+#: .\templates\order\invoice_list.html:34
 msgid "Paid"
 msgstr "پرداخت شده"
 
@@ -373,8 +375,8 @@ msgid "Completed"
 msgstr "کامل شده"
 
 #: .\apps\order\enums.py:13 .\apps\wallet\apps.py:8 .\apps\wallet\models.py:24
-#: .\apps\wallet\models.py:38 .\templates\account\user_detail.html:26
-#: .\templates\wallet\wallet.html:7
+#: .\apps\wallet\models.py:38 .\templates\account\user_detail.html:29
+#: .\templates\wallet\wallet.html:9
 msgid "Wallet"
 msgstr "کیف پول"
 
@@ -387,53 +389,47 @@ msgid "Cash Payment"
 msgstr "پرداخت نقدی"
 
 #: .\apps\order\enums.py:19
-#| msgid "Product"
 msgid "Buy Product"
 msgstr "خرید محصول"
 
 #: .\apps\order\enums.py:20
-#| msgid "Product"
 msgid "Sell Product"
 msgstr "فروش محصول"
 
 #: .\apps\order\enums.py:21
-#| msgid "Coin"
 msgid "Buy Coin"
 msgstr "خرید سکه"
 
 #: .\apps\order\enums.py:22
-#| msgid "Sell Price"
 msgid "Sell Coin"
 msgstr "فروش سکه"
 
 #: .\apps\order\enums.py:23 .\templates\wallet\melted_gold_buy.html:6
-#: .\templates\wallet\melted_gold_buy.html:11
-#| msgid "Melted Gold Price"
+#: .\templates\wallet\melted_gold_buy.html:15
 msgid "Buy Melted Gold"
 msgstr "خرید طلای آب شده"
 
-#: .\apps\order\enums.py:24 .\templates\dashboard\dashboard_customer.html:69
-#: .\templates\wallet\sell_melted_gold.html:6
-#| msgid "Melted Gold Price"
+#: .\apps\order\enums.py:24 .\templates\dashboard\dashboard_customer.html:104
+#: .\templates\wallet\sell_melted_gold.html:8
 msgid "Sell Melted Gold"
 msgstr "فروش طلای آب شده"
 
 #: .\apps\order\models.py:21 .\apps\payment\models.py:35
 #: .\apps\payment\models.py:75 .\apps\product\models.py:65
 #: .\apps\product\models.py:122 .\apps\wallet\models.py:85
-#: .\templates\account\user_detail.html:87
-#: .\templates\account\user_detail.html:114
-#: .\templates\account\user_detail.html:139
-#: .\templates\order\invoice_detail.html:43
-#: .\templates\order\invoice_list.html:20
-#: .\templates\order\sell_melted_gold_list.html:20
-#: .\templates\order\user_sell_melted_gold_list.html:19
-#: .\templates\product\product_list.html:65
-#: .\templates\product\product_list.html:91
-#: .\templates\wallet\admin\withdraw_request_list.html:14
+#: .\templates\account\user_detail.html:90
+#: .\templates\account\user_detail.html:117
+#: .\templates\account\user_detail.html:142
+#: .\templates\order\invoice_detail.html:45
+#: .\templates\order\invoice_list.html:22
+#: .\templates\order\sell_melted_gold_list.html:22
+#: .\templates\order\user_sell_melted_gold_list.html:21
+#: .\templates\product\product_list.html:48
+#: .\templates\product\product_list.html:96
+#: .\templates\wallet\admin\withdraw_request_list.html:16
 #: .\templates\wallet\partials\withdraw_requests_table.html:12
-#: .\templates\wallet\wallet.html:49
-#: .\templates\wallet\wallet_transaction_detail.html:12
+#: .\templates\wallet\wallet.html:51
+#: .\templates\wallet\wallet_transaction_detail.html:15
 msgid "Status"
 msgstr "وضعیت"
 
@@ -450,11 +446,10 @@ msgid "Expire At"
 msgstr "منقضی شده در"
 
 #: .\apps\order\models.py:37
-#| msgid "Gold Price"
 msgid "Locked Price At"
 msgstr "قیمت قفل شده در"
 
-#: .\apps\order\models.py:41 .\templates\account\user_detail.html:108
+#: .\apps\order\models.py:41 .\templates\account\user_detail.html:111
 msgid "Orders"
 msgstr "سفارشات"
 
@@ -475,8 +470,8 @@ msgstr "مقدار"
 msgid "Unit Price"
 msgstr "قیمت واحد"
 
-#: .\apps\order\models.py:77 .\templates\order\sell_melted_gold_list.html:18
-#: .\templates\order\user_sell_melted_gold_list.html:18
+#: .\apps\order\models.py:77 .\templates\order\sell_melted_gold_list.html:20
+#: .\templates\order\user_sell_melted_gold_list.html:20
 msgid "Total Price"
 msgstr "قیمت کل"
 
@@ -496,39 +491,39 @@ msgstr "شما باید یا یک محصول یا یک سکه را انتخاب 
 msgid "You cannot select both product and coin at the same time."
 msgstr "شما نمی‌توانید همزمان هم محصول و هم سکه را انتخاب کنید."
 
-#: .\apps\order\models.py:113 .\templates\order\invoice_detail.html:18
-#: .\templates\order\invoice_list.html:18
+#: .\apps\order\models.py:113 .\templates\order\invoice_detail.html:20
+#: .\templates\order\invoice_list.html:20
 msgid "Invoice Number"
 msgstr "شماره فاکتور"
 
 #: .\apps\order\models.py:114 .\apps\payment\models.py:32
 #: .\apps\payment\models.py:72 .\apps\wallet\forms.py:43
 #: .\apps\wallet\forms.py:52 .\apps\wallet\models.py:40
-#: .\apps\wallet\models.py:83 .\templates\account\user_detail.html:33
-#: .\templates\account\user_detail.html:86
-#: .\templates\account\user_detail.html:113
-#: .\templates\account\user_detail.html:138
-#: .\templates\order\invoice_detail.html:23
-#: .\templates\order\invoice_list.html:19
+#: .\apps\wallet\models.py:83 .\templates\account\user_detail.html:36
+#: .\templates\account\user_detail.html:89
+#: .\templates\account\user_detail.html:116
+#: .\templates\account\user_detail.html:141
+#: .\templates\order\invoice_detail.html:25
+#: .\templates\order\invoice_list.html:21
 #: .\templates\wallet\admin\withdraw_request_detail.html:15
-#: .\templates\wallet\admin\withdraw_request_list.html:13
+#: .\templates\wallet\admin\withdraw_request_list.html:15
 #: .\templates\wallet\partials\withdraw_requests_table.html:11
-#: .\templates\wallet\wallet.html:47
-#: .\templates\wallet\wallet_transaction_detail.html:10
-#: .\templates\wallet\withdraw_request.html:19
+#: .\templates\wallet\wallet.html:49
+#: .\templates\wallet\wallet_transaction_detail.html:13
+#: .\templates\wallet\withdraw_request.html:21
 msgid "Amount"
 msgstr "مقدار"
 
-#: .\apps\order\models.py:116 .\templates\order\invoice_detail.html:28
+#: .\apps\order\models.py:116 .\templates\order\invoice_detail.html:30
 msgid "Tax Amount"
 msgstr "مقدار مالیات"
 
-#: .\apps\order\models.py:119 .\templates\order\invoice_detail.html:33
+#: .\apps\order\models.py:119 .\templates\order\invoice_detail.html:35
 msgid "Wage Amount"
 msgstr "میزان اجرت"
 
-#: .\apps\order\models.py:123 .\templates\order\invoice_detail.html:52
-#: .\templates\order\invoice_list.html:21
+#: .\apps\order\models.py:123 .\templates\order\invoice_detail.html:54
+#: .\templates\order\invoice_list.html:23
 msgid "Paid At"
 msgstr "پرداخت شده در"
 
@@ -574,13 +569,13 @@ msgid "Payment"
 msgstr "پرداخت"
 
 #: .\apps\payment\enums.py:7 .\apps\wallet\models.py:49
-#: .\templates\wallet\wallet.html:62
-#: .\templates\wallet\wallet_transaction_detail.html:14
+#: .\templates\wallet\wallet.html:64
+#: .\templates\wallet\wallet_transaction_detail.html:17
 msgid "Success"
 msgstr "موفق"
 
-#: .\apps\payment\enums.py:8 .\templates\wallet\wallet.html:64
-#: .\templates\wallet\wallet_transaction_detail.html:16
+#: .\apps\payment\enums.py:8 .\templates\wallet\wallet.html:66
+#: .\templates\wallet\wallet_transaction_detail.html:19
 msgid "Failed"
 msgstr "ناموفق"
 
@@ -601,12 +596,12 @@ msgid "Authority Code"
 msgstr "کد مرجع"
 
 #: .\apps\payment\models.py:42 .\apps\wallet\models.py:51
-#: .\templates\wallet\wallet.html:50
-#: .\templates\wallet\wallet_transaction_detail.html:20
+#: .\templates\wallet\wallet.html:52
+#: .\templates\wallet\wallet_transaction_detail.html:23
 msgid "Reference ID"
 msgstr "شناسه مرجع"
 
-#: .\apps\payment\models.py:48 .\templates\account\user_detail.html:82
+#: .\apps\payment\models.py:48 .\templates\account\user_detail.html:85
 msgid "Payments"
 msgstr "پرداخت ها"
 
@@ -627,17 +622,14 @@ msgid "Payment already processed."
 msgstr "پرداخت قبلا پردازش شده است."
 
 #: .\apps\payment\views\callback.py:55 .\apps\payment\views\gateway.py:28
-#| msgid "Payment Type"
 msgid "Payment expired."
 msgstr "نوع پرداخت منقضی شده است."
 
 #: .\apps\payment\views\callback.py:79
-#| msgid "Payment Method"
 msgid "Payment failed."
 msgstr "پرداخت انجام نشد."
 
 #: .\apps\payment\views\callback.py:105
-#| msgid "Order Item Information"
 msgid "Order item not found."
 msgstr "کالای سفارش داده شده یافت نشد."
 
@@ -654,12 +646,10 @@ msgid "Payment successful."
 msgstr "پرداخت با موفقیت انجام شد."
 
 #: .\apps\payment\views\callback.py:177
-#| msgid "Wallet charge cannot have an order."
 msgid "Wallet charged from gateway"
 msgstr "شارژ کیف پول از طریق درگاه پرداخت."
 
 #: .\apps\payment\views\callback.py:185
-#| msgid "Wallet Charges"
 msgid "Wallet charged successfully."
 msgstr "کیف پول با موفقیت شارژ شد."
 
@@ -691,11 +681,11 @@ msgstr "اطلاعات سکه"
 msgid "Gold Prices"
 msgstr "قیمت طلا"
 
-#: .\apps\product\enums.py:6 .\templates\product\product_list.html:68
+#: .\apps\product\enums.py:6 .\templates\product\product_list.html:55
 msgid "Available"
 msgstr "موجود است"
 
-#: .\apps\product\enums.py:7 .\templates\product\product_list.html:72
+#: .\apps\product\enums.py:7 .\templates\product\product_list.html:60
 msgid "Out Of Stock"
 msgstr "موجود نیست"
 
@@ -726,9 +716,9 @@ msgid "Slug"
 msgstr "برچسب"
 
 #: .\apps\product\models.py:12 .\apps\product\models.py:68
-#: .\apps\wallet\models.py:47 .\templates\account\user_detail.html:35
-#: .\templates\product\product_detail.html:37
-#: .\templates\wallet\wallet_transaction_detail.html:19
+#: .\apps\wallet\models.py:47 .\templates\account\user_detail.html:38
+#: .\templates\product\product_detail.html:34
+#: .\templates\wallet\wallet_transaction_detail.html:22
 msgid "Description"
 msgstr "توضیحات"
 
@@ -740,7 +730,7 @@ msgstr "آیکون"
 msgid "Category"
 msgstr "دسته بندی"
 
-#: .\apps\product\models.py:19 .\templates\product\product_list.html:45
+#: .\apps\product\models.py:19 .\templates\product\product_list.html:18
 msgid "Categories"
 msgstr "دسته بندی ها"
 
@@ -766,7 +756,7 @@ msgstr "مالیات (%)"
 msgid "Stock"
 msgstr "موجودی"
 
-#: .\apps\product\models.py:72 .\templates\product\product_list.html:6
+#: .\apps\product\models.py:72 .\templates\product\product_list.html:8
 msgid "Products"
 msgstr "محصولات"
 
@@ -774,8 +764,9 @@ msgstr "محصولات"
 msgid "Coin Type"
 msgstr "نوع سکه"
 
-#: .\apps\product\models.py:129 .\templates\base\header.html:19
-#: .\templates\product\coin_list.html:6 .\templates\product\coin_list.html:11
+#: .\apps\product\models.py:129 .\templates\base\header.html:34
+#: .\templates\base\header.html:88 .\templates\product\coin_list.html:8
+#: .\templates\product\coin_list.html:17
 msgid "Coins"
 msgstr "سکه ها"
 
@@ -872,8 +863,9 @@ msgid "Content"
 msgstr "محتوا"
 
 #: .\apps\public\models.py:37 .\apps\public\models.py:38
-#: .\templates\base\footer.html:18 .\templates\base\header.html:16
-#: .\templates\public\about.html:6 .\templates\public\about.html:14
+#: .\templates\base\footer.html:17 .\templates\base\header.html:22
+#: .\templates\base\header.html:76 .\templates\public\about.html:6
+#: .\templates\public\about.html:16
 msgid "About Us"
 msgstr "آشنایی با ما"
 
@@ -894,7 +886,7 @@ msgid "Article"
 msgstr "مقاله"
 
 #: .\apps\public\models.py:62 .\templates\public\article_list.html:6
-#: .\templates\public\article_list.html:13
+#: .\templates\public\article_list.html:15
 msgid "Articles"
 msgstr "مقالات"
 
@@ -939,8 +931,8 @@ msgstr "مقدار باید بزرگتر از صفر باشد."
 msgid "There are not enough wallet balances."
 msgstr "موجودی کیف پول کافی نیست."
 
-#: .\apps\wallet\models.py:20 .\templates\account\user_detail.html:27
-#: .\templates\wallet\wallet.html:12
+#: .\apps\wallet\models.py:20 .\templates\account\user_detail.html:30
+#: .\templates\wallet\wallet.html:14
 msgid "Balance"
 msgstr "موجودی"
 
@@ -952,8 +944,8 @@ msgstr "کیف پول ها"
 msgid "Transaction Type"
 msgstr "نوع معامله"
 
-#: .\apps\wallet\models.py:60 .\templates\account\user_detail.html:29
-#: .\templates\wallet\wallet.html:42
+#: .\apps\wallet\models.py:60 .\templates\account\user_detail.html:32
+#: .\templates\wallet\wallet.html:44
 msgid "Wallet Transactions"
 msgstr "تراکنش‌های کیف پول"
 
@@ -967,9 +959,9 @@ msgstr "یادداشت ادمین"
 msgid "Withdraw Request"
 msgstr "درخواست برداشت"
 
-#: .\apps\wallet\models.py:93 .\templates\account\user_detail.html:134
-#: .\templates\dashboard\dashboard_admin.html:47
-#: .\templates\wallet\admin\withdraw_request_list.html:7
+#: .\apps\wallet\models.py:93 .\templates\account\user_detail.html:137
+#: .\templates\dashboard\dashboard_admin.html:66
+#: .\templates\wallet\admin\withdraw_request_list.html:9
 #: .\templates\wallet\partials\withdraw_requests_table.html:6
 msgid "Withdraw Requests"
 msgstr "درخواست های برداشت"
@@ -978,7 +970,7 @@ msgstr "درخواست های برداشت"
 msgid "Amount (germs or units)"
 msgstr "مقدار (گرم یا واحد)"
 
-#: .\apps\wallet\models.py:111 .\templates\account\user_detail.html:55
+#: .\apps\wallet\models.py:111 .\templates\account\user_detail.html:58
 msgid "Gold Inventory"
 msgstr "موجودی طلا"
 
@@ -995,7 +987,6 @@ msgid "Withdraw approved by admin"
 msgstr "برداشت توسط مدیر تأیید شد"
 
 #: .\apps\wallet\views\admin.py:79
-#| msgid "Withdraw Request"
 msgid "Withdraw request approved."
 msgstr "درخواست برداشت تایید شد."
 
@@ -1008,7 +999,6 @@ msgid "Withdraw rejected by admin"
 msgstr "انصراف توسط مدیر رد شد"
 
 #: .\apps\wallet\views\admin.py:103
-#| msgid "Withdraw Request"
 msgid "Withdraw request rejected."
 msgstr "درخواست برداشت رد شد."
 
@@ -1018,7 +1008,6 @@ msgstr "اقدام نامعتبر."
 
 #: .\apps\wallet\views\api.py:24 .\apps\wallet\views\api.py:41
 #: .\apps\wallet\views\gold.py:33
-#| msgid "Enter amount"
 msgid "Invalid amount"
 msgstr "مقدار نامعتبر"
 
@@ -1028,7 +1017,6 @@ msgid "Gold price not available"
 msgstr "قیمت طلا موجود نیست"
 
 #: .\apps\wallet\views\gold.py:27
-#| msgid "Enter amount"
 msgid "Please enter an amount"
 msgstr "لطفا یک مقدار وارد کنید"
 
@@ -1045,7 +1033,6 @@ msgid "Buying melted gold"
 msgstr "خرید طلای آب شده"
 
 #: .\apps\wallet\views\gold.py:69
-#| msgid "Password successfully reset"
 msgid "Purchase successful"
 msgstr "خرید موفق"
 
@@ -1071,7 +1058,7 @@ msgid "Bank Account Information"
 msgstr "اطلاعات حساب بانکی"
 
 #: .\templates\account\bank_account.html:18
-#: .\templates\account\user_detail.html:65
+#: .\templates\account\user_detail.html:68
 #: .\templates\wallet\admin\withdraw_request_detail.html:20
 msgid "Card Number"
 msgstr "شماره کارت"
@@ -1080,14 +1067,13 @@ msgstr "شماره کارت"
 msgid "IBAN (Sheba)"
 msgstr "شماره شبا"
 
-#: .\templates\account\bank_account.html:28
-#: .\templates\account\profile.html:38
+#: .\templates\account\bank_account.html:28 .\templates\account\profile.html:38
 msgid "Save changes"
 msgstr "ذخیره ی تغییرات"
 
 #: .\templates\account\login.html:7 .\templates\account\login.html:14
 #: .\templates\account\login.html:41 .\templates\account\login.html:53
-#: .\templates\account\signup.html:46 .\templates\base\header.html:28
+#: .\templates\account\signup.html:46 .\templates\base\header.html:50
 msgid "Login"
 msgstr "ورود"
 
@@ -1104,7 +1090,7 @@ msgid "Don't have an account?"
 msgstr "حساب کاربری ندارید؟"
 
 #: .\templates\account\login.html:48 .\templates\account\signup.html:39
-#: .\templates\base\header.html:29
+#: .\templates\base\header.html:55
 msgid "Register"
 msgstr "ثبت نام"
 
@@ -1171,63 +1157,59 @@ msgstr "یک حساب کاربری ایجاد کنید"
 msgid "Already have an account?"
 msgstr "قبلاً حساب کاربری دارید؟"
 
-#: .\templates\account\user_detail.html:6
-#: .\templates\account\user_detail.html:11
-#| msgid "Edit Profile"
+#: .\templates\account\user_detail.html:9
+#: .\templates\account\user_detail.html:14
 msgid "User Profile"
 msgstr "پرئفایل کاربر"
 
-#: .\templates\account\user_detail.html:15
-#| msgid "Bank Information"
+#: .\templates\account\user_detail.html:18
 msgid "Basic Information"
 msgstr "اطلاعات پایه"
 
-#: .\templates\account\user_detail.html:17 .\templates\base\footer.html:36
+#: .\templates\account\user_detail.html:20 .\templates\base\footer.html:36
 msgid "Phone"
 msgstr "شماره"
 
-#: .\templates\account\user_detail.html:18
-#| msgid "First name"
+#: .\templates\account\user_detail.html:21
 msgid "First Name"
 msgstr "نام"
 
-#: .\templates\account\user_detail.html:19
-#| msgid "Last name"
+#: .\templates\account\user_detail.html:22
 msgid "Last Name"
 msgstr "نام خانوادگی"
 
-#: .\templates\account\user_detail.html:34
-#: .\templates\account\user_detail.html:88
-#: .\templates\account\user_detail.html:112 .\templates\wallet\wallet.html:48
-#: .\templates\wallet\wallet_transaction_detail.html:11
+#: .\templates\account\user_detail.html:37
+#: .\templates\account\user_detail.html:91
+#: .\templates\account\user_detail.html:115 .\templates\wallet\wallet.html:50
+#: .\templates\wallet\wallet_transaction_detail.html:14
 msgid "Type"
 msgstr "نوع سکه"
 
-#: .\templates\account\user_detail.html:36
-#: .\templates\account\user_detail.html:89
-#: .\templates\account\user_detail.html:115
-#: .\templates\account\user_detail.html:140
-#: .\templates\order\user_sell_melted_gold_list.html:20
-#: .\templates\wallet\wallet_transaction_detail.html:21
+#: .\templates\account\user_detail.html:39
+#: .\templates\account\user_detail.html:92
+#: .\templates\account\user_detail.html:118
+#: .\templates\account\user_detail.html:143
+#: .\templates\order\sell_melted_gold_list.html:23
+#: .\templates\order\user_sell_melted_gold_list.html:22
+#: .\templates\wallet\admin\withdraw_request_list.html:17
+#: .\templates\wallet\wallet_transaction_detail.html:24
 msgid "Date"
 msgstr "تاریخ ها"
 
-#: .\templates\account\user_detail.html:56
-#: .\templates\wallet\sell_melted_gold.html:13
+#: .\templates\account\user_detail.html:59
+#: .\templates\wallet\sell_melted_gold.html:15
 msgid "grams"
 msgstr "گرم"
 
-#: .\templates\account\user_detail.html:60
-#| msgid "Account"
+#: .\templates\account\user_detail.html:63
 msgid "Bank Accounts"
 msgstr "اطلاعات حساب بانکی"
 
-#: .\templates\account\user_detail.html:64
-#| msgid "Bank Name"
+#: .\templates\account\user_detail.html:67
 msgid "Bank"
 msgstr "نام بانک"
 
-#: .\templates\account\user_detail.html:66
+#: .\templates\account\user_detail.html:69
 #: .\templates\wallet\admin\withdraw_request_detail.html:31
 msgid "IBAN"
 msgstr "شماره شبا"
@@ -1240,15 +1222,15 @@ msgstr "تایید شماره تماس"
 msgid "Resend code"
 msgstr "ارسال مجدد کد"
 
-#: .\templates\base\footer.html:10
+#: .\templates\base\footer.html:9
 msgid "Trust Seal"
 msgstr "مهر اعتماد"
 
-#: .\templates\base\footer.html:12
+#: .\templates\base\footer.html:11
 msgid "Enamad Logo"
 msgstr "لوگو اینماد"
 
-#: .\templates\base\footer.html:20
+#: .\templates\base\footer.html:19
 msgid ""
 "Your company description will be placed here. This text is temporary and "
 "will be replaced by the content team."
@@ -1256,324 +1238,290 @@ msgstr ""
 "توضیحات شرکت شما اینجا قرار خواهد گرفت. این متن موقتی است و توسط تیم محتوا "
 "جایگزین خواهد شد."
 
-#: .\templates\base\footer.html:26
+#: .\templates\base\footer.html:25
 msgid "Developed By"
 msgstr "توسعه یافته توسط"
 
-#: .\templates\base\footer.html:28
+#: .\templates\base\footer.html:27
 msgid "Your development company name will be placed here."
 msgstr "نام شرکت توسعه‌دهنده شما اینجا قرار خواهد گرفت."
 
-#: .\templates\base\footer.html:34
+#: .\templates\base\footer.html:33
 msgid "Contact Us"
 msgstr "ارتباط با ما"
 
-#: .\templates\base\footer.html:38
+#: .\templates\base\footer.html:42
 msgid "Address"
 msgstr "ادرس"
 
-#: .\templates\base\header.html:9
+#: .\templates\base\header.html:10
 msgid "Logo"
 msgstr "لوگو"
 
-#: .\templates\base\header.html:15 .\templates\public\index.html:6
+#: .\templates\base\header.html:18 .\templates\base\header.html:72
+#: .\templates\dashboard\dashboard_admin.html:33
+#: .\templates\dashboard\dashboard_customer.html:38
+#: .\templates\public\index.html:7
 msgid "Home"
 msgstr "صفحه اصلی"
 
-#: .\templates\base\header.html:17
+#: .\templates\base\header.html:26 .\templates\base\header.html:80
 msgid "Store"
 msgstr "فروشگاه"
 
-#: .\templates\base\header.html:18
+#: .\templates\base\header.html:30 .\templates\base\header.html:84
 msgid "Molten gold"
 msgstr "طلای ابشده"
 
 #: .\templates\base\pagination.html:8
-#: .\templates\order\sell_melted_gold_list.html:66
-#: .\templates\order\user_sell_melted_gold_list.html:44
+#: .\templates\order\sell_melted_gold_list.html:74
 msgid "Previous"
 msgstr "قبلی"
 
 #: .\templates\base\pagination.html:12
-#: .\templates\order\sell_melted_gold_list.html:70
-#: .\templates\order\user_sell_melted_gold_list.html:48
+#: .\templates\order\sell_melted_gold_list.html:78
 msgid "Page"
 msgstr "صفحه"
 
 #: .\templates\base\pagination.html:12
-#: .\templates\order\sell_melted_gold_list.html:70
-#: .\templates\order\user_sell_melted_gold_list.html:48
+#: .\templates\order\sell_melted_gold_list.html:78
 msgid "of"
 msgstr "از"
 
 #: .\templates\base\pagination.html:16
-#: .\templates\order\sell_melted_gold_list.html:74
-#: .\templates\order\user_sell_melted_gold_list.html:52
+#: .\templates\order\sell_melted_gold_list.html:82
 msgid "Next"
 msgstr "بعدی"
 
 #: .\templates\dashboard\dashboard_admin.html:6
-#| msgid "Dashboard"
 msgid "Dashboard Admin"
 msgstr "داشبورد ادمین"
 
-#: .\templates\dashboard\dashboard_admin.html:25
-#: .\templates\dashboard\dashboard_customer.html:25
-#| msgid "Edit Profile"
+#: .\templates\dashboard\dashboard_admin.html:44
+#: .\templates\dashboard\dashboard_customer.html:49
 msgid "Profile"
 msgstr "پروفایل"
 
-#: .\templates\dashboard\dashboard_admin.html:36
-#: .\templates\dashboard\dashboard_customer.html:36
-#| msgid "Account"
-msgid "Bank Account"
-msgstr "اطلاعات حساب بانکی"
-
-#: .\templates\dashboard\dashboard_admin.html:53
-msgid "Django Admin"
-msgstr "ادمین جنگو (بالاتزین سطح دسترسی ادمین) "
-
-#: .\templates\dashboard\dashboard_admin.html:59
-msgid "Rosetta"
-msgstr "بخش ترجمه ها"
-
-#: .\templates\dashboard\dashboard_admin.html:70
-#: .\templates\dashboard\dashboard_customer.html:104
-msgid "Please select an item from the menu."
-msgstr "لطفا یک مورد را از منو انتخاب کنید."
-
-#: .\templates\dashboard\dashboard_customer.html:6
-#| msgid "Dashboard"
-msgid "Dashboard Customer"
-msgstr "داشبورد مشتری"
-
-#: .\templates\dashboard\dashboard_customer.html:47
-#| msgid "Melted Gold Price"
-msgid "My Melted Gold Sales"
-msgstr "فروش طلای آب شده من"
-
-#: .\templates\dashboard\dashboard_customer.html:58
-#: .\templates\wallet\charge.html:47
-#: .\templates\wallet\withdraw_request.html:48
-#| msgid "Wallet"
-msgid "My Wallet"
-msgstr "کیف پول من"
-
-#: .\templates\dashboard\dashboard_customer.html:80
-#: .\templates\order\invoice_list.html:6
-#: .\templates\order\invoice_list.html:12
-#| msgid "Invoices"
-msgid "My Invoices"
-msgstr "فاکتورها"
-
-#: .\templates\dashboard\dashboard_customer.html:92
-msgid "Logout"
-msgstr "خروج"
-
-#: .\templates\order\invoice\invoice_pdf.html:6
-#: .\templates\order\invoice_detail.html:6
-#: .\templates\order\invoice_detail.html:12
-#| msgid "Invoices"
-msgid "Invoice Details"
-msgstr "جزئیات فاکتور"
-
-#: .\templates\order\invoice_detail.html:38
-#: .\templates\product\coin_list.html:21
-#: .\templates\product\product_detail.html:45
-#: .\templates\product\product_list.html:90
-#| msgid "Weight (grams)"
-msgid "Weight"
-msgstr "وزن"
-
-#: .\templates\order\invoice_detail.html:47
-#: .\templates\order\invoice_list.html:34
-#| msgid "Paid"
-msgid "Not Paid"
-msgstr "پرداخت‌نشده"
-
-#: .\templates\order\invoice_detail.html:57
-#| msgid "Melted Gold Price"
-msgid "Locked Gold Price"
-msgstr "قیمت طلا قفل شده"
-
-#: .\templates\order\invoice_detail.html:62
-#| msgid "Half Coin Price"
-msgid "Locked Coin Price"
-msgstr "قیمت سکه قفل شده"
-
-#: .\templates\order\invoice_detail.html:76
-msgid "Download PDF"
-msgstr "دانلود PDF"
-
-#: .\templates\order\invoice_list.html:47
-#: .\templates\wallet\admin\withdraw_request_list.html:30
-#: .\templates\wallet\wallet.html:70
-msgid "View"
-msgstr "مشاهده"
-
-#: .\templates\order\invoice_list.html:54
-msgid "No invoices found."
-msgstr "هیچ فاکتوری یافت نشد."
-
-#: .\templates\order\sell_melted_gold_list.html:6
-#: .\templates\order\sell_melted_gold_list.html:11
-#| msgid "Melted Gold Price"
+#: .\templates\dashboard\dashboard_admin.html:55
+#: .\templates\order\sell_melted_gold_list.html:8
+#: .\templates\order\sell_melted_gold_list.html:13
 msgid "Sell Melted Gold Requests"
 msgstr "درخواست‌های فروش طلای آب‌شده"
 
-#: .\templates\order\sell_melted_gold_list.html:17
-#: .\templates\order\user_sell_melted_gold_list.html:17
-#| msgid "Total Amount"
+#: .\templates\dashboard\dashboard_admin.html:72
+msgid "Django Admin"
+msgstr "ادمین جنگو (بالاتزین سطح دسترسی ادمین) "
+
+#: .\templates\dashboard\dashboard_admin.html:78
+msgid "Rosetta"
+msgstr "بخش ترجمه ها"
+
+#: .\templates\dashboard\dashboard_admin.html:90
+#: .\templates\dashboard\dashboard_customer.html:127
+msgid "Logout"
+msgstr "خروج"
+
+#: .\templates\dashboard\dashboard_admin.html:102
+#: .\templates\dashboard\dashboard_customer.html:139
+msgid "Please select an item from the menu."
+msgstr "لطفا یک مورد را از منو انتخاب کنید."
+
+#: .\templates\dashboard\dashboard_customer.html:8
+msgid "Dashboard Customer"
+msgstr "داشبورد مشتری"
+
+#: .\templates\dashboard\dashboard_customer.html:60
+msgid "Bank Account"
+msgstr "اطلاعات حساب بانکی"
+
+#: .\templates\dashboard\dashboard_customer.html:71
+msgid "My Melted Gold Sales"
+msgstr "فروش طلای آب شده من"
+
+#: .\templates\dashboard\dashboard_customer.html:82
+#: .\templates\wallet\charge.html:47
+#: .\templates\wallet\wallet_transaction_detail.html:35
+#: .\templates\wallet\withdraw_request.html:50
+msgid "My Wallet"
+msgstr "کیف پول من"
+
+#: .\templates\dashboard\dashboard_customer.html:115
+#: .\templates\order\invoice_list.html:8 .\templates\order\invoice_list.html:14
+msgid "My Invoices"
+msgstr "فاکتورها"
+
+#: .\templates\order\invoice\invoice_pdf.html:6
+#: .\templates\order\invoice_detail.html:8
+#: .\templates\order\invoice_detail.html:14
+msgid "Invoice Details"
+msgstr "جزئیات فاکتور"
+
+#: .\templates\order\invoice_detail.html:40
+#: .\templates\product\coin_list.html:42
+#: .\templates\product\product_detail.html:44
+#: .\templates\product\product_list.html:92
+msgid "Weight"
+msgstr "وزن"
+
+#: .\templates\order\invoice_detail.html:49
+#: .\templates\order\invoice_list.html:36
+msgid "Not Paid"
+msgstr "پرداخت‌نشده"
+
+#: .\templates\order\invoice_detail.html:59
+msgid "Locked Gold Price"
+msgstr "قیمت طلا قفل شده"
+
+#: .\templates\order\invoice_detail.html:64
+msgid "Locked Coin Price"
+msgstr "قیمت سکه قفل شده"
+
+#: .\templates\order\invoice_detail.html:78
+msgid "Download PDF"
+msgstr "دانلود PDF"
+
+#: .\templates\order\invoice_list.html:49
+#: .\templates\wallet\admin\withdraw_request_list.html:51
+#: .\templates\wallet\wallet.html:76
+msgid "View"
+msgstr "مشاهده"
+
+#: .\templates\order\invoice_list.html:56
+msgid "No invoices found."
+msgstr "هیچ فاکتوری یافت نشد."
+
+#: .\templates\order\sell_melted_gold_list.html:19
+#: .\templates\order\user_sell_melted_gold_list.html:19
 msgid "Gold Amount (g)"
 msgstr "مقدار طلا (گرم)"
 
-#: .\templates\order\sell_melted_gold_list.html:19
-#| msgid "Current Balance"
+#: .\templates\order\sell_melted_gold_list.html:21
 msgid "Wallet Balance"
 msgstr "موجودی کیف پول"
 
-#: .\templates\order\sell_melted_gold_list.html:21
-#| msgid "Active"
+#: .\templates\order\sell_melted_gold_list.html:24
 msgid "Actions"
 msgstr "فعال"
 
-#: .\templates\order\sell_melted_gold_list.html:43
+#: .\templates\order\sell_melted_gold_list.html:51
 #: .\templates\wallet\admin\withdraw_request_detail.html:52
 msgid "Approve"
 msgstr "تایید کنید"
 
-#: .\templates\order\sell_melted_gold_list.html:48
+#: .\templates\order\sell_melted_gold_list.html:56
 #: .\templates\wallet\admin\withdraw_request_detail.html:56
-#| msgid "Rejected"
 msgid "Reject"
 msgstr "رد شد"
 
-#: .\templates\order\sell_melted_gold_list.html:51
+#: .\templates\order\sell_melted_gold_list.html:59
 msgid "Processed"
 msgstr "پردازش شده است"
 
-#: .\templates\order\sell_melted_gold_list.html:65
-#: .\templates\order\user_sell_melted_gold_list.html:43
-#| msgid "First name"
+#: .\templates\order\sell_melted_gold_list.html:73
 msgid "First"
 msgstr "اول"
 
-#: .\templates\order\sell_melted_gold_list.html:75
-#: .\templates\order\user_sell_melted_gold_list.html:53
-#| msgid "Last name"
+#: .\templates\order\sell_melted_gold_list.html:83
 msgid "Last"
 msgstr "اخر"
 
-#: .\templates\order\user_sell_melted_gold_list.html:6
-#| msgid "Withdraw Requests"
+#: .\templates\order\user_sell_melted_gold_list.html:8
 msgid "Requests"
 msgstr "درخواست ها"
 
-#: .\templates\order\user_sell_melted_gold_list.html:12
+#: .\templates\order\user_sell_melted_gold_list.html:14
 msgid "My Sell Requests (Melted Gold)"
 msgstr "درخواست‌های فروش من (طلای آب‌شده)"
 
-#: .\templates\product\coin_list.html:24
-#| msgid "Current Balance"
+#: .\templates\product\coin_list.html:47
 msgid "Current Price"
 msgstr "قیمت فعلی"
 
-#: .\templates\product\coin_list.html:32
-#: .\templates\product\product_detail.html:62
+#: .\templates\product\coin_list.html:58
+#: .\templates\product\product_detail.html:72
 msgid "Buy Now"
 msgstr "خرید"
 
-#: .\templates\product\coin_list.html:37
-#: .\templates\product\product_detail.html:68
-#| msgid "Out Of Stock"
+#: .\templates\product\coin_list.html:63
+#: .\templates\product\product_detail.html:79
 msgid "Out of Stock"
 msgstr "موجود نیست"
 
-#: .\templates\product\product_detail.html:38
-#| msgid "Notif description"
+#: .\templates\product\product_detail.html:37
 msgid "No description available."
 msgstr "هیچ توضیحی فعلا ندارد."
 
-#: .\templates\product\product_detail.html:52
-#| msgid "Total Price"
+#: .\templates\product\product_detail.html:54
 msgid "Final Price"
 msgstr "قیمت نهایی"
 
-#: .\templates\product\product_list.html:48
-msgid "All"
-msgstr "همه"
-
-#: .\templates\product\product_list.html:89
-#| msgid "Buy Price"
-msgid "Price"
-msgstr "قیمت"
-
-#: .\templates\product\product_list.html:95
-msgid "No products found."
-msgstr "محصولی یافت نشد."
-
-#: .\templates\public\about.html:24
-#| msgid "About Us"
-msgid "About Us Image"
-msgstr "تصویر آشنایی با ما"
-
-#: .\templates\public\about.html:29
-msgid "No information available yet."
-msgstr "هنوز اطلاعاتی در دسترس نیست."
-
-#: .\templates\public\article_detail.html:19
-#| msgid "Published"
-msgid "Published on"
-msgstr "منتشر شد"
-
-#: .\templates\public\index.html:27
-#| msgid "Products"
-msgid "Latest Products"
-msgstr "آخرین محصولات"
-
-#: .\templates\public\index.html:43
-#: .\templates\wallet\sell_melted_gold.html:24
+#: .\templates\product\product_detail.html:57
+#: .\templates\product\product_list.html:88 .\templates\public\index.html:44
+#: .\templates\wallet\sell_melted_gold.html:26
 msgid "Toman"
 msgstr "تومان"
 
-#: .\templates\public\index.html:45
+#: .\templates\product\product_list.html:26
+msgid "All"
+msgstr "همه"
+
+#: .\templates\product\product_list.html:88
+msgid "Price"
+msgstr "قیمت"
+
+#: .\templates\product\product_list.html:104
+msgid "No products found."
+msgstr "محصولی یافت نشد."
+
+#: .\templates\public\about.html:26
+msgid "About Us Image"
+msgstr "تصویر آشنایی با ما"
+
+#: .\templates\public\about.html:40
+msgid "No information available yet."
+msgstr "هنوز اطلاعاتی در دسترس نیست."
+
+#: .\templates\public\article_detail.html:22
+msgid "Published on"
+msgstr "منتشر شد"
+
+#: .\templates\public\index.html:28
+msgid "Latest Products"
+msgstr "آخرین محصولات"
+
+#: .\templates\public\index.html:46
 msgid "Price not available"
 msgstr "قیمت موجود نیست"
 
-#: .\templates\public\index.html:57
-#| msgid "Products"
+#: .\templates\public\index.html:58
 msgid "View All Products"
 msgstr "مشاهده تمام محصولات"
 
-#: .\templates\public\index.html:68
-#| msgid "Melted Gold Price"
+#: .\templates\public\index.html:69
 msgid "Melted Gold Section"
 msgstr "بخش طلای آب شده"
 
-#: .\templates\public\index.html:70 .\templates\public\index.html:81
+#: .\templates\public\index.html:71 .\templates\public\index.html:82
 msgid "Short description will be added by content team."
 msgstr "توضیحات مختصر توسط تیم محتوا اضافه خواهد شد."
 
-#: .\templates\public\index.html:73 .\templates\public\index.html:84
+#: .\templates\public\index.html:74 .\templates\public\index.html:85
 msgid "Go to Page"
 msgstr "به صفحه بروید"
 
-#: .\templates\public\index.html:79
+#: .\templates\public\index.html:80
 msgid "Coin Purchase Section"
 msgstr "بخش خرید سکه"
 
-#: .\templates\public\index.html:93
-#| msgid "Articles"
+#: .\templates\public\index.html:94
 msgid "Latest Articles"
 msgstr "اخرین مقالات"
 
-#: .\templates\public\index.html:119
-#| msgid "Articles"
+#: .\templates\public\index.html:120
 msgid "View All Articles"
 msgstr "مشاهده تمام مقالات"
 
 #: .\templates\wallet\admin\withdraw_request_detail.html:7
-#| msgid "Withdraw Requests"
 msgid "Withdraw Request Details"
 msgstr "جزئیات درخواست"
 
@@ -1581,122 +1529,113 @@ msgstr "جزئیات درخواست"
 msgid "No bank account"
 msgstr "بدون حساب بانکی"
 
-#: .\templates\wallet\admin\withdraw_request_list.html:15
-#: .\templates\wallet\wallet.html:51
+#: .\templates\wallet\admin\withdraw_request_list.html:18
+#: .\templates\wallet\wallet.html:53
 msgid "Details"
 msgstr "جزئیات"
 
-#: .\templates\wallet\admin\withdraw_request_list.html:34
-#| msgid "Available"
+#: .\templates\wallet\admin\withdraw_request_list.html:55
 msgid "Not Available"
 msgstr "موجود نیست"
 
-#: .\templates\wallet\admin\withdraw_request_list.html:42
+#: .\templates\wallet\admin\withdraw_request_list.html:63
 #: .\templates\wallet\partials\withdraw_requests_table.html:27
-#| msgid "Withdraw Requests"
 msgid "No withdraw requests found."
 msgstr "درخواست برداشتی یافت نشد"
 
 #: .\templates\wallet\charge.html:6 .\templates\wallet\charge.html:11
-#| msgid "Wallet"
 msgid "Charge Wallet"
 msgstr "شارژ کیف پول"
 
 #: .\templates\wallet\charge.html:35
-#| msgid "Payment"
 msgid "Pay"
 msgstr "پرداخت"
 
-#: .\templates\wallet\melted_gold_buy.html:15
+#: .\templates\wallet\melted_gold_buy.html:21
 msgid "Purchase Steps"
 msgstr "مراحل خرید"
 
-#: .\templates\wallet\melted_gold_buy.html:17
+#: .\templates\wallet\melted_gold_buy.html:24
 msgid "Enter the amount you want to spend"
 msgstr "مبلغ مورد نظر برای خرج کردن را وارد کنید"
 
-#: .\templates\wallet\melted_gold_buy.html:18
+#: .\templates\wallet\melted_gold_buy.html:25
 msgid "System calculates how much gold you can buy"
 msgstr "سیستم محاسبه می‌کند که چقدر می‌توانید طلا بخرید"
 
-#: .\templates\wallet\melted_gold_buy.html:19
+#: .\templates\wallet\melted_gold_buy.html:26
 msgid "Confirm purchase"
 msgstr "تأیید خرید"
 
-#: .\templates\wallet\melted_gold_buy.html:20
+#: .\templates\wallet\melted_gold_buy.html:27
 msgid "Gold is added to your inventory"
 msgstr "طلا به موجودی شما اضافه شد"
 
-#: .\templates\wallet\melted_gold_buy.html:26
-#| msgid "Amount"
+#: .\templates\wallet\melted_gold_buy.html:34
 msgid "Amount (Toman)"
 msgstr "قیمت (تومان)"
 
-#: .\templates\wallet\melted_gold_buy.html:32
+#: .\templates\wallet\melted_gold_buy.html:48
 msgid "You can buy"
 msgstr "می توانید خرید کنید"
 
-#: .\templates\wallet\melted_gold_buy.html:34
+#: .\templates\wallet\melted_gold_buy.html:50
 msgid "grams of gold"
 msgstr "گرم‌های طلا"
 
-#: .\templates\wallet\melted_gold_buy.html:42
-#| msgid "Back to Wallet"
+#: .\templates\wallet\melted_gold_buy.html:62
 msgid "Buy with Wallet"
 msgstr "خرید با کیف پول"
 
-#: .\templates\wallet\sell_melted_gold.html:12
-#| msgid "Gold Inventory"
+#: .\templates\wallet\sell_melted_gold.html:14
 msgid "Your gold inventory"
 msgstr "موجودی طلای شما"
 
-#: .\templates\wallet\sell_melted_gold.html:17
-#| msgid "Amount (germs or units)"
+#: .\templates\wallet\sell_melted_gold.html:19
 msgid "Gold Amount (grams)"
 msgstr "مقدار طلا (گرم)"
 
-#: .\templates\wallet\sell_melted_gold.html:23
-#| msgid "Unit Price"
+#: .\templates\wallet\sell_melted_gold.html:25
 msgid "Estimated Price"
 msgstr "قیمت تخمینی"
 
-#: .\templates\wallet\sell_melted_gold.html:32
-#| msgid "Submit Withdraw Request"
+#: .\templates\wallet\sell_melted_gold.html:34
 msgid "Submit Sell Request"
 msgstr "ارسال درخواست فروش"
 
-#: .\templates\wallet\wallet.html:26
+#: .\templates\wallet\wallet.html:28
 msgid "Increase Wallet Balance"
 msgstr "افزایش موجودی کیف پول"
 
-#: .\templates\wallet\wallet.html:34
-#: .\templates\wallet\withdraw_request.html:7
+#: .\templates\wallet\wallet.html:36 .\templates\wallet\withdraw_request.html:9
 msgid "Withdraw from Wallet"
 msgstr "درخواست برداشت از کیف پول"
 
-#: .\templates\wallet\wallet.html:76
+#: .\templates\wallet\wallet.html:82
 msgid "No transactions found."
 msgstr "هیچ تراکنشی پیدا نشد"
 
-#: .\templates\wallet\wallet_transaction_detail.html:7
+#: .\templates\wallet\wallet_transaction_detail.html:10
 msgid "Transaction Details"
 msgstr "نوع معامله"
 
-#: .\templates\wallet\wallet_transaction_detail.html:27
-msgid "Back to Wallet"
-msgstr "کیف پول"
-
-#: .\templates\wallet\withdraw_request.html:11
+#: .\templates\wallet\withdraw_request.html:13
 msgid "Current Balance"
 msgstr "موجودی"
 
-#: .\templates\wallet\withdraw_request.html:26
+#: .\templates\wallet\withdraw_request.html:28
 msgid "Enter amount"
 msgstr "مقدار را وارد کنید"
 
-#: .\templates\wallet\withdraw_request.html:36
+#: .\templates\wallet\withdraw_request.html:38
 msgid "Submit Withdraw Request"
 msgstr "درخواست برداشت"
+
+#~ msgid "Card number must be 16 digits."
+#~ msgstr "شماره کارت باید ۱۶ رقمی باشد."
+
+#~ msgid "Back to Wallet"
+#~ msgstr "کیف پول"
 
 #~ msgid "Coin Inventory"
 #~ msgstr "موجودی سکه"

@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load i18n %}
+{% load jalali %}
 
 {% load static %}
 
@@ -18,7 +19,7 @@
 
     <!-- Publish Date -->
     <p class="text-sm text-gray-500 mb-6">
-        {% trans "Published on" %}: {{ article.created_at|date:"Y-m-d H:i" }}
+        {% trans "Published on" %}: {{ article.created_at|jalali }}
     </p>
 
     <!-- Image -->

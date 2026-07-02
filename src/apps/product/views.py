@@ -1,8 +1,3 @@
-from apps.order.enums import OrderStatusEnum, OrderTypeEnum, PaymentMethodEnum
-from apps.order.models import OrderItemModel, OrderModel
-from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
-from apps.payment.models import PaymentModel
-from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -12,6 +7,12 @@ from django.utils import timezone
 from django.utils.timezone import timedelta
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView, View
+
+from apps.order.enums import OrderStatusEnum, OrderTypeEnum, PaymentMethodEnum
+from apps.order.models import OrderItemModel, OrderModel
+from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
+from apps.payment.models import PaymentModel
+from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
 
 
 class ProductListView(ListView):

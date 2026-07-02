@@ -1,8 +1,10 @@
-from apps.core.models import BaseModel
-from apps.notification.enums import NotificationEnums
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
+
+from apps.core.models import BaseModel
+from apps.notification.enums import NotificationEnums
+
 
 User = get_user_model()
 

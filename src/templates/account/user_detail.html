@@ -2,15 +2,14 @@
 {% load i18n %}
 {% load static %}
 {% load price_filters %}
-
-
-{% block title %}
-    {% trans "User Profile" %}: {{ user_obj.full_name }} ({{ user_obj.phone_number }})
-{% endblock %}
+{% load jalali %}
 
 {% block content %}
 
-<h2>{% trans "User Profile" %}: {{ user_obj.full_name }} ({{ user_obj.phone_number }})</h2>
+<h2>
+    {% trans "User Profile" %}:
+    {{ user_obj.full_name }} ({{ user_obj.phone_number }})
+</h2>
 
 <hr>
 
@@ -26,133 +25,17 @@
 <hr>
 
 <h3>{% trans "Wallet" %}</h3>
-<p>{% trans "Balance" %}: {{ wallet.balance|comma }}</p>
-
-<h4>{% trans "Wallet Transactions" %}</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Description" %}</th>
-            <th>{% trans "Date" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for tx in wallet_tx_page %}
-        <tr>
-            <td>{{ tx.amount|comma }}</td>
-            <td>{{ tx.transaction_type }}</td>
-            <td>{{ tx.description }}</td>
-            <td>{{ tx.created_at|date:"Y-m-d H:i" }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-{% include "base/pagination.html" with page_obj=wallet_tx_page %}
+<p>
+    {% trans "Balance" %}:
+    {{ wallet.balance|comma }}
+</p>
 
 <hr>
 
 <h3>{% trans "Gold Inventory" %}</h3>
-<p>{{ gold_inventory.amount|comma }} {% trans "grams" %}</p>
-
-<hr>
-
-<h3>{% trans "Bank Accounts" %}</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>{% trans "Bank" %}</th>
-            <th>{% trans "Card Number" %}</th>
-            <th>{% trans "IBAN" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for bank in bank_accounts %}
-        <tr>
-            <td>{{ bank.bank_name }}</td>
-            <td>{{ bank.card_number }}</td>
-            <td>{{ bank.iban }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<hr>
-
-<h3>{% trans "Payments" %}</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Date" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for p in payments_page %}
-        <tr>
-            <td>{{ p.amount|comma }}</td>
-            <td>{{ p.status }}</td>
-            <td>{{ p.payment_type }}</td>
-            <td>{{ p.created_at|date:"Y-m-d H:i" }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-{% include "base/pagination.html" with page_obj=wallet_tx_page %}
-
-<hr>
-
-<h3>{% trans "Orders" %}</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Date" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for o in orders_page %}
-        <tr>
-            <td>{{ o.order_type }}</td>
-            <td>{{ o.total_amount|comma }}</td>
-            <td>{{ o.status }}</td>
-            <td>{{ o.created_at|date:"Y-m-d H:i"}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-{% include "base/pagination.html" with page_obj=wallet_tx_page %}
-
-<hr>
-
-<h3>{% trans "Withdraw Requests" %}</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Date" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for w in withdraws_page %}
-        <tr>
-            <td>{{ w.amount|comma }}</td>
-            <td>{{ w.status }}</td>
-            <td>{{ w.created_at|date:"Y-m-d H:i" }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-{% include "base/pagination.html" with page_obj=wallet_tx_page %}
+<p>
+    {% trans "Gold Amount" %}:
+    {{ gold_inventory.amount }} {% trans "grams" %}
+</p>
 
 {% endblock %}

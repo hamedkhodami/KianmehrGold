@@ -40,7 +40,7 @@
 
 <hr>
 
-<form method="post">
+<form method="post" action="{% url 'wallet:admin_withdraw_request_detail' withdraw_request.pk %}">
     {% csrf_token %}
 
     <div>

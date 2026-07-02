@@ -1,6 +1,8 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
+{% load jalali %}
+
 
 {% block title %}
     {% trans "My Invoices" %}
@@ -35,7 +37,7 @@
                 {% endif %}
             </td>
             <td class="p-2">
-                {{ invoice.paid_at|date:"Y-m-d H:i" }}
+                {{ invoice.paid_at|jalali }}
             </td>
             <td class="p-2">
                 <button
@@ -58,6 +60,41 @@
     </tbody>
 </table>
 
-{% include 'base/pagination.html' %}
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+
+        <a
+            hx-get="{% url 'order:invoice_list' %}?page={{ page_obj.previous_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Previous" %}
+        </a>
+
+    {% endif %}
+
+    <span>
+
+        {% trans "Page" %}
+        {{ page_obj.number }}
+        {% trans "of" %}
+        {{ page_obj.paginator.num_pages }}
+
+    </span>
+
+    {% if page_obj.has_next %}
+
+        <a
+            hx-get="{% url 'order:invoice_list' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Next" %}
+        </a>
+
+    {% endif %}
+
+</div>
 
 {% endblock %}

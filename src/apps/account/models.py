@@ -1,5 +1,10 @@
 from datetime import timedelta
 
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext as _
+
 from apps.account.enums import UserRoleEnum
 from apps.account.managers import UserManager
 from apps.account.validators import (
@@ -7,10 +12,6 @@ from apps.account.validators import (
     validate_iban,
 )
 from apps.core.models import BaseModel
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
-from django.utils import timezone
-from django.utils.translation import gettext as _
 
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):

@@ -1,9 +1,10 @@
-from apps.core.models import BaseModel
-from apps.product.enums import CoinTypeEnum, ProductStatusEnum
-from apps.product.service.pricing_service import PriceService
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from slugify import slugify
+
+from apps.core.models import BaseModel
+from apps.product.enums import CoinTypeEnum, ProductStatusEnum
+from apps.product.service.pricing_service import PriceService
 
 
 class CategoryModel(BaseModel):

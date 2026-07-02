@@ -1,6 +1,7 @@
-from apps.public.models import AboutUsModel, ArticleModel, BannerModel
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+
+from apps.public.models import AboutUsModel, ArticleModel, BannerModel
 
 
 @admin.register(BannerModel)

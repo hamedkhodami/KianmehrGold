@@ -1,5 +1,7 @@
-from apps.payment.views import callback, gateway
 from django.urls import path
+
+from apps.payment.views import callback, gateway
+
 
 app_name = "payment"
 

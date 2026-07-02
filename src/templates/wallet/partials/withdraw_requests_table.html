@@ -1,5 +1,7 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
+{% load static %}
+{% load price_filters %}
 
 {% block content %}
 
@@ -17,7 +19,7 @@
     <tbody>
         {% for req in withdraw_requests %}
         <tr>
-            <td>{{ req.amount }}</td>
+            <td>{{ req.amount|comma }}</td>
             <td>{{ req.status }}</td>
             <td>{{ req.admin_note|default:"-" }}</td>
 
@@ -29,4 +31,43 @@
         {% endfor %}
     </tbody>
 </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+
+        {% if page_obj.has_previous %}
+
+            <a
+                hx-get="{% url 'wallet:withdraw_requests' %}?page={{ page_obj.previous_page_number }}"
+                hx-target="#dashboard-content"
+                hx-swap="innerHTML"
+            >
+                {% trans "Previous" %}
+            </a>
+
+        {% endif %}
+
+        <span>
+
+            {% trans "Page" %}
+            {{ page_obj.number }}
+            {% trans "of" %}
+            {{ page_obj.paginator.num_pages }}
+
+        </span>
+
+        {% if page_obj.has_next %}
+
+            <a
+                hx-get="{% url 'wallet:withdraw_requests' %}?page={{ page_obj.next_page_number }}"
+                hx-target="#dashboard-content"
+                hx-swap="innerHTML"
+            >
+                {% trans "Next" %}
+            </a>
+
+        {% endif %}
+
+    </div>
+
 {% endblock %}

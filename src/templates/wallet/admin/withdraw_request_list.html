@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load price_filters %}
+{% load jalali %}
 
 {% block content %}
 
@@ -13,6 +14,7 @@
             <th>{% trans "User" %}</th>
             <th>{% trans "Amount" %}</th>
             <th>{% trans "Status" %}</th>
+            <th>{% trans "Date" %}</th>
             <th>{% trans "Details" %}</th>
         </tr>
     </thead>
@@ -21,38 +23,104 @@
         {% for req in requests %}
         {% with bank=req.user.bank_accounts.first %}
         <tr>
+
             <td>
                 <a
-                    href="{% url 'account:admin_user_detail' req.user.id %}"
-                    class="text-blue-600 hover:underline"
+                    hx-get="{% url 'account:admin_user_detail' req.user.id %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
                 >
                     {{ req.user.phone_number }}
                 </a>
             </td>
 
-            <td>{{ req.amount|comma }}</td>
-
-            <td>{{ req.status }}</td>
+            <td>
+                {{ req.amount|comma }}
+            </td>
 
             <td>
+                {{ req.status }}
+            </td>
+
+            <td>
+                {{ req.created_at|jalali }}
+            </td>
+
+            <td>
+
                 {% if req.status == "pending" %}
-                    <a href="{% url 'wallet:admin_withdraw_request_detail' req.pk %}">
+
+                    <a
+                        hx-get="{% url 'wallet:admin_withdraw_request_detail' req.pk %}"
+                        hx-target="#dashboard-content"
+                        hx-swap="innerHTML"
+                        class="w-full text-right p-2 bg-white rounded shadow"
+                    >
                         {% trans "View" %}
                     </a>
+
                 {% else %}
+
                     <span class="text-gray-400">
                         {% trans "Not Available" %}
                     </span>
+
                 {% endif %}
+
             </td>
+
         </tr>
         {% endwith %}
+
         {% empty %}
+
         <tr>
-            <td colspan="6">{% trans "No withdraw requests found." %}</td>
+            <td colspan="5">
+                {% trans "No withdraw requests found." %}
+            </td>
         </tr>
+
         {% endfor %}
+
     </tbody>
 </table>
+
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+
+        <a
+            hx-get="{% url 'wallet:withdraw_request_list' %}?page={{ page_obj.previous_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Previous" %}
+        </a>
+
+    {% endif %}
+
+    <span>
+
+        {% trans "Page" %}
+        {{ page_obj.number }}
+        {% trans "of" %}
+        {{ page_obj.paginator.num_pages }}
+
+    </span>
+
+    {% if page_obj.has_next %}
+
+        <a
+            hx-get="{% url 'wallet:withdraw_request_list' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Next" %}
+        </a>
+
+    {% endif %}
+
+</div>
 
 {% endblock %}

@@ -8,30 +8,12 @@ def validate_card_number(value: str) -> None:
     """
     Validate Iranian bank card number.
     """
-
     value = value.replace("-", "").replace(" ", "")
-
     if not value.isdigit():
         raise ValidationError(_("Card number must contain only digits."))
 
     if len(value) != 16:
-        raise ValidationError(_("Card number must be 16 digits."))
-
-    total = 0
-
-    for index, digit in enumerate(value):
-        num = int(digit)
-
-        if index % 2 == 0:
-            num *= 2
-
-            if num > 9:
-                num -= 9
-
-        total += num
-
-    if total % 10 != 0:
-        raise ValidationError("Invalid card number.")
+        raise ValidationError(_("Card number must contain exactly 16 digits."))
 
 
 def validate_iban(value: str) -> None:

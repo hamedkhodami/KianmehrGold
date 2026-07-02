@@ -1,8 +1,9 @@
-from apps.product.models import ProductModel
-from apps.public.models import AboutUsModel, ArticleModel, BannerModel
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from django.views import View
+
+from apps.product.models import ProductModel
+from apps.public.models import AboutUsModel, ArticleModel, BannerModel
 
 
 class HomeView(View):

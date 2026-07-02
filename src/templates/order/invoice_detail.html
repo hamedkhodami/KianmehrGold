@@ -1,6 +1,8 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
+{% load jalali %}
+
 
 {% block title %}
     {% trans "Invoice Details" %}
@@ -50,7 +52,7 @@
 
     <p>
         <strong>{% trans "Paid At" %}:</strong>
-        {{ invoice.paid_at|date:"Y-m-d H:i" }}
+        {{ invoice.paid_at|jalali }}
     </p>
 
     <p>

@@ -1,6 +1,8 @@
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
+{% load jalali %}
+
 
 {% block title %}
     {% trans "Sell Melted Gold Requests" %}
@@ -18,6 +20,7 @@
             <th>{% trans "Total Price" %}</th>
             <th>{% trans "Wallet Balance" %}</th>
             <th>{% trans "Status" %}</th>
+            <th>{% trans "Date" %}</th>
             <th>{% trans "Actions" %}</th>
         </tr>
     </thead>
@@ -27,7 +30,11 @@
             {% with item=order.items.first %}
             <tr>
                 <td>
-                    <a href="{% url 'account:admin_user_detail' order.user.id %}">
+                    <a
+                        hx-get="{% url 'account:admin_user_detail' order.user.id %}"
+                        hx-target="#dashboard-content"
+                        hx-swap="innerHTML"
+                    >
                         {{ order.user.phone_number }}
                     </a>
                 </td>
@@ -35,6 +42,7 @@
                 <td>{{ item.total_price }}</td>
                 <td>{{ order.user.wallet.balance }}</td>
                 <td>{{ order.status }}</td>
+                <td>{{ order.created_at|jalali }}</td>
 
                 <td>
                     {% if order.status == "pending" %}
@@ -57,25 +65,41 @@
     </tbody>
 </table>
 
-{# 🔥 Pagination #}
 <div class="pagination">
-    <span class="step-links">
 
-        {% if page_obj.has_previous %}
-            <a href="?page=1">{% trans "First" %}</a>
-            <a href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
-        {% endif %}
+    {% if page_obj.has_previous %}
 
-        <span class="current">
-            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
-        </span>
+        <a
+            hx-get="{% url 'order:admin_sell_list' %}?page={{ page_obj.previous_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Previous" %}
+        </a>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}</a>
-        {% endif %}
+    {% endif %}
+
+    <span>
+
+        {% trans "Page" %}
+        {{ page_obj.number }}
+        {% trans "of" %}
+        {{ page_obj.paginator.num_pages }}
 
     </span>
+
+    {% if page_obj.has_next %}
+
+        <a
+            hx-get="{% url 'order:admin_sell_list' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Next" %}
+        </a>
+
+    {% endif %}
+
 </div>
 
 {% endblock %}

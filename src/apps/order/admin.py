@@ -1,6 +1,7 @@
-from apps.order.models import InvoiceModel, OrderItemModel, OrderModel
 from django.contrib import admin
 from django.utils.translation import gettext as _
+
+from apps.order.models import InvoiceModel, OrderItemModel, OrderModel
 
 
 @admin.register(OrderModel)

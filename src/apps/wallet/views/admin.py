@@ -1,13 +1,14 @@
-from apps.account.mixins import AdminRequiredMixin
-from apps.notification.enums import NotificationEnums
-from apps.notification.models import Notification
-from apps.wallet import models
-from apps.wallet.models import WithdrawRequestModel
 from django.contrib import messages
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.generic import ListView, View
+
+from apps.account.mixins import AdminRequiredMixin
+from apps.notification.enums import NotificationEnums
+from apps.notification.models import Notification
+from apps.wallet import models
+from apps.wallet.models import WithdrawRequestModel
 
 
 class AdminWithdrawRequestListView(AdminRequiredMixin, ListView):
@@ -105,4 +106,4 @@ class AdminWithdrawRequestDetailView(AdminRequiredMixin, View):
         else:
             messages.error(request, _("Invalid action."))
 
-        return redirect("wallet:withdraw_request_list")
+        return redirect("dashboard:dashboard")

@@ -1,6 +1,7 @@
-from apps.wallet.models import WithdrawRequestModel
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
+from apps.wallet.models import WithdrawRequestModel
 
 
 class WithdrawRequestForm(forms.ModelForm):

@@ -1,9 +1,10 @@
 from decimal import Decimal
 
-from apps.product.models import GoldPriceModel
 from django.http import JsonResponse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
+
+from apps.product.models import GoldPriceModel
 
 
 def api_get_gold_price(request):

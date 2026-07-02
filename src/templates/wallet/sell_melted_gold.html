@@ -27,7 +27,7 @@
     </p>
 </div>
 
-<form id="sell-form" method="post" style="display:none;">
+<form id="sell-form" method="post" style="display:none;" action="{% url 'wallet:sell_melted_gold' %}">
     {% csrf_token %}
     <input type="hidden" name="gold_amount" id="final-gold-amount">
     <button type="submit" class="btn btn-danger">

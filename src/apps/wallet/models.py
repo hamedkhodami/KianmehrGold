@@ -1,12 +1,13 @@
 import uuid
 
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 from apps.core.models import BaseModel
 from apps.wallet.enums import (
     WalletTransactionTypeEnum,
     WithdrawStatusEnum,
 )
-from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class WalletModel(BaseModel):

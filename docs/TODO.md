@@ -69,8 +69,8 @@
 | Step | Title | Description | Status |
 |--------|--------|-------------|--------|
 | 1️⃣ | Frontend Collaboration | Collaborate with frontend development, review templates, improve UI integration, and support frontend implementation throughout the phase | 🎯 |
-| 2️⃣ | System Review & Refinement | Review all templates, views, forms, services, and business logic to improve small details, consistency, usability, and overall code quality | 📌 |
-| 3️⃣ | Gold Price API Integration Testing | Connect to the real gold price API, validate pricing calculations, and verify production behavior | 📌 |
+| 2️⃣ | System Review & Refinement | Review all templates, views, forms, services, and business logic to improve small details, consistency, usability, and overall code quality | ✅ |
+| 3️⃣ | Gold Price API Integration Testing | Connect to the real gold price API, validate pricing calculations, and verify production behavior |🎯 |
 | 4️⃣ | SMS Provider Integration Testing | Integrate the real IPPanel service, verify SMS delivery, notification flows, and production configurations | 📌 |
 | 5️⃣ | Payment Gateway Integration Testing | Integrate the real payment gateway (Beh Pardakht Mellat), verify callback, settlement, invoice generation, and payment workflows | 📌 |
 | 6️⃣ | Complete Internationalization | Finalize Rosetta translations, review multilingual content, and verify translated templates throughout the project | 📌 |

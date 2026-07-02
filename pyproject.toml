@@ -19,3 +19,10 @@ fix = true
 [tool.ruff.lint]
 select = ["E", "F", "B", "I"]
 ignore = ["F403", "F405", "E501", "F841", "E722"]
+
+[tool.ruff.lint.isort]
+force-single-line = false
+force-sort-within-sections = true
+lines-after-imports = 2
+known-first-party = ["apps"]
+known-third-party = ["django"]
