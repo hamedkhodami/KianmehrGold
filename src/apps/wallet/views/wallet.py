@@ -89,7 +89,7 @@ class WithdrawRequestCreateView(LoginRequiredMixin, CreateView):
     def notify_admin(self, withdraw_request):
         create_notify_for_admins(
             type=NotificationEnums.ADMIN_ALERT,
-            title=_("New withdraw request from %(phone)s")
+            title=_("New withdraw request")
             % {"phone": withdraw_request.user.phone_number},
         )
 

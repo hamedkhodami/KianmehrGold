@@ -102,7 +102,7 @@ class SellMeltedGoldView(LoginRequiredMixin, View):
         if not form.is_valid():
             return render(
                 request,
-                "wallet/sell_melted_gold.html",
+                "dashboard/dashboard.html",
                 {
                     "form": form,
                     "inventory": inventory,
@@ -113,12 +113,12 @@ class SellMeltedGoldView(LoginRequiredMixin, View):
 
         if gold_amount > inventory:
             messages.error(request, _("You don't have enough gold"))
-            return redirect("wallet:sell_melted_gold")
+            return redirect("dashboard:dashboard")
 
         latest_price = GoldPriceModel.objects.filter(is_active=True).last()
         if not latest_price:
             messages.error(request, _("Gold price not available"))
-            return redirect("wallet:sell_melted_gold")
+            return redirect("dashboard:dashboard")
 
         unit_price = latest_price.gold_melted  # Decimal
         total_price = (gold_amount * unit_price).quantize(Decimal("1"))
