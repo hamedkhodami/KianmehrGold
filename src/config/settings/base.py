@@ -139,7 +139,6 @@ STATIC_ROOT = BASE_DIR / os.getenv("STATIC_ROOT", "staticfiles")
 # ---Media--------------------------------------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / os.getenv("MEDIA_ROOT", "static/media")
-ENABLE_MEDIA_SERVE_IN_LOCAL = bool(int(os.getenv("ENABLE_MEDIA_SERVE_IN_LOCAL", 0)))
 # ----------------------------------------------------------------
 
 

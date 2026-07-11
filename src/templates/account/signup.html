@@ -8,42 +8,56 @@
 
 {% block body %}
 
-<div class="signup-container">
+<div class="signup-container max-w-sm mx-auto mt-10 bg-white p-6 rounded-lg shadow">
 
-    <h1>{% trans "Create an account" %}</h1>
+    <h1 class="text-xl font-semibold mb-6 text-center">
+        {% trans "Create an account" %}
+    </h1>
 
-    <form method="post" novalidate>
+    <form method="post" novalidate class="space-y-4">
         {% csrf_token %}
 
         <!-- Phone Number -->
         <div>
-            <label for="id_phone_number">{% trans "Phone number" %}</label>
+            <label for="id_phone_number" class="block text-sm mb-1">
+                {% trans "Phone number" %}
+            </label>
             <input type="text" name="phone_number" id="id_phone_number"
-                   value="{{ form.phone_number.value }}">
+                   value="{{ form.phone_number.value }}"
+                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
         </div>
 
         <!-- Password -->
         <div>
-            <label for="id_password1">{% trans "Password" %}</label>
-            <input type="password" name="password1" id="id_password1">
+            <label for="id_password1" class="block text-sm mb-1">
+                {% trans "Password" %}
+            </label>
+            <input type="password" name="password1" id="id_password1"
+                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
         </div>
 
         <!-- Password Repeat -->
         <div>
-            <label for="id_password2">{% trans "Repeat password" %}</label>
-            <input type="password" name="password2" id="id_password2">
+            <label for="id_password2" class="block text-sm mb-1">
+                {% trans "Repeat password" %}
+            </label>
+            <input type="password" name="password2" id="id_password2"
+                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
         </div>
 
         <!-- Submit -->
-        <button type="submit">
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
             {% trans "Register" %}
         </button>
     </form>
 
     <!-- Link to Login -->
-    <p>
+    <p class="text-center text-sm mt-4">
         {% trans "Already have an account?" %}
-        <a href="{% url 'account:login' %}">{% trans "Login" %}</a>
+        <a href="{% url 'account:login' %}" class="text-blue-600 hover:underline">
+            {% trans "Login" %}
+        </a>
     </p>
 
 </div>

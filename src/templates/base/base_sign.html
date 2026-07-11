@@ -8,11 +8,28 @@
     <title>{% block title%}{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'public/css/styles.css' %}">
+    <style>
+            .dashboard-message.success {
+                background-color: #d1fae5; /* green-100 */
+                color: #065f46; /* green-700 */
+            }
+            .dashboard-message.error {
+                background-color: #fee2e2; /* red-100 */
+                color: #991b1b; /* red-700 */
+            }
+    </style>
 
     {% block extra_style %}
     {% endblock %}
 </head>
 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 <body>
 
 {% block body %}
@@ -20,6 +37,15 @@
 
 
   <script src="{% static 'public/js/signup-in.js' %}"></script>
+  <script>
+        setTimeout(function () {
+            document.querySelectorAll('.dashboard-message').forEach(function (msg) {
+                msg.style.transition = "opacity 0.5s";
+                msg.style.opacity = "0";
+                setTimeout(() => msg.remove(), 500);
+            });
+        }, 2000);
+  </script>
 
   {% block extra_script %}
   {% endblock %}

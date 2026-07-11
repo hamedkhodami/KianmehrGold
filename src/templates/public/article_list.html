@@ -34,7 +34,7 @@
                         </h2>
 
                         <p class="text-sm text-gray-600 leading-6">
-                            {{ article.content|striptags|truncatechars:100 }}
+                            {{ article.content|striptags|truncatechars:100|safe }}
                         </p>
 
                     </div>
