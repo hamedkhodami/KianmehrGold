@@ -10,6 +10,8 @@ from django.views import View
 from xhtml2pdf import pisa
 
 from apps.account.mixins import AdminRequiredMixin
+from apps.notification.enums import NotificationEnums
+from apps.notification.models import Notification
 from apps.order.enums import OrderStatusEnum, OrderTypeEnum
 from apps.order.models import InvoiceModel, OrderModel
 from apps.wallet.enums import WalletTransactionTypeEnum
@@ -65,6 +67,13 @@ class AdminApproveSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, Vie
         order.status = OrderStatusEnum.COMPLETED
         order.save()
 
+        Notification.objects.create(
+            type=NotificationEnums.WALLET_TRANSACTION,
+            to_user=order.user,
+            title=_("Your melted gold sell request has been approved"),
+            kwargs={"amount": str(total_price), "status": "approved"},
+        )
+
         messages.success(request, _("Sell request approved"))
         return redirect("dashboard:dashboard")
 
@@ -90,6 +99,13 @@ class AdminRejectSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View
 
         order.status = OrderStatusEnum.CANCELED
         order.save()
+
+        Notification.objects.create(
+            type=NotificationEnums.WALLET_TRANSACTION,
+            to_user=order.user,
+            title=_("Your melted gold sell request has been rejected"),
+            kwargs={"amount": str(gold_amount), "status": "rejected"},
+        )
 
         messages.success(request, _("Sell request rejected"))
         return redirect("dashboard:dashboard")
