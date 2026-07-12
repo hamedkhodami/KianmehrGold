@@ -20,6 +20,24 @@ DATABASES = {
 # ----------------------------------------------------------------
 
 
+# ---Django-q config-----------------------------------------------
+Q_CLUSTER = {
+    "name": "gold",
+    "workers": int(os.getenv("Q_CLUSTER_WORKERS", 2)),
+    "recycle": int(os.getenv("Q_CLUSTER_RECYCLE", 500)),
+    "timeout": int(os.getenv("Q_CLUSTER_TIMEOUT", 60)),
+    "retry": int(os.getenv("Q_CLUSTER_RETRY", 90)),
+    "queue_limit": int(os.getenv("Q_CLUSTER_QUEUE_LIMIT", 50)),
+    "save_limit": int(os.getenv("Q_CLUSTER_SAVE_LIMIT", 100)),
+    "redis": {
+        "host": os.getenv("REDIS_HOST", "redis"),
+        "port": int(os.getenv("REDIS_PORT", 6379)),
+        "db": int(os.getenv("REDIS_Q_DB", 2)),
+    },
+}
+# ----------------------------------------------------------------
+
+
 # ---Production whitenoise----------------------------------------
 if int(os.getenv("ENABLE_WHITENOISE", default=0)):
     MIDDLEWARE += [

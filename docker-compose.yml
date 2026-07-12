@@ -15,7 +15,7 @@ services:
       - media_volume:/var/www/media
     depends_on:
       redis:
-        condition: service_started
+        condition: service_healthy
 
   redis:
     image: redis:7-alpine
@@ -24,6 +24,11 @@ services:
       - "6379:6379"
     volumes:
       - redis_volume:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   nginx:
     image: nginx:alpine

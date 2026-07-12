@@ -155,10 +155,13 @@ AUTH_USER_MODEL = "account.User"
 # ---Redis-------------------------------------------------------
 REDIS_CONFIG = {
     "DB": int(os.getenv("REDIS_DB", 0)),
-    "HOST": os.getenv("REDIS_HOST", "localhost"),
+    "HOST": os.getenv("REDIS_HOST", "redis"),
     "PORT": int(os.getenv("REDIS_PORT", 6379)),
     "CHANNEL_NAME": os.getenv("REDIS_CHANNEL_NAME", "market_price"),
 }
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 # ---------------------------------------------------------------
 
 
@@ -166,7 +169,7 @@ REDIS_CONFIG = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{REDIS_CONFIG['HOST']}:{REDIS_CONFIG['PORT']}/{REDIS_CONFIG['DB']}",
+        "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}/{os.getenv('REDIS_CACHE_DB')}",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },

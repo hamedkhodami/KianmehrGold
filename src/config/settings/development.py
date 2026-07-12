@@ -26,9 +26,9 @@ Q_CLUSTER = {
     "queue_limit": int(os.getenv("Q_CLUSTER_QUEUE_LIMIT", 50)),
     "save_limit": int(os.getenv("Q_CLUSTER_SAVE_LIMIT", 100)),
     "redis": {
-        "host": os.getenv("REDIS_HOST", "localhost"),
+        "host": os.getenv("REDIS_HOST", "redis"),
         "port": int(os.getenv("REDIS_PORT", 6379)),
-        "db": int(os.getenv("REDIS_DB", 0)),
+        "db": int(os.getenv("REDIS_Q_DB", 2)),
     },
 }
 # ----------------------------------------------------------------
