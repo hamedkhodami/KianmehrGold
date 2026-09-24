@@ -8,17 +8,24 @@
     {% trans "Invoice Details" %}
 {% endblock %}
 
+
 {% block content %}
 
 <h2 class="text-xl font-bold mb-4">
     {% trans "Invoice Details" %}
 </h2>
 
+
 <div class="space-y-2">
 
     <p>
         <strong>{% trans "Invoice Number" %}:</strong>
         {{ invoice.invoice_number }}
+    </p>
+
+    <p>
+        <strong>{% trans "Title" %}:</strong>
+        {{ invoice.title }}
     </p>
 
     <p>
@@ -43,10 +50,15 @@
 
     <p>
         <strong>{% trans "Status" %}:</strong>
+
         {% if invoice.is_paid %}
-            <span class="text-green-600">{% trans "Paid" %}</span>
+            <span class="text-green-600">
+                {% trans "Paid" %}
+            </span>
         {% else %}
-            <span class="text-red-600">{% trans "Not Paid" %}</span>
+            <span class="text-red-600">
+                {% trans "Not Paid" %}
+            </span>
         {% endif %}
     </p>
 
@@ -56,26 +68,22 @@
     </p>
 
     <p>
-        <strong>{% trans "Locked Gold Price" %}:</strong>
-        {{ invoice.locked_gold_price }}
-    </p>
-
-    <p>
-        <strong>{% trans "Locked Coin Price" %}:</strong>
-        {{ invoice.locked_coin_price }}
+        <strong>{% trans "Locked Price At" %}:</strong>
+        {{ invoice.order.locked_price_at|jalali }}
     </p>
 
 </div>
 
+
 <hr class="my-4">
 
-<!-- دکمه خروجی PDF -->
+
 <a
-        href="{% url 'order:invoice_pdf' invoice.id %}"
-        class="px-4 py-2 bg-blue-600 text-white rounded"
-        target="_blank"
+    href="{% url 'order:invoice_docx' invoice.id %}"
+    class="px-4 py-2 bg-blue-600 text-white rounded"
+    target="_blank"
 >
-    {% trans "Download PDF" %}
+    {% trans "Download" %}
 </a>
 
 {% endblock %}

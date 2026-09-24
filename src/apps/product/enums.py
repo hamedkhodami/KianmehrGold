@@ -11,4 +11,9 @@ class CoinTypeEnum(TextChoices):
     QUARTER = "quarter", _("Quarter")
     HALF = "half", _("Half")
     FULL = "full", _("Full")
-    EMAMI = "emai", _("Emai")
+
+
+class CoinCategoryEnum(TextChoices):
+    BANK = "bank", _("Bank")
+    PARSIAN = "parsian", _("Parsian")
+    MARKET = "market", _("Market")

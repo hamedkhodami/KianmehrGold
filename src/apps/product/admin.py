@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from apps.product.models import CategoryModel, CoinModel, GoldPriceModel, ProductModel
+from apps.product.forms import CoinModelForm
+from apps.product.models import (
+    CategoryModel,
+    CoinModel,
+    GoldPriceModel,
+    ProductModel,
+)
 
 
 @admin.register(CategoryModel)
@@ -32,13 +38,13 @@ class ProductAdmin(admin.ModelAdmin):
         "weight",
         "slug",
         "wage_percent",
+        "profit_percent",
         "tax_percent",
-        "stock",
         "status",
         "created_at",
     )
     list_display_links = ("id", "title")
-    search_fields = ("title", "slug", "description")
+    search_fields = ("title", "slug", "description", "id")
     list_filter = ("status", "category", "created_at")
     readonly_fields = ("created_at", "updated_at", "status", "slug")
 
@@ -49,7 +55,15 @@ class ProductAdmin(admin.ModelAdmin):
         ),
         (
             _("Pricing Information"),
-            {"fields": ("weight", "wage_percent", "tax_percent", "status")},
+            {
+                "fields": (
+                    "weight",
+                    "wage_percent",
+                    "profit_percent",
+                    "tax_percent",
+                    "status",
+                )
+            },
         ),
         (_("System Information"), {"fields": ("created_at", "updated_at")}),
     )
@@ -60,29 +74,79 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(CoinModel)
 class CoinAdmin(admin.ModelAdmin):
+    form = CoinModelForm
+
     list_display = (
         "id",
+        "category",
         "coin_type",
         "weight",
-        "stock",
+        "market_extra_fee",
+        "market_percent_fee",
         "status",
         "is_active",
+        "stock",
         "created_at",
     )
-    list_display_links = ("id", "coin_type")
-    search_fields = ("coin_type",)
-    list_filter = ("coin_type", "is_active", "created_at")
-    readonly_fields = ("created_at", "updated_at", "status")
+
+    search_fields = (
+        "category",
+        "coin_type",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "status",
+    )
 
     fieldsets = (
         (
-            _("Coin Information"),
-            {"fields": ("coin_type", "image", "weight", "stock", "is_active")},
+            "General Information",
+            {
+                "fields": (
+                    "category",
+                    "image",
+                    "stock",
+                    "status",
+                    "is_active",
+                ),
+            },
         ),
-        (_("System Information"), {"fields": ("created_at", "updated_at")}),
+        (
+            "Coin Type (Bank & Normal Coins)",
+            {
+                "fields": ("coin_type",),
+            },
+        ),
+        (
+            "Weight",
+            {
+                "fields": ("weight",),
+            },
+        ),
+        (
+            "Pricing (Parsian & Normal Coins)",
+            {
+                "fields": (
+                    "market_extra_fee",
+                    "market_percent_fee",
+                ),
+            },
+        ),
+        (
+            "System Information",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                ),
+            },
+        ),
     )
 
-    ordering = ("-created_at",)
+    class Media:
+        js = ("public/js/admin.js",)
 
 
 @admin.register(GoldPriceModel)
@@ -90,17 +154,31 @@ class GoldPriceAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "gold_melted",
-        "gold_ounce",
+        "internal_gold_17",
         "gold_mozanneh",
-        "quarter_coin",
-        "half_coin",
-        "full_coin",
-        "emami_coin",
+        "gold_ounce",
+        "silver_gram",
+        "usd_price",
+        "is_active",
+        "effective_at",
         "created_at",
     )
-    list_display_links = ("id", "created_at")
-    list_filter = ("created_at",)
-    readonly_fields = ("created_at", "updated_at")
+
+    list_filter = (
+        "is_active",
+        "effective_at",
+        "created_at",
+    )
+
+    search_fields = (
+        "id",
+        "effective_at",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
 
     fieldsets = (
         (
@@ -108,17 +186,42 @@ class GoldPriceAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "gold_melted",
-                    "gold_ounce",
+                    "gold_24",
                     "gold_mozanneh",
-                    "quarter_coin",
-                    "half_coin",
-                    "full_coin",
-                    "emami_coin",
+                    "internal_gold_17",
+                    "gold_ounce",
                 )
             },
         ),
-        (_("System Information"), {"fields": ("created_at", "updated_at")}),
+        (
+            _("Silver Prices"),
+            {"fields": ("silver_gram",)},
+        ),
+        (
+            _("Coin Prices"),
+            {
+                "fields": (
+                    "quarter_coin",
+                    "half_coin",
+                    "full_coin",
+                )
+            },
+        ),
+        (
+            _("Currency Prices"),
+            {"fields": ("usd_price",)},
+        ),
+        (
+            _("Meta Information"),
+            {
+                "fields": (
+                    "is_active",
+                    "effective_at",
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
     )
 
-    date_hierarchy = "created_at"
-    ordering = ("-created_at",)
+    ordering = ("-effective_at", "-created_at")

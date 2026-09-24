@@ -2,18 +2,18 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template.loader import get_template
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views import View
-from xhtml2pdf import pisa
+from django.views.decorators.cache import never_cache
 
 from apps.account.mixins import AdminRequiredMixin
-from apps.notification.enums import NotificationEnums
+from apps.notification.enums import NotificationChannelEnum, NotificationTypeEnum
 from apps.notification.models import Notification
 from apps.order.enums import OrderStatusEnum, OrderTypeEnum
 from apps.order.models import InvoiceModel, OrderModel
+from apps.order.services import InvoiceDOCXService
 from apps.wallet.enums import WalletTransactionTypeEnum
 from apps.wallet.models import GoldInventoryModel, WalletTransactionModel
 
@@ -38,6 +38,7 @@ class AdminSellMeltedGoldListView(AdminRequiredMixin, View):
         )
 
 
+@method_decorator(never_cache, name="dispatch")
 class AdminApproveSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View):
 
     @transaction.atomic
@@ -68,7 +69,8 @@ class AdminApproveSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, Vie
         order.save()
 
         Notification.objects.create(
-            type=NotificationEnums.WALLET_TRANSACTION,
+            type=NotificationTypeEnum.WALLET_TRANSACTION,
+            channel=NotificationChannelEnum.SMS,
             to_user=order.user,
             title=_("Your melted gold sell request has been approved"),
             kwargs={"amount": str(total_price), "status": "approved"},
@@ -78,6 +80,7 @@ class AdminApproveSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, Vie
         return redirect("dashboard:dashboard")
 
 
+@method_decorator(never_cache, name="dispatch")
 class AdminRejectSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View):
 
     @transaction.atomic
@@ -101,7 +104,8 @@ class AdminRejectSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View
         order.save()
 
         Notification.objects.create(
-            type=NotificationEnums.WALLET_TRANSACTION,
+            type=NotificationTypeEnum.WALLET_TRANSACTION,
+            channel=NotificationChannelEnum.SMS,
             to_user=order.user,
             title=_("Your melted gold sell request has been rejected"),
             kwargs={"amount": str(gold_amount), "status": "rejected"},
@@ -111,6 +115,7 @@ class AdminRejectSellMeltedGoldView(LoginRequiredMixin, AdminRequiredMixin, View
         return redirect("dashboard:dashboard")
 
 
+@method_decorator(never_cache, name="dispatch")
 class UserSellMeltedGoldListView(LoginRequiredMixin, View):
     def get(self, request):
 
@@ -150,17 +155,7 @@ class InvoiceDetailView(LoginRequiredMixin, View):
         return render(request, "order/invoice_detail.html", {"invoice": invoice})
 
 
-class InvoicePDFView(LoginRequiredMixin, View):
+class UserInvoiceDOCXView(LoginRequiredMixin, View):
     def get(self, request, pk):
         invoice = get_object_or_404(InvoiceModel, id=pk, order__user=request.user)
-        template = get_template("order/invoice/invoice_pdf.html")
-        html = template.render({"invoice": invoice})
-
-        response = HttpResponse(content_type="application/pdf")
-        response["Content-Disposition"] = (
-            f"attachment; filename={invoice.invoice_number}.pdf"
-        )
-        pisa_status = pisa.CreatePDF(html, dest=response)
-        if pisa_status.err:
-            return HttpResponse("Error generating PDF", status=500)
-        return response
+        return InvoiceDOCXService.generate_docx(invoice)

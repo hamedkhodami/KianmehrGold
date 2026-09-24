@@ -3,6 +3,7 @@ from django.utils.translation import gettext as _
 
 from apps.wallet.models import (
     GoldInventoryModel,
+    GoldPriceRuleModel,
     WalletModel,
     WalletTransactionModel,
     WithdrawRequestModel,
@@ -182,3 +183,17 @@ class GoldInventoryAdmin(admin.ModelAdmin):
     ordering = ("-created_at",)
 
     date_hierarchy = "created_at"
+
+
+@admin.register(GoldPriceRuleModel)
+class GoldPriceRuleAdmin(admin.ModelAdmin):
+    list_display = ("id", "buy_percent", "sell_percent", "is_active", "created_at")
+    list_display_links = ("id",)
+    list_filter = ("is_active", "created_at")
+    readonly_fields = ("created_at", "updated_at")
+    ordering = ("-created_at",)
+
+    fieldsets = (
+        (_("Pricing Rules"), {"fields": ("buy_percent", "sell_percent", "is_active")}),
+        (_("System Information"), {"fields": ("created_at", "updated_at")}),
+    )

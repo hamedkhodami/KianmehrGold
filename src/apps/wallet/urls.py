@@ -39,7 +39,7 @@ urlpatterns = [
     ),
     # AJAX APIs
     path("api/gold-price/", api.api_get_gold_price, name="api_gold_price"),
-    path("api/calc-gold/", api.api_calculate_gold_amount, name="api_calc_gold"),
+    path("api/calc-gold/", api.api_calc_buy_melted_gold, name="api_calc_gold"),
     path(
         "api/calc-sell-melted-gold/",
         api.api_calc_sell_melted_gold,

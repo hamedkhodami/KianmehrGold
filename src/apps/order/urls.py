@@ -30,5 +30,9 @@ urlpatterns = [
     path(
         "invoices/<uuid:pk>/", views.InvoiceDetailView.as_view(), name="invoice_detail"
     ),
-    path("invoices/<uuid:pk>/pdf/", views.InvoicePDFView.as_view(), name="invoice_pdf"),
+    path(
+        "invoice/<uuid:pk>/docx/",
+        views.UserInvoiceDOCXView.as_view(),
+        name="invoice_docx",
+    ),
 ]

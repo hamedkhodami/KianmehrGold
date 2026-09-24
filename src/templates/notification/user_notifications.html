@@ -1,0 +1,85 @@
+{% extends "base/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% load jalali %}
+
+{% block title %}
+    {% trans "My Notifications" %}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-2xl font-bold text-dashboard-dark mb-6">
+    {% trans "My Notifications" %}
+</h1>
+
+<div class="space-y-4">
+
+    {% for notif in notifications %}
+        <div class="border border-dashboard-line rounded-xl p-4 bg-white shadow-sm">
+
+            <h2 class="font-bold text-lg text-dashboard-dark">
+                {{ notif.title }}
+            </h2>
+
+            {% if notif.description %}
+                <p class="text-gray-700 mt-2">
+                    {{ notif.description }}
+                </p>
+            {% endif %}
+
+            <p class="text-sm text-gray-500 mt-3">
+                {% trans "Notification Type" %}: {{ notif.get_type_display }}
+                <br>
+                {% trans "Channel" %}: {{ notif.get_channel_display }}
+                <br>
+                {% trans "Date" %}: {{ notif.created_at|jalali:"(%H:%M) %Y/%m/%d" }}
+            </p>
+
+        </div>
+    {% empty %}
+        <p class="text-gray-600">
+            {% trans "No notifications found." %}
+        </p>
+    {% endfor %}
+
+</div>
+
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+
+        <a
+            hx-get="{% url 'notification:user_notifications' %}?page={{ page_obj.previous_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Previous" %}
+        </a>
+
+    {% endif %}
+
+    <span>
+
+        {% trans "Page" %}
+        {{ page_obj.number }}
+        {% trans "of" %}
+        {{ page_obj.paginator.num_pages }}
+
+    </span>
+
+    {% if page_obj.has_next %}
+
+        <a
+            hx-get="{% url 'notification:user_notifications' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#dashboard-content"
+            hx-swap="innerHTML"
+        >
+            {% trans "Next" %}
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

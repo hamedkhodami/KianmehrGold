@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from apps.core.models import BaseModel
-from apps.notification.enums import NotificationEnums
+from apps.notification.enums import NotificationChannelEnum, NotificationTypeEnum
 
 
 User = get_user_model()
@@ -11,9 +11,17 @@ User = get_user_model()
 
 # Notification model
 class Notification(BaseModel):
-    Type = NotificationEnums
+    Type = NotificationTypeEnum
+    Channel = NotificationChannelEnum
 
     type = models.CharField(_("Notification Type"), max_length=50, choices=Type.choices)
+    channel = models.CharField(
+        _("Notification Channel"),
+        max_length=50,
+        choices=Channel.choices,
+        default=NotificationChannelEnum.IN_APP,
+    )
+
     title = models.CharField(_("Notif title"), max_length=255)
     description = models.TextField(_("Notif description"), null=True, blank=True)
     # Attach content

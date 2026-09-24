@@ -64,7 +64,7 @@ class UserBankAccount(BaseModel):
         "account.User",
         on_delete=models.CASCADE,
         related_name="bank_accounts",
-        verbose_name="User",
+        verbose_name=_("User"),
     )
 
     bank_name = models.CharField(_("Bank Name"), max_length=128, blank=True)
@@ -72,25 +72,30 @@ class UserBankAccount(BaseModel):
     card_number = models.CharField(
         max_length=16,
         validators=[validate_card_number],
-        verbose_name="Card Number",
+        verbose_name=_("Card Number"),
         help_text="16-digit bank card number",
     )
 
     iban = models.CharField(
         max_length=26,
         validators=[validate_iban],
-        verbose_name="IBAN",
+        verbose_name=_("IBAN"),
         help_text="Iranian Sheba Number",
     )
 
     is_default = models.BooleanField(
         default=False,
-        verbose_name="Default Account",
+        verbose_name=_("Default Account"),
     )
 
     class Meta:
-        verbose_name = "Bank Account"
-        verbose_name_plural = "Bank Accounts"
+        verbose_name = _("Bank Account")
+        verbose_name_plural = _("Bank Accounts")
 
     def __str__(self):
         return f"{self.bank_name} " f"({self.card_number[-4:]})"
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            UserBankAccount.objects.filter(user=self.user).update(is_default=False)
+        super().save(*args, **kwargs)

@@ -19,29 +19,54 @@ class OrderModel(BaseModel):
     )
 
     status = models.CharField(
-        _("Status"), max_length=20, choices=Status.choices, default=Status.PENDING
+        _("Status"),
+        max_length=20,
+        choices=Status.choices,
+        default=Status.PENDING,
     )
 
     payment_method = models.CharField(
         _("Payment Method"),
         max_length=20,
         choices=PaymentMethod.choices,
-        default=PaymentMethod.WALLET,
+        null=True,
+        blank=True,
     )
 
-    order_type = models.CharField(max_length=20, choices=Type.choices)
+    order_type = models.CharField(
+        max_length=20,
+        choices=Type.choices,
+    )
 
     total_amount = models.DecimalField(
-        _("Total Amount"), max_digits=18, decimal_places=0, default=0
+        _("Total Amount"),
+        max_digits=18,
+        decimal_places=0,
+        default=0,
     )
-    expire_at = models.DateTimeField(_("Expire At"), null=True, blank=True)
-    locked_price_at = models.DateTimeField(_("Locked Price At"), null=True, blank=True)
+
+    locked_price_at = models.DateTimeField(
+        _("Locked Price At"),
+        null=True,
+        blank=True,
+    )
+
+    expire_at = models.DateTimeField(
+        _("Expire At"),
+        null=True,
+        blank=True,
+    )
+
+    invoice_generated = models.BooleanField(
+        _("Invoice Generated"),
+        default=False,
+    )
 
     class Meta:
         verbose_name = _("Order")
         verbose_name_plural = _("Orders")
 
-    def __str__(self):
+    def str(self):
         return f"Order - {self.user.phone_number} - {self.status}"
 
 
@@ -85,15 +110,19 @@ class OrderItemModel(BaseModel):
         super().clean()
 
         if self.gold_amount > 0:
+            if self.product or self.coin:
+                raise ValidationError(
+                    _("Weight-based items cannot have product or coin.")
+                )
             return
 
         if not self.product and not self.coin:
             raise ValidationError(_("You must select either a product or a coin."))
 
-        if self.product and self.coin:
-            raise ValidationError(
-                _("You cannot select both product and coin at the same time.")
-            )
+        selected = [self.product, self.coin]
+
+        if sum(1 for x in selected if x) > 1:
+            raise ValidationError(_("You cannot select more than one item type."))
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -112,6 +141,7 @@ class InvoiceModel(BaseModel):
     )
 
     invoice_number = models.CharField(_("Invoice Number"), max_length=50, unique=True)
+    title = models.CharField(_("Title"), max_length=100, blank=True, null=True)
     amount = models.DecimalField(_("Amount"), max_digits=18, decimal_places=0)
     tax_amount = models.DecimalField(
         _("Tax Amount"), max_digits=18, decimal_places=0, default=0
@@ -122,14 +152,6 @@ class InvoiceModel(BaseModel):
 
     is_paid = models.BooleanField(_("Paid"), default=False)
     paid_at = models.DateTimeField(_("Paid At"), blank=True, null=True)
-
-    locked_gold_price = models.DecimalField(
-        max_digits=18, decimal_places=0, null=True, blank=True
-    )
-
-    locked_coin_price = models.DecimalField(
-        max_digits=18, decimal_places=0, null=True, blank=True
-    )
 
     weight = models.DecimalField(max_digits=18, decimal_places=3, default=0)
 

@@ -15,7 +15,7 @@ from apps.account.mixins import AdminRequiredMixin, LogoutRequiredMixin
 from apps.account.models import User, UserBankAccount
 from apps.account.services.otp_service import OTPService
 from apps.core.utils import toast_form_errors
-from apps.notification.enums import NotificationEnums
+from apps.notification.enums import NotificationChannelEnum, NotificationTypeEnum
 from apps.notification.models import Notification
 
 
@@ -40,10 +40,12 @@ class RegisterView(LogoutRequiredMixin, FormView):
         self.request.session["verify_user_id"] = str(user.id)
 
         Notification.objects.create(
-            type=NotificationEnums.MOBILE_VERIFICATION_CODE,
-            title=_("Verification Code"),
-            kwargs={"code": otp_code},
+            type=NotificationTypeEnum.MOBILE_VERIFICATION_CODE,
+            channel=NotificationChannelEnum.SMS,
             to_user=user,
+            title="کد تأیید حساب",
+            kwargs={"code": otp_code},
+            send_notify=True,
         )
 
         return super().form_valid(form)
@@ -110,10 +112,11 @@ class SendCodeView(LogoutRequiredMixin, View):
         OTPService.set_otp(user.phone_number, str(code))
 
         Notification.objects.create(
-            type=NotificationEnums.MOBILE_VERIFICATION_CODE.value,
-            title=_("Phone number verification code"),
-            kwargs={"code": code},
+            type=NotificationTypeEnum.MOBILE_VERIFICATION_CODE,
+            channel=NotificationChannelEnum.SMS,
             to_user=user,
+            title="کد تأیید حساب",
+            kwargs={"code": code},
             send_notify=True,
         )
 

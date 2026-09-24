@@ -68,6 +68,17 @@
             </li>
 
             <li>
+                <button
+                    hx-get="{% url 'notification:user_notifications' %}"
+                    hx-target="#dashboard-content"
+                    hx-swap="innerHTML"
+                    class="w-full text-right p-2 bg-white rounded shadow"
+                >
+                    {% trans "Notifications" %}
+                </button>
+            </li>
+
+            <li>
                 <a href="/admin/" class="block text-right p-2 bg-white rounded shadow">
                     {% trans "Django Admin" %}
                 </a>

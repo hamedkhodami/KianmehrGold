@@ -16,7 +16,7 @@ from django.views.generic import (
     TemplateView,
 )
 
-from apps.notification.enums import NotificationEnums
+from apps.notification.enums import NotificationTypeEnum
 from apps.notification.utils import create_notify_for_admins
 from apps.payment.enums import PaymentStatusEnum, PaymentTypeEnum
 from apps.payment.models import PaymentModel, WalletChargeModel
@@ -88,7 +88,7 @@ class WithdrawRequestCreateView(LoginRequiredMixin, CreateView):
 
     def notify_admin(self, withdraw_request):
         create_notify_for_admins(
-            type=NotificationEnums.ADMIN_ALERT,
+            type=NotificationTypeEnum.ADMIN_ALERT,
             title=_("New withdraw request")
             % {"phone": withdraw_request.user.phone_number},
         )

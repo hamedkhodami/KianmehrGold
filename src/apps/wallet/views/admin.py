@@ -1,11 +1,13 @@
 from django.contrib import messages
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
+from django.views.decorators.cache import never_cache
 from django.views.generic import ListView, View
 
 from apps.account.mixins import AdminRequiredMixin
-from apps.notification.enums import NotificationEnums
+from apps.notification.enums import NotificationChannelEnum, NotificationTypeEnum
 from apps.notification.models import Notification
 from apps.wallet import models
 from apps.wallet.models import WithdrawRequestModel
@@ -23,6 +25,7 @@ class AdminWithdrawRequestListView(AdminRequiredMixin, ListView):
         )
 
 
+@method_decorator(never_cache, name="dispatch")
 class AdminWithdrawRequestDetailView(AdminRequiredMixin, View):
     template_name = "wallet/admin/withdraw_request_detail.html"
 
@@ -71,7 +74,8 @@ class AdminWithdrawRequestDetailView(AdminRequiredMixin, View):
             withdraw_request.save()
 
             Notification.objects.create(
-                type=NotificationEnums.WALLET_TRANSACTION,
+                type=NotificationTypeEnum.WALLET_TRANSACTION,
+                channel=NotificationChannelEnum.SMS,
                 to_user=withdraw_request.user,
                 title=_("Withdraw approved by admin"),
                 kwargs={"amount": str(amount), "status": "approved"},
@@ -96,7 +100,8 @@ class AdminWithdrawRequestDetailView(AdminRequiredMixin, View):
             withdraw_request.save()
 
             Notification.objects.create(
-                type=NotificationEnums.WALLET_TRANSACTION,
+                type=NotificationTypeEnum.WALLET_TRANSACTION,
+                channel=NotificationChannelEnum.SMS,
                 to_user=withdraw_request.user,
                 title=_("Withdraw rejected by admin"),
                 kwargs={"amount": str(amount), "status": "rejected"},

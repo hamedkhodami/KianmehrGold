@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.cache import cache
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -114,3 +115,25 @@ class GoldInventoryModel(BaseModel):
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.amount}"
+
+
+class GoldPriceRuleModel(BaseModel):
+    buy_percent = models.DecimalField(
+        _("Buy Percent"), max_digits=5, decimal_places=2, default=0
+    )
+    sell_percent = models.DecimalField(
+        _("Sell Percent"), max_digits=5, decimal_places=2, default=0
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _("Gold Price Rule")
+        verbose_name_plural = _("Gold Price Rules")
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            GoldPriceRuleModel.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+        cache.delete("latest_melt_rule")

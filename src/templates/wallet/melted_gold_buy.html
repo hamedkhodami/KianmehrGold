@@ -6,116 +6,907 @@
     {% trans "Buy Melted Gold" %}
 {% endblock %}
 
-{% block content %}
 
-<section class="max-w-3xl mx-auto px-4 py-10">
+{% block extra_style %}
 
-    <!-- Title -->
-    <h2 class="text-2xl font-bold mb-6">
-        {% trans "Buy Melted Gold" %}
-    </h2>
+<style>
 
-    <!-- Steps -->
-    <div class="mb-8 bg-gray-50 border rounded p-4">
-        <h3 class="text-lg font-semibold mb-3">
-            {% trans "Purchase Steps" %}
-        </h3>
-        <ul class="list-disc pr-6 text-gray-700 leading-7">
-            <li>{% trans "Enter the amount you want to spend" %}</li>
-            <li>{% trans "System calculates how much gold you can buy" %}</li>
-            <li>{% trans "Confirm purchase" %}</li>
-            <li>{% trans "Gold is added to your inventory" %}</li>
-        </ul>
-    </div>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
 
-    <!-- Input -->
-    <div class="mb-6">
-        <label for="amount" class="block mb-2 font-medium">
-            {% trans "Amount (Toman)" %}
-        </label>
-        <input
-            type="number"
-            id="amount"
-            class="w-full border rounded px-3 py-2"
-            min="1000000"
-            placeholder="1,000,000"
-        >
-    </div>
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-    <!-- Result -->
-    <div id="gold-result" class="hidden bg-green-50 border border-green-300 rounded p-4 mb-6">
-        <p class="text-green-700 font-medium">
-            {% trans "You can buy" %}:
-            <span id="gold-amount" class="font-bold"></span>
-            {% trans "grams of gold" %}
-        </p>
-    </div>
+    .animate-fade-in {
+        animation: fadeIn 0.45s ease forwards;
+    }
 
-    <!-- Form -->
-    <form id="buy-form" method="post" class="hidden">
-        {% csrf_token %}
-        <input type="hidden" name="amount" id="final-amount">
-        <button
-            type="submit"
-            class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-        >
-            {% trans "Buy with Wallet" %}
-        </button>
-    </form>
 
-</section>
+    input[type="range"] {
+        width: 100%;
+        height: 7px;
+        background: #e5e7eb;
+        border-radius: 999px;
+        cursor: pointer;
+        appearance: none;
+    }
+
+
+    input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 23px;
+        height: 23px;
+        background: #B8860B;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+    }
+
+
+    input[type="range"]::-moz-range-thumb {
+        width: 23px;
+        height: 23px;
+        background: #B8860B;
+        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+    }
+
+
+    .modal-backdrop {
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(5px);
+    }
+
+</style>
 
 {% endblock %}
 
+
+{% block content %}
+
+<section class="max-w-7xl mx-auto px-4 py-10">
+
+
+    <!-- Banner -->
+
+    <div
+        class="relative w-full h-72 md:h-96 rounded-2xl overflow-hidden mb-12"
+    >
+
+        <img
+            id="meltBannerImage"
+            src="{% static 'public/images/banner/public/melt.webp' %}"
+            alt="{% trans 'Melted Gold Purchase Steps' %}"
+            class="absolute inset-0 w-full h-full object-cover object-center"
+        >
+
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70"
+        ></div>
+
+
+        <div
+            class="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
+        >
+
+            <h2
+                class="text-white text-2xl md:text-3xl font-bold mb-4 melt-title"
+            >
+                {% trans "How to Buy Melted Gold" %}
+            </h2>
+
+
+            <div
+                class="text-white/90 text-sm md:text-base leading-7 max-w-xl melt-desc"
+            >
+
+                <p class="mb-2">
+                    {% trans "1. Select the amount you want to spend." %}
+                </p>
+
+                <p class="mb-2">
+                    {% trans "2. The system calculates the amount of gold you can buy." %}
+                </p>
+
+                <p class="mb-2">
+                    {% trans "3. Review the purchase details." %}
+                </p>
+
+                <p>
+                    {% trans "4. Confirm the purchase and receive your invoice." %}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Purchase Card -->
+
+    <div class="max-w-3xl mx-auto">
+
+        <div
+            class="bg-white/90 backdrop-blur-xl
+                   border border-public-gold/30
+                   shadow-xl rounded-2xl p-6 md:p-8"
+        >
+
+
+            <h3
+                class="text-2xl font-bold text-public-gold mb-8 text-center"
+            >
+                {% trans "Buy Melted Gold" %}
+            </h3>
+
+
+
+            <!-- Wallet -->
+
+            <div
+                class="bg-gray-50 border rounded-xl p-4 mb-8
+                       flex items-center justify-between"
+            >
+
+                <span class="text-gray-600">
+                    {% trans "Wallet Balance" %}
+                </span>
+
+
+                <strong
+                    id="walletBalance"
+                    class="text-public-gold"
+                >
+                    {{ wallet_balance|floatformat:0 }}
+                    {% trans "Toman" %}
+                </strong>
+
+            </div>
+
+
+
+            <!-- Amount -->
+
+            <div class="mb-8">
+
+                <label
+                    class="block text-lg font-semibold text-gray-700 mb-4"
+                >
+                    {% trans "Select Amount" %}
+                </label>
+
+
+
+                <div class="flex items-center gap-3">
+
+
+                    <button
+                        id="btn-decrease"
+                        type="button"
+                        class="px-4 py-2 rounded-lg
+                               bg-public-gold/20
+                               hover:bg-public-gold/30
+                               text-public-gold
+                               font-bold text-xl"
+                    >
+                        -
+                    </button>
+
+
+
+                    <input
+                        type="range"
+                        id="amount"
+                        min="{{ min_amount|floatformat:0 }}"
+                        max="{{ max_amount|floatformat:0 }}"
+                        step="{{ step_amount|floatformat:0 }}"
+                        value="{{ min_amount|floatformat:0 }}"
+                        class="flex-1"
+                    >
+
+
+
+                    <button
+                        id="btn-increase"
+                        type="button"
+                        class="px-4 py-2 rounded-lg
+                               bg-public-gold/20
+                               hover:bg-public-gold/30
+                               text-public-gold
+                               font-bold text-xl"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+
+
+                <p class="text-lg font-semibold text-public-gold mt-4 text-center">
+
+                    {% trans "Selected Amount:" %}
+
+                    <span
+                        id="amountDisplay"
+                        class="mx-1"
+                    >
+                        {{ min_amount|floatformat:0 }}
+                    </span>
+
+                    {% trans "Toman" %}
+
+                </p>
+
+
+
+                <p class="text-sm text-gray-500 text-center mt-2">
+
+                    {% trans "Minimum amount is 1,000,000 Toman" %}
+
+                </p>
+
+            </div>
+
+
+
+            <!-- Calculation -->
+
+            <div
+                id="gold-result"
+                class="hidden
+                       bg-public-gold/10
+                       border border-public-gold/40
+                       rounded-xl
+                       p-6
+                       shadow-md
+                       animate-fade-in"
+            >
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-center">
+
+
+                    <div>
+
+                        <p class="text-sm text-gray-500">
+                            {% trans "Buy Price Per Gram" %}
+                        </p>
+
+                        <p
+                            id="price-per-gram"
+                            class="text-lg font-bold text-gray-800 mt-1"
+                        >
+                            -
+                        </p>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <p class="text-sm text-gray-500">
+                            {% trans "You Can Buy" %}
+                        </p>
+
+                        <p
+                            id="gold-amount"
+                            class="text-xl font-bold text-public-gold mt-1"
+                        >
+                            -
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Review -->
+
+            <button
+                id="open-confirm-modal"
+                type="button"
+                class="hidden
+                       w-full mt-8
+                       bg-public-gold
+                       text-white
+                       font-semibold
+                       text-lg
+                       py-3
+                       rounded-xl
+                       shadow-lg
+                       hover:bg-yellow-600
+                       transition"
+            >
+                {% trans "Review Purchase" %}
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Confirmation Modal -->
+
+<div
+    id="confirm-modal"
+    class="hidden fixed inset-0 z-50 modal-backdrop
+           items-center justify-center px-4"
+>
+
+    <div
+        class="bg-white rounded-2xl shadow-2xl
+               w-full max-w-lg
+               p-6 md:p-8
+               animate-fade-in"
+    >
+
+
+        <div class="text-center mb-6">
+
+            <h3 class="text-2xl font-bold text-gray-800">
+                {% trans "Confirm Purchase" %}
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                {% trans "Please review the following information." %}
+            </p>
+
+        </div>
+
+
+
+        <!-- Summary -->
+
+        <div class="space-y-4">
+
+
+            <div
+                class="flex justify-between
+                       border-b pb-3"
+            >
+
+                <span class="text-gray-600">
+                    {% trans "Amount" %}
+                </span>
+
+                <strong id="modal-amount">
+                    -
+                </strong>
+
+            </div>
+
+
+
+            <div
+                class="flex justify-between
+                       border-b pb-3"
+            >
+
+                <span class="text-gray-600">
+                    {% trans "Price Per Gram" %}
+                </span>
+
+                <strong id="modal-price">
+                    -
+                </strong>
+
+            </div>
+
+
+
+            <div
+                class="flex justify-between
+                       border-b pb-3"
+            >
+
+                <span class="text-gray-600">
+                    {% trans "Gold Amount" %}
+                </span>
+
+                <strong
+                    id="modal-gold"
+                    class="text-public-gold"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+
+            <div
+                class="flex justify-between
+                       border-b pb-3"
+            >
+
+                <span class="text-gray-600">
+                    {% trans "Current Wallet Balance" %}
+                </span>
+
+                <strong id="modal-wallet">
+                    -
+                </strong>
+
+            </div>
+
+
+
+            <div class="flex justify-between">
+
+                <span class="text-gray-600">
+                    {% trans "Balance After Purchase" %}
+                </span>
+
+                <strong id="modal-wallet-after">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Warning -->
+
+        <div
+            class="mt-6
+                   bg-yellow-50
+                   border border-yellow-200
+                   rounded-xl
+                   p-4
+                   text-sm
+                   text-yellow-800"
+        >
+
+            {% trans "After confirmation, the purchase amount will be deducted from your wallet and the purchased gold will be added to your inventory." %}
+
+        </div>
+
+
+
+        <!-- Confirm Form -->
+
+        <form
+            id="confirm-form"
+            method="post"
+            action="{% url 'wallet:melted_gold_buy' %}"
+            class="mt-6"
+        >
+
+            {% csrf_token %}
+
+
+            <input
+                type="hidden"
+                name="amount"
+                id="final-amount"
+            >
+
+
+            <div class="grid grid-cols-2 gap-3">
+
+
+                <button
+                    type="button"
+                    id="close-modal"
+                    class="w-full py-3 rounded-xl
+                           border border-gray-300
+                           text-gray-700
+                           hover:bg-gray-50"
+                >
+                    {% trans "Cancel" %}
+                </button>
+
+
+
+                <button
+                    type="submit"
+                    class="w-full py-3 rounded-xl
+                           bg-public-gold
+                           text-white
+                           font-semibold
+                           hover:bg-yellow-600"
+                >
+                    {% trans "Confirm Purchase" %}
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
+
 {% block extra_script %}
+
 <script>
 
-    // --- Format number with commas ---
-    function formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const amountInput =
+    document.getElementById("amount");
+
+const amountDisplay =
+    document.getElementById("amountDisplay");
+
+const resultBox =
+    document.getElementById("gold-result");
+
+const goldAmountText =
+    document.getElementById("gold-amount");
+
+const pricePerGramText =
+    document.getElementById("price-per-gram");
+
+const reviewButton =
+    document.getElementById("open-confirm-modal");
+
+const confirmModal =
+    document.getElementById("confirm-modal");
+
+const closeModal =
+    document.getElementById("close-modal");
+
+const finalAmountInput =
+    document.getElementById("final-amount");
+
+const modalAmount =
+    document.getElementById("modal-amount");
+
+const modalPrice =
+    document.getElementById("modal-price");
+
+const modalGold =
+    document.getElementById("modal-gold");
+
+const modalWallet =
+    document.getElementById("modal-wallet");
+
+const modalWalletAfter =
+    document.getElementById("modal-wallet-after");
+
+
+const walletBalance =
+    Number("{{ wallet_balance|floatformat:0 }}");
+
+const minAmount =
+    Number("{{ min_amount|floatformat:0 }}");
+
+const maxAmount =
+    Number("{{ max_amount|floatformat:0 }}");
+
+const stepAmount =
+    Number("{{ step_amount|floatformat:0 }}");
+
+
+function formatNumber(value) {
+
+    return Number(value).toLocaleString("en-US");
+
+}
+
+
+
+function calculateGold(amount) {
+
+    if (
+        !amount ||
+        amount < minAmount ||
+        amount > maxAmount
+    ) {
+
+        resultBox.classList.add("hidden");
+
+        reviewButton.classList.add("hidden");
+
+        return;
     }
 
-    const amountInput = document.getElementById("amount");
-    const resultBox = document.getElementById("gold-result");
-    const goldAmountSpan = document.getElementById("gold-amount");
-    const buyForm = document.getElementById("buy-form");
-    const finalAmount = document.getElementById("final-amount");
 
-    amountInput.addEventListener("input", function () {
-        let amount = parseInt(this.value);
+    fetch(
+        "{% url 'wallet:api_calc_gold' %}",
+        {
+            method: "POST",
 
-        if (!amount || amount < 1000000) {
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type":
+                    "application/x-www-form-urlencoded"
+            },
+
+            body:
+                "amount=" +
+                encodeURIComponent(amount)
+        }
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if (!data.success) {
+
             resultBox.classList.add("hidden");
-            buyForm.classList.add("hidden");
+
+            reviewButton.classList.add("hidden");
+
             return;
         }
 
-        fetch("{% url 'wallet:api_calc_gold' %}", {
-            method: "POST",
-            headers: {
-                "X-CSRFToken": "{{ csrf_token }}",
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "amount=" + amount
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
 
-                // نمایش مقدار طلا
-                goldAmountSpan.innerText = data.gold_amount;
+        const goldAmount =
+            Number(data.gold_amount);
 
-                // نمایش بخش نتیجه
-                resultBox.classList.remove("hidden");
+        const pricePerGram =
+            Number(data.price_per_gram);
 
-                // مقدار نهایی برای ارسال فرم
-                finalAmount.value = amount;
 
-                // نمایش فرم خرید
-                buyForm.classList.remove("hidden");
-            }
-        });
+        amountDisplay.innerText =
+            formatNumber(amount);
+
+
+        goldAmountText.innerText =
+            goldAmount.toFixed(3) + " g";
+
+
+        pricePerGramText.innerText =
+            formatNumber(pricePerGram) +
+            " Toman";
+
+
+        resultBox.classList.remove("hidden");
+
+        reviewButton.classList.remove("hidden");
+
+        finalAmountInput.value = amount;
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        resultBox.classList.add("hidden");
+
+        reviewButton.classList.add("hidden");
+
     });
 
+}
+
+
+
+amountInput.addEventListener(
+    "input",
+    function () {
+
+        const amount =
+            Number(this.value);
+
+        amountDisplay.innerText =
+            formatNumber(amount);
+
+        calculateGold(amount);
+
+    }
+);
+
+
+
+document
+    .getElementById("btn-increase")
+    .addEventListener(
+        "click",
+        function () {
+
+            let amount =
+                Number(amountInput.value);
+
+
+            amount =
+                Math.min(
+                    amount + stepAmount,
+                    maxAmount
+                );
+
+
+            amountInput.value =
+                amount;
+
+
+            amountInput.dispatchEvent(
+                new Event("input")
+            );
+
+        }
+    );
+
+
+
+document
+    .getElementById("btn-decrease")
+    .addEventListener(
+        "click",
+        function () {
+
+            let amount =
+                Number(amountInput.value);
+
+
+            amount =
+                Math.max(
+                    amount - stepAmount,
+                    minAmount
+                );
+
+
+            amountInput.value =
+                amount;
+
+
+            amountInput.dispatchEvent(
+                new Event("input")
+            );
+
+        }
+    );
+
+
+
+/*
+ * Open confirmation modal
+ */
+
+reviewButton.addEventListener(
+    "click",
+    function () {
+
+        const amount =
+            Number(amountInput.value);
+
+
+        if (
+            !amount ||
+            amount < minAmount ||
+            amount > maxAmount ||
+            amount > walletBalance
+        ) {
+
+            return;
+        }
+
+
+        modalAmount.innerText =
+            formatNumber(amount) +
+            " Toman";
+
+
+        modalPrice.innerText =
+            pricePerGramText.innerText;
+
+
+        modalGold.innerText =
+            goldAmountText.innerText;
+
+
+        modalWallet.innerText =
+            formatNumber(walletBalance) +
+            " Toman";
+
+
+        modalWalletAfter.innerText =
+            formatNumber(walletBalance - amount) +
+            " Toman";
+
+
+        finalAmountInput.value =
+            amount;
+
+
+        confirmModal.classList.remove("hidden");
+
+        confirmModal.classList.add("flex");
+
+    }
+);
+
+
+
+/*
+ * Close modal
+ */
+
+closeModal.addEventListener(
+    "click",
+    function () {
+
+        confirmModal.classList.add("hidden");
+
+        confirmModal.classList.remove("flex");
+
+    }
+);
+
+
+
+/*
+ * Click outside modal
+ */
+
+confirmModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target === confirmModal
+        ) {
+
+            confirmModal.classList.add("hidden");
+
+            confirmModal.classList.remove("flex");
+
+        }
+
+    }
+);
+
+
+
+/*
+ * Initial calculation
+ */
+
+calculateGold(
+    Number(amountInput.value)
+);
+
+
+
+/*
+ * Banner parallax
+ */
+
+const meltBannerImage =
+    document.getElementById(
+        "meltBannerImage"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        const offset =
+            window.pageYOffset;
+
+
+        meltBannerImage.style.transform =
+            `translateY(${offset * 0.25}px)`;
+
+    }
+);
+
 </script>
+
 {% endblock %}
