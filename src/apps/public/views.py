@@ -13,7 +13,7 @@ class HomeView(View):
 
         products = ProductModel.objects.filter(status="available").order_by(
             "-created_at"
-        )[:4]
+        )[:8]
 
         articles = ArticleModel.objects.filter(is_published=True).order_by(
             "-created_at"
