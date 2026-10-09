@@ -8,7 +8,7 @@
 
 {% block body %}
 
-<div class="signup-container max-w-sm mx-auto mt-10 bg-white p-6 rounded-lg shadow">
+<div class="signup-container max-w-sm mx-auto mt-10 bg-white p-6 rounded-lg shadow-sm">
 
     <h1 class="text-xl font-semibold mb-6 text-center">
         {% trans "Create an account" %}
@@ -24,7 +24,7 @@
             </label>
             <input type="text" name="phone_number" id="id_phone_number"
                    value="{{ form.phone_number.value }}"
-                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                   class="w-full border rounded-md px-3 py-2 focus:outline-hidden focus:ring-3 focus:ring-blue-300">
         </div>
 
         <!-- Password -->
@@ -33,7 +33,7 @@
                 {% trans "Password" %}
             </label>
             <input type="password" name="password1" id="id_password1"
-                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                   class="w-full border rounded-md px-3 py-2 focus:outline-hidden focus:ring-3 focus:ring-blue-300">
         </div>
 
         <!-- Password Repeat -->
@@ -42,7 +42,7 @@
                 {% trans "Repeat password" %}
             </label>
             <input type="password" name="password2" id="id_password2"
-                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                   class="w-full border rounded-md px-3 py-2 focus:outline-hidden focus:ring-3 focus:ring-blue-300">
         </div>
 
         <!-- Submit -->

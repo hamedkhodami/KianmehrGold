@@ -29,7 +29,7 @@
                     hx-get="{% url 'account:admin_user_detail' req.user.id %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {{ req.user.phone_number }}
                 </a>
@@ -55,7 +55,7 @@
                         hx-get="{% url 'wallet:admin_withdraw_request_detail' req.pk %}"
                         hx-target="#dashboard-content"
                         hx-swap="innerHTML"
-                        class="w-full text-right p-2 bg-white rounded shadow"
+                        class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                     >
                         {% trans "View" %}
                     </a>

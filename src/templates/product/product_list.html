@@ -22,16 +22,16 @@
 
             <!-- All -->
             <a href="{% url 'product:product_list' %}"
-               class="px-4 py-2 border rounded bg-gray-50 hover:bg-gray-100">
+               class="px-4 py-2 border rounded-sm bg-gray-50 hover:bg-gray-100">
                 {% trans "All" %}
             </a>
 
             {% for cat in categories %}
                 <a href="?category={{ cat.slug }}"
-                   class="flex items-center gap-2 px-4 py-2 border rounded bg-gray-50 hover:bg-gray-100">
+                   class="flex items-center gap-2 px-4 py-2 border rounded-sm bg-gray-50 hover:bg-gray-100">
 
                     {% if cat.icon %}
-                        <img src="{{ cat.icon.url }}" alt="{{ cat.title }}" class="w-6 h-6 rounded">
+                        <img src="{{ cat.icon.url }}" alt="{{ cat.title }}" class="w-6 h-6 rounded-sm">
                     {% endif %}
 
                     <span>{{ cat.title }}</span>
@@ -70,7 +70,7 @@
 
         {% for product in products %}
             <a href="{% url 'product:product_detail' product.id product.slug %}"
-               class="border rounded-lg bg-white shadow-sm hover:shadow-md transition overflow-hidden">
+               class="border rounded-lg bg-white shadow-xs hover:shadow-md transition overflow-hidden">
 
                 {% if product.image %}
                     <img src="{{ product.image.url }}"

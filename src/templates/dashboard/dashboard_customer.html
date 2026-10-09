@@ -31,7 +31,7 @@
         <ul class="space-y-3">
 
             <li>
-                <a href="{% url 'public:index' %}" class="block text-right p-2 bg-white rounded shadow">
+                <a href="{% url 'public:index' %}" class="block text-right p-2 bg-white rounded-sm shadow-sm">
                     {% trans "Home" %}
                 </a>
             </li>
@@ -41,7 +41,7 @@
                     hx-get="{% url 'account:profile' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "Profile" %}
                 </button>
@@ -52,7 +52,7 @@
                     hx-get="{% url 'account:bank_account' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "Bank Account" %}
                 </button>
@@ -63,7 +63,7 @@
                     hx-get="{% url 'order:user_sell_list' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "My Melted Gold Sales" %}
                 </button>
@@ -74,7 +74,7 @@
                     hx-get="{% url 'wallet:wallet_dashboard' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "My Wallet" %}
                 </button>
@@ -85,7 +85,7 @@
                     hx-get="{% url 'wallet:withdraw_requests' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "Withdraw requests" %}
                 </button>
@@ -96,7 +96,7 @@
                     hx-get="{% url 'wallet:sell_melted_gold' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "Sell Melted Gold" %}
                 </button>
@@ -107,7 +107,7 @@
                     hx-get="{% url 'order:invoice_list' %}"
                     hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded shadow"
+                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
                 >
                     {% trans "My Invoices" %}
                 </button>
@@ -120,7 +120,7 @@
                     class="w-full"
                 >
                     {% csrf_token %}
-                    <button type="submit" class="w-full text-right p-2 bg-white rounded shadow">
+                    <button type="submit" class="w-full text-right p-2 bg-white rounded-sm shadow-sm">
                             {% trans "Logout" %}
                     </button>
                 </form>
@@ -137,7 +137,7 @@
         </p>
         {% if messages %}
             {% for message in messages %}
-                <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded">
+                <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded-sm">
                     {{ message }}
                 </div>
             {% endfor %}

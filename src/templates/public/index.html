@@ -50,7 +50,7 @@
             {% for product in products %}
             <div class="swiper-slide">
                 <a href="{% url 'product:product_detail' product.id product.slug %}">
-                    <div class="border rounded-lg p-4 shadow bg-white">
+                    <div class="border rounded-lg p-4 shadow-sm bg-white">
 
                         {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.title }}" class="w-full">
@@ -78,7 +78,7 @@
     </div>
 
     <div class="text-center mt-6">
-        <a href="{% url 'product:product_list' %}" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <a href="{% url 'product:product_list' %}" class="px-6 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700">
             {% trans "View All Products" %}
         </a>
     </div>
@@ -92,24 +92,24 @@
 <section class="container mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
 
     <!-- Melted Gold -->
-    <div class="p-6 border rounded-lg shadow bg-white">
+    <div class="p-6 border rounded-lg shadow-sm bg-white">
         <h3 class="text-lg font-bold mb-3">{% trans "Melted Gold Section" %}</h3>
         <p class="text-gray-600 mb-4">
             {% trans "Short description will be added by content team." %}
         </p>
         <a href="{% url 'wallet:melted_gold_buy' %}"
-            class="px-5 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+            class="px-5 py-2 bg-yellow-600 text-white rounded-sm hover:bg-yellow-700">
             {% trans "Go to Page" %}
         </a>
     </div>
 
     <!-- Coin Section -->
-    <div class="p-6 border rounded-lg shadow bg-white">
+    <div class="p-6 border rounded-lg shadow-sm bg-white">
         <h3 class="text-lg font-bold mb-3">{% trans "Coin Purchase Section" %}</h3>
         <p class="text-gray-600 mb-4">
             {% trans "Short description will be added by content team." %}
         </p>
-        <a href="{% url 'product:coin_list' %}" class="px-5 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+        <a href="{% url 'product:coin_list' %}" class="px-5 py-2 bg-yellow-600 text-white rounded-sm hover:bg-yellow-700">
             {% trans "Go to Page" %}
         </a>
     </div>
@@ -125,10 +125,10 @@
 
         {% for article in articles %}
         <a href="{% url 'public:article_detail' article.id article.slug %}">
-            <div class="border rounded-lg p-4 shadow bg-white">
+            <div class="border rounded-lg p-4 shadow-sm bg-white">
 
                 {% if article.image %}
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-sm">
                 {% endif %}
 
                 <h3 class="mt-3 font-semibold">{{ article.title }}</h3>
@@ -144,7 +144,7 @@
     </div>
 
     <div class="text-center mt-6">
-        <a href="{% url 'public:article_list' %}" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <a href="{% url 'public:article_list' %}" class="px-6 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700">
             {% trans "View All Articles" %}
         </a>
     </div>

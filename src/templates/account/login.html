@@ -8,7 +8,7 @@
 
 {% block body %}
 
-<div class="login-container max-w-sm mx-auto mt-10 bg-white p-6 rounded-lg shadow">
+<div class="login-container max-w-sm mx-auto mt-10 bg-white p-6 rounded-lg shadow-sm">
 
     <h1 class="text-xl font-semibold mb-6 text-center">
         {% trans "Login" %}
@@ -24,7 +24,7 @@
             </label>
             <input type="text" name="phone_number" id="id_phone_number"
                    value="{{ form.phone_number.value }}"
-                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                   class="w-full border rounded-md px-3 py-2 focus:outline-hidden focus:ring-3 focus:ring-blue-300">
         </div>
 
         <!-- Password -->
@@ -33,13 +33,13 @@
                 {% trans "Password" %}
             </label>
             <input type="password" name="password" id="id_password"
-                   class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                   class="w-full border rounded-md px-3 py-2 focus:outline-hidden focus:ring-3 focus:ring-blue-300">
         </div>
 
         <!-- Remember Me -->
         <div class="form-group flex items-center gap-2">
             <input type="checkbox" name="remember_me" id="id_remember_me"
-                   class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                   class="h-4 w-4 text-blue-600 border-gray-300 rounded-sm">
             <label for="id_remember_me" class="text-sm">
                 {% trans "Remember me" %}
             </label>

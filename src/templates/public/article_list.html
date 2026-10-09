@@ -19,7 +19,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
         {% for article in page_obj %}
-            <div class="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition">
+            <div class="border rounded-lg overflow-hidden bg-white shadow-xs hover:shadow-md transition">
 
                 <a href="{% url 'public:article_detail' article.id article.slug %}">
 
