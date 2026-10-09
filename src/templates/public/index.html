@@ -4,53 +4,77 @@
 {% load price_filters %}
 
 {% block title %}
-    {% trans "Home" %}
+{% trans "Home" %}
 {% endblock %}
 
 {% block content %}
 
 <!-- BANNERS -->
-<section class="container mx-auto mt-6">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-        {% for banner in banners %}
-            <div class="rounded overflow-hidden shadow bg-white">
-                <img src="{{ banner.image.url }}" alt="{{ banner.alt_text }}" class="w-full h-48 object-cover">
+<section class="w-full">
+    <div class="swiper banner-swiper">
+        <div class="swiper-wrapper">
+            {% for banner in banners %}
+            <div class="swiper-slide">
+                <img src="{{ banner.image.url }}" alt="{{ banner.alt_text }}" class="w-full h-auto block">
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
 
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
 </section>
 
 
 <!-- LAST PRODUCTS -->
 <section class="container mx-auto mt-12">
-    <h2 class="text-xl font-bold mb-4">{% trans "Latest Products" %}</h2>
+    <div class="flex items-center gap-4 mb-6" dir="rtl">
+        <h2 class="text-2xl font-normal text-[#5a0f1c] whitespace-nowrap">
+            {% trans "پرفروش ترین محصولات" %}
+        </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <span class="flex-1 h-px bg-[#c9cccc]"></span>
 
-        {% for product in products %}
-            <a href="{% url 'product:product_detail' product.id product.slug %}">
-                <div class="border rounded-lg p-4 shadow bg-white">
+        <a href="{% url 'product:product_list' %}"
+            class="flex items-center gap-2 text-base text-gray-600 hover:text-gray-900 whitespace-nowrap">
+            {% trans "مشاهده همه" %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+    </div>
+    <div class="swiper products-swiper">
+        <div class="swiper-wrapper">
+            {% for product in products %}
+            <div class="swiper-slide">
+                <a href="{% url 'product:product_detail' product.id product.slug %}">
+                    <div class="border rounded-lg p-4 shadow bg-white">
 
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="w-full h-40 object-cover rounded">
-                    {% endif %}
-
-                    <h3 class="mt-3 font-semibold">{{ product.title }}</h3>
-
-                    <p class="text-green-600 font-bold mt-2">
-                        {% if product.final_price %}
-                            {{ product.final_price|comma }} {% trans "Toman" %}
-                        {% else %}
-                            {% trans "Price not available" %}
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="w-full">
                         {% endif %}
-                    </p>
 
-                </div>
-            </a>
-        {% endfor %}
+                        <h3 class="mt-3 font-semibold text-stone-500">{{ product.title }}</h3>
 
+                        <p class="text-stone-600 font-bold mt-2">
+                            {% if product.final_price %}
+                            {{ product.final_price|comma }} {% trans "تومان" %}
+                            {% else %}
+                            {% trans "Price not available" %}
+                            {% endif %}
+                        </p>
+
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
 
     <div class="text-center mt-6">
@@ -59,6 +83,9 @@
         </a>
     </div>
 </section>
+
+
+
 
 
 <!-- TWO SECTIONS: MELTED GOLD + COIN -->
@@ -70,7 +97,8 @@
         <p class="text-gray-600 mb-4">
             {% trans "Short description will be added by content team." %}
         </p>
-        <a href="{% url 'wallet:melted_gold_buy' %}" class="px-5 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+        <a href="{% url 'wallet:melted_gold_buy' %}"
+            class="px-5 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
             {% trans "Go to Page" %}
         </a>
     </div>
@@ -96,21 +124,21 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {% for article in articles %}
-            <a href="{% url 'public:article_detail' article.id article.slug %}">
-                <div class="border rounded-lg p-4 shadow bg-white">
+        <a href="{% url 'public:article_detail' article.id article.slug %}">
+            <div class="border rounded-lg p-4 shadow bg-white">
 
-                    {% if article.image %}
-                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded">
-                    {% endif %}
+                {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded">
+                {% endif %}
 
-                    <h3 class="mt-3 font-semibold">{{ article.title }}</h3>
+                <h3 class="mt-3 font-semibold">{{ article.title }}</h3>
 
-                    <p class="text-gray-600 mt-2">
-                        {{ article.content|striptags|truncatechars:150|safe  }}
-                    </p>
+                <p class="text-gray-600 mt-2">
+                    {{ article.content|striptags|truncatechars:150|safe }}
+                </p>
 
-                </div>
-            </a>
+            </div>
+        </a>
         {% endfor %}
 
     </div>

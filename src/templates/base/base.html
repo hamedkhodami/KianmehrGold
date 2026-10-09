@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 
-<html lang="en">
+<html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
@@ -10,40 +10,60 @@
     <title>{% block title%}{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'public/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'public/swiper/swiper-bundle.min.css' %}">
     <style>
-            .dashboard-message.success {
-                background-color: #d1fae5; /* green-100 */
-                color: #065f46; /* green-700 */
-            }
-            .dashboard-message.error {
-                background-color: #fee2e2; /* red-100 */
-                color: #991b1b; /* red-700 */
-            }
+        .dashboard-message.success {
+            background-color: #d1fae5;
+            /* green-100 */
+            color: #065f46;
+            /* green-700 */
+        }
+
+        .dashboard-message.error {
+            background-color: #fee2e2;
+            /* red-100 */
+            color: #991b1b;
+            /* red-700 */
+        }
+
+        .banner-swiper .swiper-slide {
+            height: auto;
+        }
+
+        .swiper-wrapper {
+            height: auto;
+        }
+
+        body {
+            background-color: #f0f1f1;
+        }
     </style>
 
     {% block extra_style %}
     {% endblock %}
 </head>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 
 <body>
 
-  {% include 'base/header.html' %}
+    {% include 'base/header.html' %}
 
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
 
-  {% include 'base/footer.html' %}
+    {% include 'base/footer.html' %}
 
-  <script src="{% static 'public/js/signup-in.js' %}"></script>
-  <script src="{% static 'public/js/main.js' %}"></script>
-  <script>
+    <script src="{% static 'public/js/signup-in.js' %}"></script>
+    <script src="{% static 'public/js/main.js' %}"></script>
+    <script src="{% static 'public/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'public/swiper/sliders.js' %}"></script>
+    <script>
         setTimeout(function () {
             document.querySelectorAll('.dashboard-message').forEach(function (msg) {
                 msg.style.transition = "opacity 0.5s";
@@ -51,11 +71,12 @@
                 setTimeout(() => msg.remove(), 500);
             });
         }, 2000);
-  </script>
+    </script>
 
 
-  {% block extra_script %}
-  {% endblock %}
+    {% block extra_script %}
+    {% endblock %}
 
 </body>
+
 </html>
