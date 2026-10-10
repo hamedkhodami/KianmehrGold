@@ -3,7 +3,80 @@
 @source '../src/templates/**/*.html';
 @source '../src/static/assets/public/js/*.js';
 
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-THIN.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-THIN.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-LIGHT.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-LIGHT.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-REGULAR.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-REGULAR.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-SEMIBOLD.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-SEMIBOLD.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-BOLD.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-BOLD.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-EXTRABOLD.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-EXTRABOLD.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-BLACK.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-BLACK.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Yekan Bakh FaNum';
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+  src: url('../fonts/YEKANBAKHFANUM-EXTRABLACK.woff2') format('woff2'),
+       url('../fonts/YEKANBAKHFANUM-EXTRABLACK.woff') format('woff');
+}
+
 @theme {
+  --font-sans: 'Yekan Bakh FaNum', ui-sans-serif, system-ui, sans-serif;
   --color-primary: #00095c;
 
   --background-image-gradient-blue-gray: linear-gradient(
@@ -29,4 +102,56 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+}
+
+/* ===== Swiper navigation buttons ===== */
+.swiper {
+    --swiper-navigation-size: 18px;
+    --swiper-theme-color: #fff;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    width:50px;
+    height: 50px;
+    margin-top: -22px;
+    border-radius:10px !important;
+    background:  #55000f;
+    color: #fff ;
+    box-shadow: 0 4px 14px rgba(85, 0, 15, 0.18);
+    transition: background-color .2s, color .2s, transform .2s, opacity .2s;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background:#fff ;
+    color:#55000f ;
+    transform: scale(1.08);
+}
+
+.swiper-button-disabled {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.swiper-rtl .swiper-button-next { left: 12px;  right: auto; }
+.swiper-rtl .swiper-button-prev { right: 12px; left: auto; }
+
+@media (max-width: 767px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 34px;
+        height: 34px;
+        margin-top: -17px;
+    }
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 13px;
+    }
 }

@@ -2,110 +2,189 @@
 {% load i18n %}
 {% load price_filters %}
 
-<header class="w-full bg-white shadow-xs">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+{% url 'public:index' as home_url %}
 
-        <!-- Logo -->
-        <div class="flex items-center space-x-4 space-x-reverse">
+<header class="relative w-full bg-transparent
+    {% if request.path == home_url %}md:absolute md:inset-x-0 md:top-0 md:z-50 md:bg-transparent{% endif %}">
 
-            <a href="{% url 'public:index' %}" class="text-xl font-bold text-gray-800">
-                {% trans "Logo" %}
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between gap-4">
+
+        <!-- راست: لوگو -->
+        <div class="flex items-center gap-4">
+            <a href="{{ home_url }}"
+                class="flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-2xl bg-[#55000f]">
+                <img src="{% static 'public/images/logo.png' %}" alt="{% trans 'کیان مهر' %}"
+                    class="h-9 w-auto md:h-10">
             </a>
 
             {% if gold_price %}
-                <span class="text-sm text-gray-600">
-                    {% trans "Gold Price" %}: {{ gold_price.gold_melted|comma }} تومان
-                </span>
+            <span class="hidden lg:block text-sm text-[#55000f]">
+                {% trans "قیمت طلا" %}: {{ gold_price.gold_melted|comma }} {% trans "تومان" %}
+            </span>
             {% endif %}
-
         </div>
 
-        <!-- Menu (Desktop) -->
-        <nav class="hidden md:flex space-x-6 space-x-reverse text-gray-700">
+        <!-- وسط: منو (دسکتاپ) -->
+        <nav class="hidden md:flex items-center gap-12 text-lg text-[#55000f]">
 
-            <a href="{% url 'public:index' %}" class="hover:text-black">
-                {% trans "Home" %}
+            <a href="{{ home_url }}"
+                class="hover:opacity-70 transition {% if request.path == home_url %}underline underline-offset-8{% endif %}">
+                {% trans "خانه" %}
             </a>
 
-            <a href="{% url 'public:about_us' %}" class="hover:text-black">
-                {% trans "About Us" %}
+            <!-- دسته بندی (کشویی) -->
+            <div class="relative group">
+                <button type="button" class="flex items-center gap-1 hover:opacity-70 transition">
+                    {% trans "دسته بندی" %}
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="absolute right-0 top-full hidden group-hover:block pt-3 w-44 z-50">
+                    <div class="rounded-xl bg-white shadow-lg py-2 text-base">
+                        <a href="{% url 'wallet:melted_gold_buy' %}"
+                            class="block px-4 py-2 hover:bg-gray-100">{% trans "طلای آب‌شده" %}</a>
+                        <a href="{% url 'product:coin_list' %}"
+                            class="block px-4 py-2 hover:bg-gray-100">{% trans "سکه طلا" %}</a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{% url 'product:product_list' %}" class="hover:opacity-70 transition">
+                {% trans "فروشگاه" %}
             </a>
 
-            <a href="{% url 'product:product_list' %}" class="hover:text-black">
-                {% trans "Store" %}
+            <a href="{% url 'public:about_us' %}" class="hover:opacity-70 transition">
+                {% trans "آشنایی با ما" %}
             </a>
-
-            <a href="{% url 'wallet:melted_gold_buy' %}" class="hover:text-black">
-                {% trans "Molten gold" %}
-            </a>
-
-            <a href="{% url 'product:coin_list' %}" class="hover:text-black">
-                {% trans "Coins" %}
-            </a>
-
         </nav>
 
-        <!-- User -->
-        <div class="flex items-center space-x-3 space-x-reverse">
+        <!-- چپ: کاربر -->
+        <div class="flex items-center gap-3 md:gap-5">
 
             {% if request.user.is_authenticated %}
-                <a href="{% url 'dashboard:dashboard' %}"
-                   class="px-4 py-1 bg-gray-800 text-white rounded-sm hover:bg-black">
-                    {% trans "Dashboard" %}
-                </a>
+            <a href="{% url 'dashboard:dashboard' %}"
+                class="rounded-xl bg-[#55000f] px-5 py-2 text-white hover:bg-black transition whitespace-nowrap">
+                {% trans "داشبورد" %}
+            </a>
             {% else %}
-                <a href="{% url 'account:login' %}"
-                   class="px-4 py-1 border border-gray-400 rounded-sm hover:bg-gray-100">
-                    {% trans "Login" %}
-                </a>
-
-                <a href="{% url 'account:register' %}"
-                   class="px-4 py-1 bg-gray-800 text-white rounded-sm hover:bg-black">
-                    {% trans "Register" %}
-                </a>
+            <a href="{% url 'account:login' %}"
+                class="text-lg text-[#55000f] hover:opacity-70 transition whitespace-nowrap">
+                {% trans "ورود" %}
+            </a>
+            <a href="{% url 'account:register' %}"
+                class="rounded-xl bg-[#55000f] px-5 py-2 text-white hover:bg-black transition whitespace-nowrap">
+                {% trans "عضویت" %}
+            </a>
             {% endif %}
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-2xl">
-                ☰
+            <!-- دکمه منوی موبایل -->
+            <button id="mobile-menu-btn" type="button" class="md:hidden text-[#55000f]"
+                aria-label="{% trans 'منو' %}">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
             </button>
-
         </div>
-
     </div>
 
-    <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="md:hidden hidden bg-white border-t py-3 px-4 space-y-3 text-gray-700">
+    <!-- اورلی -->
+    <div id="mobile-overlay"
+        class="fixed inset-0 z-[90] bg-black/60 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
+    </div>
 
-        <a href="{% url 'public:index' %}" class="block">
-            {% trans "Home" %}
-        </a>
+    <!-- پنل منوی موبایل (از راست) -->
+    <aside id="mobile-menu" aria-hidden="true"
+        class="fixed top-0 right-0 z-[100] h-full w-1/2 min-w-[280px] max-w-sm translate-x-full
+               bg-[#55000f] text-white shadow-2xl transition-transform duration-300 ease-out md:hidden
+               flex flex-col overflow-y-auto">
 
-        <a href="{% url 'public:about_us' %}" class="block">
-            {% trans "About Us" %}
-        </a>
+        <!-- بالا: لوگو + بستن -->
+        <div class="flex items-center justify-between px-5 py-5 border-b border-[#d9b46a]/30">
+            <span class="text-lg font-semibold text-[#d9b46a]">{% trans "کیان مهر" %}</span>
+            <button id="mobile-menu-close" type="button" aria-label="{% trans 'بستن' %}"
+                class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9b46a]/50 text-[#d9b46a] hover:bg-[#d9b46a] hover:text-[#55000f] transition">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" />
+                </svg>
+            </button>
+        </div>
 
-        <a href="{% url 'product:product_list' %}" class="block">
-            {% trans "Store" %}
-        </a>
+        <!-- لینک‌ها -->
+        <nav class="flex-1 px-5 py-6 space-y-1 text-lg">
+            <a href="{{ home_url }}"
+                class="block rounded-xl px-4 py-3 transition hover:bg-white/10 {% if request.path == home_url %}bg-white/10 text-[#d9b46a]{% endif %}">
+                {% trans "خانه" %}
+            </a>
+            <a href="{% url 'product:product_list' %}"
+                class="block rounded-xl px-4 py-3 transition hover:bg-white/10">{% trans "فروشگاه" %}</a>
+            <a href="{% url 'wallet:melted_gold_buy' %}"
+                class="block rounded-xl px-4 py-3 transition hover:bg-white/10">{% trans "طلای آب‌شده" %}</a>
+            <a href="{% url 'product:coin_list' %}"
+                class="block rounded-xl px-4 py-3 transition hover:bg-white/10">{% trans "سکه طلا" %}</a>
+            <a href="{% url 'public:about_us' %}"
+                class="block rounded-xl px-4 py-3 transition hover:bg-white/10">{% trans "آشنایی با ما" %}</a>
+        </nav>
 
-        <a href="{% url 'wallet:melted_gold_buy' %}" class="block">
-            {% trans "Molten gold" %}
-        </a>
+        <!-- پایین: قیمت طلا + کاربر -->
+        <div class="px-5 pb-6 space-y-4 border-t border-[#d9b46a]/30 pt-5">
+            {% if gold_price %}
+            <p class="text-sm text-white/80">
+                {% trans "قیمت طلا" %}:
+                <span class="text-[#d9b46a] font-semibold">{{ gold_price.gold_melted|comma }} {% trans "تومان" %}</span>
+            </p>
+            {% endif %}
 
-        <a href="{% url 'product:coin_list' %}" class="block">
-            {% trans "Coins" %}
-        </a>
-
-    </nav>
-
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard:dashboard' %}"
+                class="block rounded-xl bg-[#d9b46a] px-5 py-3 text-center font-semibold text-[#55000f] hover:bg-white transition">
+                {% trans "داشبورد" %}
+            </a>
+            {% else %}
+            <div class="grid grid-cols-2 gap-3">
+                <a href="{% url 'account:login' %}"
+                    class="rounded-xl border border-[#d9b46a] px-4 py-3 text-center text-[#d9b46a] hover:bg-[#d9b46a] hover:text-[#55000f] transition">
+                    {% trans "ورود" %}
+                </a>
+                <a href="{% url 'account:register' %}"
+                    class="rounded-xl bg-[#d9b46a] px-4 py-3 text-center font-semibold text-[#55000f] hover:bg-white transition">
+                    {% trans "عضویت" %}
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </aside>
 </header>
 
 <script>
-    const btn = document.getElementById("mobile-menu-btn");
-    const menu = document.getElementById("mobile-menu");
+    (function () {
+        const openBtn = document.getElementById("mobile-menu-btn");
+        const closeBtn = document.getElementById("mobile-menu-close");
+        const menu = document.getElementById("mobile-menu");
+        const overlay = document.getElementById("mobile-overlay");
+        if (!openBtn || !menu || !overlay) return;
 
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-    });
+        function openMenu() {
+            menu.classList.remove("translate-x-full");
+            overlay.classList.remove("opacity-0", "pointer-events-none");
+            menu.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+            menu.classList.add("translate-x-full");
+            overlay.classList.add("opacity-0", "pointer-events-none");
+            menu.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+
+        openBtn.addEventListener("click", openMenu);
+        closeBtn.addEventListener("click", closeMenu);
+        overlay.addEventListener("click", closeMenu);
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+        window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMenu(); });
+    })();
 </script>
