@@ -597,9 +597,6 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
-  .border-\[\#55000f\]\/20 {
-    border-color: color-mix(in oklab, #55000f 20%, transparent);
-  }
   .border-\[\#d9b46a\] {
     border-color: #d9b46a;
   }

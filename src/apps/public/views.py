@@ -17,7 +17,7 @@ class HomeView(View):
 
         articles = ArticleModel.objects.filter(is_published=True).order_by(
             "-created_at"
-        )[:3]
+        )[:6]
 
         return render(
             request,

@@ -134,7 +134,7 @@
                         {% endif %}
 
                         <p class="px-8 pt-6 pb-16 text-gray-700 leading-8 text-justify">
-                            {{ article.content|striptags|truncatechars:150 }}
+                            {{ article.content|striptags|truncatechars:150|safe }}
                         </p>
                     </a>
 
