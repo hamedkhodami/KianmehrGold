@@ -33,12 +33,31 @@
         .swiper-wrapper {
             height: auto;
         }
+    
+
+        .container {
+            max-width: 80rem !important;
+            margin-inline: auto !important;
+            padding-inline: 1rem !important;
+        }
+
+        /* تغییر رنگ در صفحه اصلی و زیر صفحات پس زمینه */
+
+        :root {
+            --page-bg: #ffffff;
+        }
+
+        body.bg-page-gray {
+            --page-bg: #f0f1f1;
+        }
 
         body {
-            background-color: #f0f1f1;
+            background-color: var(--page-bg);
         }
-          .container { max-width: 80rem !important; margin-inline: auto !important; padding-inline: 1rem !important; }
 
+        .footer-wave {
+            color: var(--page-bg);
+        }
     </style>
 
     {% block extra_style %}
@@ -52,7 +71,7 @@
 {% endfor %}
 {% endif %}
 
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
     {% include 'base/header.html' %}
 

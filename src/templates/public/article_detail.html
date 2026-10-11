@@ -10,31 +10,28 @@
 
 {% block content %}
 
-<section class="max-w-3xl mx-auto px-4 py-10">
+<section class="container mx-auto px-4 mt-6 mb-16 max-w-4xl" dir="rtl">
 
-    <!-- Title -->
-    <h1 class="text-3xl font-bold mb-4">
+    <!-- عکس -->
+    {% if article.image %}
+    <div class="overflow-hidden rounded-2xl">
+        <img src="{{ article.image.url }}" alt="{{ article.title }}"
+            class="h-56 w-full object-cover md:h-96">
+    </div>
+    {% endif %}
+
+    <!-- عنوان -->
+    <h1 class="mt-10 text-3xl font-bold text-[#55000f] md:text-4xl">
         {{ article.title }}
     </h1>
 
-    <!-- Publish Date -->
-    <p class="text-sm text-gray-500 mb-6">
-        {% trans "Published on" %}: {{ article.created_at|jalali }}
+    <!-- تاریخ انتشار -->
+    <p class="mt-3 text-sm font-semibold text-[#55000f]">
+        {% trans "منتشر شده" %}: {{ article.created_at|jalali }}
     </p>
 
-    <!-- Image -->
-    {% if article.image %}
-        <div class="mb-6">
-            <img
-                src="{{ article.image.url }}"
-                alt="{{ article.title }}"
-                class="w-full rounded-lg shadow-xs"
-            >
-        </div>
-    {% endif %}
-
-    <!-- Full Content -->
-    <div class="prose prose-lg prose-gray leading-8">
+    <!-- متن کامل -->
+    <div class="prose prose-lg prose-gray mt-6 max-w-none text-justify leading-8 text-gray-700">
         {{ article.content|safe }}
     </div>
 
