@@ -12,53 +12,48 @@
 <style>
 
     @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
     }
 
-    .animate-fade-in {
-        animation: fadeIn 0.45s ease forwards;
+    .animate-fade-in { animation: fadeIn 0.45s ease forwards; }
+
+    .melt-bg {
+        background-image: url("{% static 'public/images/bg.webp' %}");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
     }
 
-
+    /* اسلایدر */
     input[type="range"] {
         width: 100%;
-        height: 7px;
-        background: #e5e7eb;
+        height: 2px;
+        background: #cfcfcf;
         border-radius: 999px;
         cursor: pointer;
         appearance: none;
     }
 
-
     input[type="range"]::-webkit-slider-thumb {
         appearance: none;
-        width: 23px;
-        height: 23px;
-        background: #B8860B;
+        width: 18px;
+        height: 18px;
+        background: #55000f;
         border-radius: 50%;
         cursor: pointer;
-        box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+        box-shadow: 0 0 0 4px rgba(85, 0, 15, 0.12);
     }
 
-
     input[type="range"]::-moz-range-thumb {
-        width: 23px;
-        height: 23px;
-        background: #B8860B;
+        width: 18px;
+        height: 18px;
+        background: #55000f;
         border-radius: 50%;
         cursor: pointer;
         border: none;
-        box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+        box-shadow: 0 0 0 4px rgba(85, 0, 15, 0.12);
     }
-
 
     .modal-backdrop {
         background: rgba(0, 0, 0, 0.55);
@@ -72,239 +67,120 @@
 
 {% block content %}
 
-<section class="max-w-7xl mx-auto px-4 py-10">
+<section class="melt-bg relative -mt-px pb-24 pt-10 md:pt-28">
 
+    <div class="mx-auto max-w-3xl px-4" dir="rtl">
 
-    <!-- Banner -->
+        <!-- Title + Steps -->
 
-    <div
-        class="relative w-full h-72 md:h-96 rounded-2xl overflow-hidden mb-12"
-    >
+        <div class="mx-auto max-w-md">
 
-        <img
-            id="meltBannerImage"
-            src="{% static 'public/images/banner/public/melt.webp' %}"
-            alt="{% trans 'Melted Gold Purchase Steps' %}"
-            class="absolute inset-0 w-full h-full object-cover object-center"
-        >
+            <h1 class="flex items-center gap-2 text-2xl text-[#55000f]">
+                <img src="{% static 'public/images/arrows.png' %}" alt="" class="h-5 w-5">
+                {% trans "چگونه طلای آبشده بخریم؟" %}
+            </h1>
 
-        <div
-            class="absolute inset-0 bg-linear-to-b from-black/30 to-black/70"
-        ></div>
-
-
-        <div
-            class="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
-        >
-
-            <h2
-                class="text-white text-2xl md:text-3xl font-bold mb-4 melt-title"
-            >
-                {% trans "How to Buy Melted Gold" %}
-            </h2>
-
-
-            <div
-                class="text-white/90 text-sm md:text-base leading-7 max-w-xl melt-desc"
-            >
-
-                <p class="mb-2">
-                    {% trans "1. Select the amount you want to spend." %}
-                </p>
-
-                <p class="mb-2">
-                    {% trans "2. The system calculates the amount of gold you can buy." %}
-                </p>
-
-                <p class="mb-2">
-                    {% trans "3. Review the purchase details." %}
-                </p>
-
-                <p>
-                    {% trans "4. Confirm the purchase and receive your invoice." %}
-                </p>
-
-            </div>
+            <ul class="mt-4 space-y-2 text-xs text-gray-700">
+                <li>• {% trans "1. مبلغی را که می‌خواهید هزینه کنید، انتخاب نمایید." %}</li>
+                <li>• {% trans "2. سیستم مقدار طلایی را که می‌توانید خریداری کنید، محاسبه می‌کند." %}</li>
+                <li>• {% trans "3. جزئیات خرید را بررسی کنید." %}</li>
+                <li>• {% trans "4. خرید را تأیید کنید و فاکتور خود را دریافت نمایید." %}</li>
+            </ul>
 
         </div>
 
-    </div>
+
+        <!-- Purchase Card -->
+
+        <div class="relative mx-auto mt-20 max-w-xl rounded-[2.5rem] bg-white px-6 pb-16 pt-16 shadow-xl md:px-12">
+
+            <!-- Icon -->
+            <img src="{% static 'public/images/icon-bars.png' %}" alt=""
+                class="absolute left-1/2 top-0 h-14 w-14 -translate-x-1/2 -translate-y-1/2">
 
 
-
-    <!-- Purchase Card -->
-
-    <div class="max-w-3xl mx-auto">
-
-        <div
-            class="bg-white/90 backdrop-blur-xl
-                   border border-public-gold/30
-                   shadow-xl rounded-2xl p-6 md:p-8"
-        >
-
-
-            <h3
-                class="text-2xl font-bold text-public-gold mb-8 text-center"
-            >
-                {% trans "Buy Melted Gold" %}
+            <h3 class="mb-6 text-center text-lg text-[#55000f]">
+                {% trans "خرید طلای آب شده" %}
             </h3>
-
 
 
             <!-- Wallet -->
 
-            <div
-                class="bg-gray-50 border rounded-xl p-4 mb-8
-                       flex items-center justify-between"
-            >
+            <div class="mb-8 flex items-center justify-between rounded-xl bg-[#e5e5e5] px-4 py-3 text-sm">
 
                 <span class="text-gray-600">
-                    {% trans "Wallet Balance" %}
+                    {% trans "موجودی کیف پول" %}
                 </span>
 
-
-                <strong
-                    id="walletBalance"
-                    class="text-public-gold"
-                >
+                <strong id="walletBalance" class="text-[#55000f]">
                     {{ wallet_balance|floatformat:0 }}
-                    {% trans "Toman" %}
+                    {% trans "تومان" %}
                 </strong>
 
             </div>
 
 
-
             <!-- Amount -->
 
-            <div class="mb-8">
+            <div class="mb-6">
 
-                <label
-                    class="block text-lg font-semibold text-gray-700 mb-4"
-                >
-                    {% trans "Select Amount" %}
+                <label class="mb-4 block text-sm text-gray-700">
+                    {% trans "انتخاب مبلغ:" %}
                 </label>
-
-
 
                 <div class="flex items-center gap-3">
 
-
-                    <button
-                        id="btn-decrease"
-                        type="button"
-                        class="px-4 py-2 rounded-lg
-                               bg-public-gold/20
-                               hover:bg-public-gold/30
-                               text-public-gold
-                               font-bold text-xl"
-                    >
+                    <button id="btn-decrease" type="button"
+                        class="px-2 text-xl font-bold text-[#55000f]">
                         -
                     </button>
 
-
-
-                    <input
-                        type="range"
-                        id="amount"
+                    <input type="range" id="amount"
                         min="{{ min_amount|floatformat:0 }}"
                         max="{{ max_amount|floatformat:0 }}"
                         step="{{ step_amount|floatformat:0 }}"
                         value="{{ min_amount|floatformat:0 }}"
-                        class="flex-1"
-                    >
+                        class="flex-1">
 
-
-
-                    <button
-                        id="btn-increase"
-                        type="button"
-                        class="px-4 py-2 rounded-lg
-                               bg-public-gold/20
-                               hover:bg-public-gold/30
-                               text-public-gold
-                               font-bold text-xl"
-                    >
+                    <button id="btn-increase" type="button"
+                        class="px-2 text-xl font-bold text-[#55000f]">
                         +
                     </button>
 
                 </div>
 
-
-
-                <p class="text-lg font-semibold text-public-gold mt-4 text-center">
-
-                    {% trans "Selected Amount:" %}
-
-                    <span
-                        id="amountDisplay"
-                        class="mx-1"
-                    >
-                        {{ min_amount|floatformat:0 }}
-                    </span>
-
-                    {% trans "Toman" %}
-
+                <p class="mt-4 text-center text-sm font-semibold text-[#55000f]">
+                    {% trans "مبلغ انتخاب‌شده:" %}
+                    <span id="amountDisplay" class="mx-1">{{ min_amount|floatformat:0 }}</span>
+                    {% trans "تومان" %}
                 </p>
 
-
-
-                <p class="text-sm text-gray-500 text-center mt-2">
-
-                    {% trans "Minimum amount is 1,000,000 Toman" %}
-
+                <p class="mt-2 text-center text-xs text-gray-500">
+                    {% trans "حداقل مبلغ ۱,۰۰۰,۰۰۰ تومان است" %}
                 </p>
 
             </div>
 
 
-
             <!-- Calculation -->
 
-            <div
-                id="gold-result"
-                class="hidden
-                       bg-public-gold/10
-                       border border-public-gold/40
-                       rounded-xl
-                       p-6
-                       shadow-md
-                       animate-fade-in"
-            >
+            <div id="gold-result"
+                class="animate-fade-in hidden rounded-xl bg-[#55000f]/5 p-5">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-center">
-
+                <div class="grid grid-cols-1 gap-5 text-center md:grid-cols-2">
 
                     <div>
-
-                        <p class="text-sm text-gray-500">
+                        <p class="text-xs text-gray-500">
                             {% trans "Buy Price Per Gram" %}
                         </p>
-
-                        <p
-                            id="price-per-gram"
-                            class="text-lg font-bold text-gray-800 mt-1"
-                        >
-                            -
-                        </p>
-
+                        <p id="price-per-gram" class="mt-1 text-base font-bold text-gray-800">-</p>
                     </div>
 
-
-
                     <div>
-
-                        <p class="text-sm text-gray-500">
+                        <p class="text-xs text-gray-500">
                             {% trans "You Can Buy" %}
                         </p>
-
-                        <p
-                            id="gold-amount"
-                            class="text-xl font-bold text-public-gold mt-1"
-                        >
-                            -
-                        </p>
-
+                        <p id="gold-amount" class="mt-1 text-lg font-bold text-[#55000f]">-</p>
                     </div>
 
                 </div>
@@ -312,24 +188,10 @@
             </div>
 
 
+            <!-- Review (نصفه بیرون از کارت) -->
 
-            <!-- Review -->
-
-            <button
-                id="open-confirm-modal"
-                type="button"
-                class="hidden
-                       w-full mt-8
-                       bg-public-gold
-                       text-white
-                       font-semibold
-                       text-lg
-                       py-3
-                       rounded-xl
-                       shadow-lg
-                       hover:bg-yellow-600
-                       transition"
-            >
+            <button id="open-confirm-modal" type="button"
+                class="absolute -bottom-6 left-1/2 hidden h-12 w-44 -translate-x-1/2 rounded-2xl bg-[#55000f] text-white shadow-lg transition hover:bg-black">
                 {% trans "Review Purchase" %}
             </button>
 
@@ -343,187 +205,77 @@
 
 <!-- Confirmation Modal -->
 
-<div
-    id="confirm-modal"
-    class="hidden fixed inset-0 z-50 modal-backdrop
-           items-center justify-center px-4"
->
+<div id="confirm-modal"
+    class="modal-backdrop fixed inset-0 z-[110] hidden items-center justify-center px-4">
 
-    <div
-        class="bg-white rounded-2xl shadow-2xl
-               w-full max-w-lg
-               p-6 md:p-8
-               animate-fade-in"
-    >
+    <div class="animate-fade-in w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl md:p-8">
 
-
-        <div class="text-center mb-6">
-
-            <h3 class="text-2xl font-bold text-gray-800">
+        <div class="mb-6 text-center">
+            <h3 class="text-2xl font-bold text-[#55000f]">
                 {% trans "Confirm Purchase" %}
             </h3>
-
-            <p class="text-gray-500 mt-2">
+            <p class="mt-2 text-gray-500">
                 {% trans "Please review the following information." %}
             </p>
-
         </div>
-
 
 
         <!-- Summary -->
 
         <div class="space-y-4">
 
-
-            <div
-                class="flex justify-between
-                       border-b pb-3"
-            >
-
-                <span class="text-gray-600">
-                    {% trans "Amount" %}
-                </span>
-
-                <strong id="modal-amount">
-                    -
-                </strong>
-
+            <div class="flex justify-between border-b pb-3">
+                <span class="text-gray-600">{% trans "Amount" %}</span>
+                <strong id="modal-amount">-</strong>
             </div>
 
-
-
-            <div
-                class="flex justify-between
-                       border-b pb-3"
-            >
-
-                <span class="text-gray-600">
-                    {% trans "Price Per Gram" %}
-                </span>
-
-                <strong id="modal-price">
-                    -
-                </strong>
-
+            <div class="flex justify-between border-b pb-3">
+                <span class="text-gray-600">{% trans "Price Per Gram" %}</span>
+                <strong id="modal-price">-</strong>
             </div>
 
-
-
-            <div
-                class="flex justify-between
-                       border-b pb-3"
-            >
-
-                <span class="text-gray-600">
-                    {% trans "Gold Amount" %}
-                </span>
-
-                <strong
-                    id="modal-gold"
-                    class="text-public-gold"
-                >
-                    -
-                </strong>
-
+            <div class="flex justify-between border-b pb-3">
+                <span class="text-gray-600">{% trans "Gold Amount" %}</span>
+                <strong id="modal-gold" class="text-[#55000f]">-</strong>
             </div>
 
-
-
-            <div
-                class="flex justify-between
-                       border-b pb-3"
-            >
-
-                <span class="text-gray-600">
-                    {% trans "Current Wallet Balance" %}
-                </span>
-
-                <strong id="modal-wallet">
-                    -
-                </strong>
-
+            <div class="flex justify-between border-b pb-3">
+                <span class="text-gray-600">{% trans "Current Wallet Balance" %}</span>
+                <strong id="modal-wallet">-</strong>
             </div>
-
-
 
             <div class="flex justify-between">
-
-                <span class="text-gray-600">
-                    {% trans "Balance After Purchase" %}
-                </span>
-
-                <strong id="modal-wallet-after">
-                    -
-                </strong>
-
+                <span class="text-gray-600">{% trans "Balance After Purchase" %}</span>
+                <strong id="modal-wallet-after">-</strong>
             </div>
 
         </div>
-
 
 
         <!-- Warning -->
 
-        <div
-            class="mt-6
-                   bg-yellow-50
-                   border border-yellow-200
-                   rounded-xl
-                   p-4
-                   text-sm
-                   text-yellow-800"
-        >
-
+        <div class="mt-6 rounded-xl border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
             {% trans "After confirmation, the purchase amount will be deducted from your wallet and the purchased gold will be added to your inventory." %}
-
         </div>
-
 
 
         <!-- Confirm Form -->
 
-        <form
-            id="confirm-form"
-            method="post"
-            action="{% url 'wallet:melted_gold_buy' %}"
-            class="mt-6"
-        >
+        <form id="confirm-form" method="post" action="{% url 'wallet:melted_gold_buy' %}" class="mt-6">
 
             {% csrf_token %}
 
-
-            <input
-                type="hidden"
-                name="amount"
-                id="final-amount"
-            >
-
+            <input type="hidden" name="amount" id="final-amount">
 
             <div class="grid grid-cols-2 gap-3">
 
-
-                <button
-                    type="button"
-                    id="close-modal"
-                    class="w-full py-3 rounded-xl
-                           border border-gray-300
-                           text-gray-700
-                           hover:bg-gray-50"
-                >
+                <button type="button" id="close-modal"
+                    class="w-full rounded-xl border border-gray-300 py-3 text-gray-700 hover:bg-gray-50">
                     {% trans "Cancel" %}
                 </button>
 
-
-
-                <button
-                    type="submit"
-                    class="w-full py-3 rounded-xl
-                           bg-public-gold
-                           text-white
-                           font-semibold
-                           hover:bg-yellow-600"
-                >
+                <button type="submit"
+                    class="w-full rounded-xl bg-[#55000f] py-3 font-semibold text-white hover:bg-black">
                     {% trans "Confirm Purchase" %}
                 </button>
 
@@ -879,32 +631,6 @@ confirmModal.addEventListener(
 
 calculateGold(
     Number(amountInput.value)
-);
-
-
-
-/*
- * Banner parallax
- */
-
-const meltBannerImage =
-    document.getElementById(
-        "meltBannerImage"
-    );
-
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        const offset =
-            window.pageYOffset;
-
-
-        meltBannerImage.style.transform =
-            `translateY(${offset * 0.25}px)`;
-
-    }
 );
 
 </script>
