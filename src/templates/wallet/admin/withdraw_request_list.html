@@ -6,121 +6,155 @@
 
 {% block content %}
 
-<h1>{% trans "Withdraw Requests" %}</h1>
+<div>
 
-<table>
-    <thead>
-        <tr>
-            <th>{% trans "User" %}</th>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Date" %}</th>
-            <th>{% trans "Details" %}</th>
-        </tr>
-    </thead>
+    <!-- عنوان صفحه -->
+    <div class="flex items-center gap-2 text-[#1f3a34]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+        <h1 class="text-base font-semibold">{% trans "Withdraw Requests" %}</h1>
+    </div>
 
-    <tbody>
-        {% for req in requests %}
-        {% with bank=req.user.bank_accounts.first %}
-        <tr>
+    <!-- عنوان جدول + فیلتر -->
+    <div class="mt-14 flex items-center justify-between">
+        <h2 class="text-xl text-gray-700">{% trans "Withdraw Requests" %}</h2>
+        <span class="flex items-center gap-2 text-sm text-gray-700">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 5h18l-7 8v6l-4-2v-4L3 5z" />
+            </svg>
+            {% trans "Filter" %}
+        </span>
+    </div>
 
-            <td>
-                <a
-                    hx-get="{% url 'account:admin_user_detail' req.user.id %}"
-                    hx-target="#dashboard-content"
-                    hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-                >
-                    {{ req.user.phone_number }}
-                </a>
-            </td>
+    <!-- جدول -->
+    <div class="mt-6 overflow-x-auto">
+        <table class="w-full min-w-[560px] text-center text-sm text-gray-800">
+            <thead>
+                <tr class="text-xs text-gray-400">
+                    <th class="py-4 font-normal">{% trans "Details" %}</th>
+                    <th class="py-4 font-normal">{% trans "User" %}</th>
+                    <th class="py-4 font-normal">{% trans "Amount" %}</th>
+                    <th class="py-4 font-normal">{% trans "Date" %}</th>
+                    <th class="py-4 font-normal">{% trans "Status" %}</th>
+                </tr>
+            </thead>
 
-            <td>
-                {{ req.amount|comma }}
-            </td>
+            <tbody class="[&>tr:nth-child(odd)]:bg-gray-50">
+                {% for req in requests %}
+                {% with bank=req.user.bank_accounts.first %}
+                <tr>
 
-            <td>
-                {{ req.status }}
-            </td>
+                    <td class="py-3">
+                        {% if req.status == "pending" %}
+                        <a
+                            hx-get="{% url 'wallet:admin_withdraw_request_detail' req.pk %}"
+                            hx-target="#dashboard-content"
+                            hx-swap="innerHTML"
+                            class="inline-block cursor-pointer rounded-full bg-gray-200 px-5 py-1 text-xs text-gray-800 transition hover:bg-gray-300"
+                        >
+                            {% trans "View" %}
+                        </a>
+                        {% else %}
+                        <span class="inline-block rounded-full bg-red-50 px-3 py-1 text-xs text-red-500">
+                            {% trans "Not Available" %}
+                        </span>
+                        {% endif %}
+                    </td>
 
-            <td>
-                {{ req.created_at|jalali }}
-            </td>
+                    <td class="py-3">
+                        <a
+                            hx-get="{% url 'account:admin_user_detail' req.user.id %}"
+                            hx-target="#dashboard-content"
+                            hx-swap="innerHTML"
+                            class="cursor-pointer hover:text-[#55000f] hover:underline"
+                        >
+                            {{ req.user.phone_number }}
+                        </a>
+                    </td>
 
-            <td>
+                    <td class="py-3">
+                        {{ req.amount|comma }}
+                    </td>
 
-                {% if req.status == "pending" %}
+                    <td class="py-3 whitespace-nowrap">
+                        {{ req.created_at|jalali }}
+                    </td>
 
-                    <a
-                        hx-get="{% url 'wallet:admin_withdraw_request_detail' req.pk %}"
-                        hx-target="#dashboard-content"
-                        hx-swap="innerHTML"
-                        class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-                    >
-                        {% trans "View" %}
-                    </a>
+                    <td class="py-3">
+                        {% if req.status == "paid" or req.status == "approved" or req.status == "completed" %}
+                        <span class="inline-block rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">
+                            {{ req.get_status_display|default:req.status }}
+                        </span>
+                        {% elif req.status == "rejected" or req.status == "canceled" or req.status == "cancelled" %}
+                        <span class="inline-block rounded-full bg-red-50 px-3 py-1 text-xs text-red-500">
+                            {{ req.get_status_display|default:req.status }}
+                        </span>
+                        {% else %}
+                        <span class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700">
+                            {{ req.get_status_display|default:req.status }}
+                        </span>
+                        {% endif %}
+                    </td>
 
-                {% else %}
+                </tr>
+                {% endwith %}
 
-                    <span class="text-gray-400">
-                        {% trans "Not Available" %}
-                    </span>
+                {% empty %}
 
-                {% endif %}
+                <tr>
+                    <td colspan="5" class="py-10 text-gray-500">
+                        {% trans "No withdraw requests found." %}
+                    </td>
+                </tr>
 
-            </td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        </tr>
-        {% endwith %}
+    <!-- صفحه‌بندی -->
+    <div class="pagination mt-14 flex items-center justify-center gap-2 text-sm">
 
-        {% empty %}
-
-        <tr>
-            <td colspan="5">
-                {% trans "No withdraw requests found." %}
-            </td>
-        </tr>
-
-        {% endfor %}
-
-    </tbody>
-</table>
-
-<div class="pagination">
-
-    {% if page_obj.has_previous %}
-
+        {% if page_obj.has_previous %}
         <a
             hx-get="{% url 'wallet:withdraw_request_list' %}?page={{ page_obj.previous_page_number }}"
             hx-target="#dashboard-content"
             hx-swap="innerHTML"
+            class="flex h-8 cursor-pointer items-center gap-1 rounded-lg bg-gray-100 px-3 text-gray-600 transition hover:bg-gray-200"
         >
+            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
             {% trans "Previous" %}
         </a>
+        {% endif %}
 
-    {% endif %}
+        <span class="flex h-8 items-center rounded-lg bg-[#55000f] px-4 text-white">
+            {% trans "Page" %}
+            {{ page_obj.number }}
+            {% trans "of" %}
+            {{ page_obj.paginator.num_pages }}
+        </span>
 
-    <span>
-
-        {% trans "Page" %}
-        {{ page_obj.number }}
-        {% trans "of" %}
-        {{ page_obj.paginator.num_pages }}
-
-    </span>
-
-    {% if page_obj.has_next %}
-
+        {% if page_obj.has_next %}
         <a
             hx-get="{% url 'wallet:withdraw_request_list' %}?page={{ page_obj.next_page_number }}"
             hx-target="#dashboard-content"
             hx-swap="innerHTML"
+            class="flex h-8 cursor-pointer items-center gap-1 rounded-lg bg-gray-100 px-3 text-gray-600 transition hover:bg-gray-200"
         >
             {% trans "Next" %}
+            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
         </a>
+        {% endif %}
 
-    {% endif %}
+    </div>
 
 </div>
+
+
 
 {% endblock %}

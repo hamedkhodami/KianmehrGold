@@ -10,97 +10,144 @@
 
 {% block content %}
 
-<h2>{% trans "Sell Melted Gold Requests" %}</h2>
+<div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>{% trans "User" %}</th>
-            <th>{% trans "Gold Amount (g)" %}</th>
-            <th>{% trans "Total Price" %}</th>
-            <th>{% trans "Wallet Balance" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Date" %}</th>
-            <th>{% trans "Actions" %}</th>
-        </tr>
-    </thead>
+    <!-- عنوان صفحه -->
+    <div class="flex items-center gap-2 text-[#1f3a34]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+        <h2 class="text-base font-semibold">{% trans "Sell Melted Gold Requests" %}</h2>
+    </div>
 
-    <tbody>
-        {% for order in page_obj %}
-            {% with item=order.items.first %}
-            <tr>
-                <td>
-                    <a
-                        hx-get="{% url 'account:admin_user_detail' order.user.id %}"
-                        hx-target="#dashboard-content"
-                        hx-swap="innerHTML"
-                    >
-                        {{ order.user.phone_number }}
-                    </a>
-                </td>
-                <td>{{ item.gold_amount }}</td>
-                <td>{{ item.total_price }}</td>
-                <td>{{ order.user.wallet.balance }}</td>
-                <td>{{ order.status }}</td>
-                <td>{{ order.created_at|jalali }}</td>
+    <!-- عنوان جدول + فیلتر -->
+    <div class="mt-14 flex items-center justify-between">
+        <h3 class="text-xl text-gray-700">{% trans "Sell Melted Gold Requests" %}</h3>
+        <span class="flex items-center gap-2 text-sm text-gray-700">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 5h18l-7 8v6l-4-2v-4L3 5z" />
+            </svg>
+            {% trans "Filter" %}
+        </span>
+    </div>
 
-                <td>
-                    {% if order.status == "pending" %}
-                        <form method="post" action="{% url 'order:admin_sell_approve' order.id %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button class="btn btn-success">{% trans "Approve" %}</button>
-                        </form>
+    <!-- جدول -->
+    <div class="mt-6 overflow-x-auto">
+        <table class="table w-full min-w-[640px] text-center text-sm text-gray-800">
+            <thead>
+                <tr class="text-xs text-gray-400">
+                    <th class="py-4 font-normal">{% trans "User" %}</th>
+                    <th class="py-4 font-normal">{% trans "Gold Amount (g)" %}</th>
+                    <th class="py-4 font-normal">{% trans "Total Price" %}</th>
+                    <th class="py-4 font-normal">{% trans "Wallet Balance" %}</th>
+                    <th class="py-4 font-normal">{% trans "Status" %}</th>
+                    <th class="py-4 font-normal">{% trans "Date" %}</th>
+                    <th class="py-4 font-normal">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
 
-                        <form method="post" action="{% url 'order:admin_sell_reject' order.id %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button class="btn btn-danger">{% trans "Reject" %}</button>
-                        </form>
-                    {% else %}
-                        <span>{% trans "Processed" %}</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endwith %}
-        {% endfor %}
-    </tbody>
-</table>
+            <tbody class="[&>tr:nth-child(odd)]:bg-gray-50">
+                {% for order in page_obj %}
+                {% with item=order.items.first %}
+                <tr>
+                    <td class="py-3">
+                        <a
+                            hx-get="{% url 'account:admin_user_detail' order.user.id %}"
+                            hx-target="#dashboard-content"
+                            hx-swap="innerHTML"
+                            class="cursor-pointer hover:text-[#55000f] hover:underline"
+                        >
+                            {{ order.user.phone_number }}
+                        </a>
+                    </td>
+                    <td class="py-3">{{ item.gold_amount }}</td>
+                    <td class="py-3">{{ item.total_price }}</td>
+                    <td class="py-3">{{ order.user.wallet.balance }}</td>
+                    <td class="py-3">
+                        <span class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700">
+                            {{ order.status }}
+                        </span>
+                    </td>
+                    <td class="py-3 whitespace-nowrap">{{ order.created_at|jalali }}</td>
 
-<div class="pagination">
+                    <td class="py-3">
+                        {% if order.status == "pending" %}
+                        <div class="flex items-center justify-center gap-2">
+                            <form method="post" action="{% url 'order:admin_sell_approve' order.id %}" class="inline">
+                                {% csrf_token %}
+                                <button type="submit" title="{% trans 'Approve' %}" aria-label="{% trans 'Approve' %}"
+                                    class="btn btn-success flex h-7 w-7 items-center justify-center rounded-full bg-green-50 text-green-600 transition hover:bg-green-100">
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12l5 5L20 7" />
+                                    </svg>
+                                </button>
+                            </form>
 
-    {% if page_obj.has_previous %}
+                            <form method="post" action="{% url 'order:admin_sell_reject' order.id %}" class="inline">
+                                {% csrf_token %}
+                                <button type="submit" title="{% trans 'Reject' %}" aria-label="{% trans 'Reject' %}"
+                                    class="btn btn-danger flex h-7 w-7 items-center justify-center rounded-full bg-red-50 text-red-500 transition hover:bg-red-100">
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 6l12 12M18 6L6 18" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <span class="text-xs text-gray-500">{% trans "Processed" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
+    <!-- صفحه‌بندی -->
+    <div class="pagination mt-14 flex items-center justify-center gap-2 text-sm">
+
+        {% if page_obj.has_previous %}
         <a
             hx-get="{% url 'order:admin_sell_list' %}?page={{ page_obj.previous_page_number }}"
             hx-target="#dashboard-content"
             hx-swap="innerHTML"
+            class="flex h-8 cursor-pointer items-center gap-1 rounded-lg bg-gray-100 px-3 text-gray-600 transition hover:bg-gray-200"
         >
+            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
             {% trans "Previous" %}
         </a>
+        {% endif %}
 
-    {% endif %}
+        <span class="flex h-8 items-center rounded-lg bg-[#55000f] px-4 text-white">
+            {% trans "Page" %}
+            {{ page_obj.number }}
+            {% trans "of" %}
+            {{ page_obj.paginator.num_pages }}
+        </span>
 
-    <span>
-
-        {% trans "Page" %}
-        {{ page_obj.number }}
-        {% trans "of" %}
-        {{ page_obj.paginator.num_pages }}
-
-    </span>
-
-    {% if page_obj.has_next %}
-
+        {% if page_obj.has_next %}
         <a
             hx-get="{% url 'order:admin_sell_list' %}?page={{ page_obj.next_page_number }}"
             hx-target="#dashboard-content"
             hx-swap="innerHTML"
+            class="flex h-8 cursor-pointer items-center gap-1 rounded-lg bg-gray-100 px-3 text-gray-600 transition hover:bg-gray-200"
         >
             {% trans "Next" %}
+            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
         </a>
+        {% endif %}
 
-    {% endif %}
+    </div>
 
 </div>
+
 
 {% endblock %}
 

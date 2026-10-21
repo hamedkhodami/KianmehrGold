@@ -3,108 +3,155 @@
 {% load static %}
 
 {% block title %}
-    {% trans "Dashboard Admin" %}
+{% trans "Dashboard Admin" %}
 {% endblock %}
 
-    {% block extra_style %}
-        <style>
-            .dashboard-message.success {
-                background-color: #d1fae5; /* green-100 */
-                color: #065f46; /* green-700 */
-            }
-            .dashboard-message.error {
-                background-color: #fee2e2; /* red-100 */
-                color: #991b1b; /* red-700 */
-            }
-        </style>
-    {% endblock %}
+{% block extra_style %}
+<style>
+    .dashboard-message.success {
+        background-color: #d1fae5;
+        /* green-100 */
+        color: #065f46;
+        /* green-700 */
+    }
+
+    .dashboard-message.error {
+        background-color: #fee2e2;
+        /* red-100 */
+        color: #991b1b;
+        /* red-700 */
+    }
+    .dash-item.active {
+    background-color: #ffdde1;
+    color: #55000f;
+    font-weight: 700;
+}
+</style>
+{% endblock %}
 
 {% block content %}
 
 <div class="flex">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-gray-100 min-h-screen p-4 space-y-3">
+    <aside class="w-64 shrink-0 self-start rounded-2xl border border-gray-200 bg-white p-3 shadow-xs" dir="rtl">
 
-        <ul class="space-y-3">
+        <ul class="space-y-1 text-sm text-gray-900" id="dash-menu">
 
+            <!-- صفحه اصلی -->
             <li>
-                <a href="{% url 'public:index' %}" class="block text-right p-2 bg-white rounded-sm shadow-sm">
-                    {% trans "Home" %}
+                <a href="{% url 'public:index' %}"
+                    class="dash-item flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8.5z" />
+                        <path d="M10 20v-5h4v5" />
+                    </svg>
+                    <span>{% trans "Home" %}</span>
                 </a>
             </li>
 
+            <!-- پروفایل -->
             <li>
-                <button
-                    hx-get="{% url 'account:profile' %}"
-                    hx-target="#dashboard-content"
+                <button type="button" hx-get="{% url 'account:profile' %}" hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-                >
-                    {% trans "Profile" %}
+                    class="dash-item flex w-full items-center gap-3 rounded-xl px-4 py-3 text-right transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" />
+                    </svg>
+                    <span>{% trans "Profile" %}</span>
                 </button>
             </li>
 
+            <!-- درخواست‌های فروش طلای آب‌شده -->
             <li>
-                <button
-                    hx-get="{% url 'order:admin_sell_list' %}"
-                    hx-target="#dashboard-content"
+                <button type="button" hx-get="{% url 'order:admin_sell_list' %}" hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-                >
-                    {% trans "Sell Melted Gold Requests" %}
+                    class="dash-item flex w-full items-center gap-3 rounded-xl px-4 py-3 text-right transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 4h6l2 5H7l2-5z" />
+                        <path d="M4 20l2-6h6l2 6H4z" />
+                        <path d="M12 14l2-5h6l1 5-1 6h-6" />
+                    </svg>
+                    <span>{% trans "Sell Melted Gold Requests" %}</span>
                 </button>
             </li>
 
+            <!-- درخواست‌های برداشت -->
             <li>
-                <button
-                    hx-get="{% url 'wallet:withdraw_request_list' %}"
-                    hx-target="#dashboard-content"
+                <button type="button" hx-get="{% url 'wallet:withdraw_request_list' %}" hx-target="#dashboard-content"
                     hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-                >
-                    {% trans "Withdraw Requests" %}
+                    class="dash-item flex w-full items-center gap-3 rounded-xl px-4 py-3 text-right transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 20V6m0 0L4 10m4-4l4 4" />
+                        <path d="M16 4v14m0 0l-4-4m4 4l4-4" />
+                    </svg>
+                    <span>{% trans "Withdraw Requests" %}</span>
                 </button>
             </li>
 
+            <!-- اعلان‌ها -->
             <li>
-                <button
-                    hx-get="{% url 'notification:user_notifications' %}"
-                    hx-target="#dashboard-content"
-                    hx-swap="innerHTML"
-                    class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-                >
-                    {% trans "Notifications" %}
+                <button type="button" hx-get="{% url 'notification:user_notifications' %}"
+                    hx-target="#dashboard-content" hx-swap="innerHTML"
+                    class="dash-item flex w-full items-center gap-3 rounded-xl px-4 py-3 text-right transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6z" />
+                        <path d="M10 19a2 2 0 0 0 4 0" />
+                    </svg>
+                    <span>{% trans "Notifications" %}</span>
                 </button>
             </li>
 
+            <!-- ادمین جنگو -->
             <li>
-                <a href="/admin/" class="block text-right p-2 bg-white rounded-sm shadow-sm">
-                    {% trans "Django Admin" %}
+                <a href="/admin/"
+                    class="dash-item flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="8" r="3.5" />
+                        <path d="M2.5 19c0-3.3 3-5 6.5-5s6.5 1.7 6.5 5" />
+                        <path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.3c2 .6 3.5 2 3.5 4.7" />
+                    </svg>
+                    <span>{% trans "Django Admin" %}</span>
                 </a>
             </li>
 
+            <!-- بخش ترجمه‌ها -->
             <li>
-                <a href="/rosetta/" class="block text-right p-2 bg-white rounded-sm shadow-sm">
-                    {% trans "Rosetta" %}
+                <a href="/rosetta/"
+                    class="dash-item flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-gray-50">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" />
+                    </svg>
+                    <span>{% trans "Rosetta" %}</span>
                 </a>
             </li>
 
+            <!-- خروج -->
             <li>
-                <form
-                    method="post"
-                    action="{% url 'account:logout' %}"
-                    class="w-full"
-                >
+                <form method="post" action="{% url 'account:logout' %}" class="w-full">
                     {% csrf_token %}
-                    <button type="submit" class="w-full text-right p-2 bg-white rounded-sm shadow-sm">
-                            {% trans "Logout" %}
+                    <button type="submit"
+                        class="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-right transition hover:bg-gray-50">
+                        <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" />
+                            <path d="M15 8l4 4-4 4M19 12H9" />
+                        </svg>
+                        <span>{% trans "Logout" %}</span>
                     </button>
                 </form>
             </li>
 
         </ul>
-
     </aside>
 
     <!-- Content -->
@@ -113,11 +160,11 @@
             {% trans "Please select an item from the menu." %}
         </p>
         {% if messages %}
-            {% for message in messages %}
-                <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded-sm">
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="dashboard-message {{ message.tags }} mb-4 p-3 rounded-sm">
+            {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
     </main>
 
@@ -135,5 +182,14 @@
             setTimeout(() => msg.remove(), 500);
         });
     }, 2000);
+
+    document.querySelectorAll('#dash-menu button.dash-item').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('#dash-menu .dash-item').forEach(function (el) {
+                el.classList.remove('active');
+            });
+            btn.classList.add('active');
+        });
+    });
 </script>
 {% endblock %}

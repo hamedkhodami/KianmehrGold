@@ -4,40 +4,159 @@
 
 {% block content %}
 
-<h1>{% trans "Edit Profile" %}</h1>
+<div dir="rtl">
 
-<form method="post" action="{% url 'account:profile' %}">
-    {% csrf_token %}
-
-    <div>
-        <label>{% trans "First name" %}</label>
-        <input type="text" name="first_name" value="{{ form.first_name.value }}">
+    <!-- عنوان صفحه -->
+    <div class="flex items-center gap-2 text-[#1f3a34]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+        <h1 class="text-base font-semibold">{% trans "Edit Profile" %}</h1>
     </div>
 
-    <div>
-        <label>{% trans "Last name" %}</label>
-        <input type="text" name="last_name" value="{{ form.last_name.value }}">
-    </div>
+    <form method="post" action="{% url 'account:profile' %}" class="mt-8 w-full max-w-xl px-2 md:px-6">
+        {% csrf_token %}
 
-    <div>
-        <label>{% trans "Phone number" %}</label>
-        <input type="text" name="phone_number" value="{{ form.phone_number.value }}">
-    </div>
+        <div class="space-y-5">
 
-    <div>
-        <label>{% trans "National code" %}</label>
-        <input type="text" name="national_code" value="{{ form.national_code.value }}">
-    </div>
+            <!-- نام -->
+            <div>
+                <label for="id_first_name" class="mb-1 block text-xs text-gray-700">
+                    {% trans "First name" %}
+                </label>
+                <div class="relative">
+                    <input type="text" name="first_name" id="id_first_name"
+                        value="{{ form.first_name.value|default_if_none:'' }}"
+                        class="h-11 w-full rounded-lg border border-gray-300 bg-white pr-11 pl-4 text-sm text-gray-800 outline-none focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/15">
+                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-600">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="10" cy="8" r="3.5" />
+                            <path d="M3.5 19c0-3.2 2.9-5 6.5-5 1.2 0 2.3.2 3.2.6" />
+                            <path d="M16 20l4-4-1.5-1.5L14.5 18.5 14 20.5z" />
+                        </svg>
+                    </span>
+                </div>
+                {% if form.first_name.errors %}
+                <p class="mt-1 text-[11px] text-red-600">{{ form.first_name.errors.0 }}</p>
+                {% else %}
+                <p class="mt-1 text-[11px] text-gray-400">{% trans "Please use Persian letters." %}</p>
+                {% endif %}
+            </div>
 
-    <div>
-        <label>{% trans "Email" %}</label>
-        <input type="email" name="email" value="{{ form.email.value }}">
-    </div>
+            <!-- نام خانوادگی -->
+            <div>
+                <label for="id_last_name" class="mb-1 block text-xs text-gray-700">
+                    {% trans "Last name" %}
+                </label>
+                <div class="relative">
+                    <input type="text" name="last_name" id="id_last_name"
+                        value="{{ form.last_name.value|default_if_none:'' }}"
+                        class="h-11 w-full rounded-lg border border-gray-300 bg-white pr-11 pl-4 text-sm text-gray-800 outline-none focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/15">
+                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-600">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="10" cy="8" r="3.5" />
+                            <path d="M3.5 19c0-3.2 2.9-5 6.5-5 1.2 0 2.3.2 3.2.6" />
+                            <path d="M16 20l4-4-1.5-1.5L14.5 18.5 14 20.5z" />
+                        </svg>
+                    </span>
+                </div>
+                {% if form.last_name.errors %}
+                <p class="mt-1 text-[11px] text-red-600">{{ form.last_name.errors.0 }}</p>
+                {% else %}
+                <p class="mt-1 text-[11px] text-gray-400">{% trans "Please use Persian letters." %}</p>
+                {% endif %}
+            </div>
 
-    <button type="submit">
-        {% trans "Save changes" %}
-    </button>
+            <!-- کدملی -->
+            <div>
+                <label for="id_national_code" class="mb-1 block text-xs text-gray-700">
+                    {% trans "National code" %}
+                </label>
+                <div class="relative">
+                    <input type="text" name="national_code" id="id_national_code" inputmode="numeric"
+                        value="{{ form.national_code.value|default_if_none:'' }}"
+                        class="h-11 w-full rounded-lg border border-gray-300 bg-white pr-11 pl-4 text-sm text-gray-800 outline-none focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/15">
+                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-600">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="10" cy="8" r="3.5" />
+                            <path d="M3.5 19c0-3.2 2.9-5 6.5-5 1.5 0 2.8.3 3.9.9" />
+                            <path d="M15 17.5l2 2 3.5-3.5" />
+                        </svg>
+                    </span>
+                </div>
+                {% if form.national_code.errors %}
+                <p class="mt-1 text-[11px] text-red-600">{{ form.national_code.errors.0 }}</p>
+                {% else %}
+                <p class="mt-1 text-[11px] text-gray-400">{% trans "Please enter digits without dashes." %}</p>
+                {% endif %}
+            </div>
 
-</form>
+            <!-- شماره تماس -->
+            <div>
+                <label for="id_phone_number" class="mb-1 block text-xs text-gray-700">
+                    {% trans "Phone number" %}
+                </label>
+                <div class="relative">
+                    <input type="text" name="phone_number" id="id_phone_number" inputmode="tel"
+                        value="{{ form.phone_number.value|default_if_none:'' }}"
+                        class="h-11 w-full rounded-lg border border-gray-300 bg-white pr-11 pl-4 text-sm text-gray-800 outline-none focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/15">
+                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-600">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z" />
+                            <path d="M17 3v4M15 5h4" />
+                        </svg>
+                    </span>
+                </div>
+                {% if form.phone_number.errors %}
+                <p class="mt-1 text-[11px] text-red-600">{{ form.phone_number.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- ایمیل -->
+            <div>
+                <label for="id_email" class="mb-1 block text-xs text-gray-700">
+                    {% trans "Email" %}
+                </label>
+                <div class="relative">
+                    <input type="email" name="email" id="id_email" dir="ltr"
+                        value="{{ form.email.value|default_if_none:'' }}"
+                        class="h-11 w-full rounded-lg border border-gray-300 bg-white pe-11 ps-4 text-right text-sm text-gray-800 outline-none focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/15">
+                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-600">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="5" width="18" height="14" rx="2" />
+                            <path d="M3 7l9 6 9-6" />
+                        </svg>
+                    </span>
+                </div>
+                {% if form.email.errors %}
+                <p class="mt-1 text-[11px] text-red-600">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- دکمه -->
+        <div class="mt-16">
+            <button type="submit"
+                class="flex h-11 items-center gap-2 rounded-lg bg-[#55000f] px-6 text-sm text-white transition hover:bg-black">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="4" width="14" height="17" rx="2" />
+                    <path d="M9 4V3h6v1M9 13l2 2 4-4" />
+                </svg>
+                {% trans "Save changes" %}
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
 
 {% endblock %}
