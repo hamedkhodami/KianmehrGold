@@ -10,31 +10,60 @@
 <style>
     .dashboard-message.success {
         background-color: #d1fae5;
-        /* green-100 */
         color: #065f46;
-        /* green-700 */
     }
 
     .dashboard-message.error {
         background-color: #fee2e2;
-        /* red-100 */
         color: #991b1b;
-        /* red-700 */
     }
+
     .dash-item.active {
-    background-color: #ffdde1;
-    color: #55000f;
-    font-weight: 700;
-}
+        background-color: #ffdde1;
+        color: #55000f;
+        font-weight: 700;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<div class="flex">
+<div class="min-h-screen md:flex md:items-start md:gap-6" dir="rtl">
 
-    <!-- Sidebar -->
-    <aside class=" h-screen w-64 shrink-0 self-start rounded-xl border border-gray-200 bg-white p-3 shadow-xs" dir="rtl">
+    <!-- نوار بالای موبایل: دکمه همبرگری -->
+    <div class="mb-4 flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-xs md:hidden">
+        <span class="text-sm font-semibold text-[#55000f]">{% trans "Dashboard Admin" %}</span>
+        <button id="dash-open" type="button" aria-label="{% trans 'Menu' %}"
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-[#55000f]">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- اورلی موبایل -->
+    <div id="dash-overlay"
+        class="pointer-events-none fixed inset-0 z-[90] bg-black/50 opacity-0 transition-opacity duration-300 md:hidden">
+    </div>
+
+    <!-- Sidebar: موبایل = پنل کشویی از راست | دسکتاپ = سایدبار sticky -->
+    <aside id="dash-sidebar"
+        class="fixed right-0 top-0 z-[100] h-full w-72 max-w-[80%] translate-x-full overflow-y-auto bg-white p-3 shadow-2xl transition-transform duration-300
+               md:static md:z-auto md:h-screen md:w-64 md:max-w-none md:translate-x-0 md:shrink-0 md:rounded-xl md:border md:border-gray-200 md:shadow-xs md:sticky md:top-0"
+        dir="rtl">
+
+        <!-- دکمه بستن (فقط موبایل) -->
+        <div class="mb-2 flex items-center justify-between px-2 md:hidden">
+            <span class="text-sm font-semibold text-[#55000f]">کیان مهر</span>
+            <button id="dash-close" type="button" aria-label="{% trans 'Close' %}"
+                class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-[#55000f]">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+            </button>
+        </div>
 
         <ul class="space-y-1 text-sm text-gray-900" id="dash-menu">
 
@@ -155,7 +184,7 @@
     </aside>
 
     <!-- Content -->
-    <main class="flex-1 p-6" id="dashboard-content">
+    <main class="min-w-0 flex-1 space-y-8 p-4 md:max-w-5xl md:p-8" id="dashboard-content">
         <p class="text-gray-600">
             {% trans "Please select an item from the menu." %}
         </p>
@@ -183,6 +212,7 @@
         });
     }, 2000);
 
+    // آیتم فعال
     document.querySelectorAll('#dash-menu button.dash-item').forEach(function (btn) {
         btn.addEventListener('click', function () {
             document.querySelectorAll('#dash-menu .dash-item').forEach(function (el) {
@@ -191,5 +221,43 @@
             btn.classList.add('active');
         });
     });
+
+    // منوی همبرگری موبایل
+    (function () {
+        var sidebar = document.getElementById('dash-sidebar');
+        var overlay = document.getElementById('dash-overlay');
+        var openBtn = document.getElementById('dash-open');
+        var closeBtn = document.getElementById('dash-close');
+        if (!sidebar || !overlay || !openBtn) return;
+
+        function openMenu() {
+            sidebar.classList.remove('translate-x-full');
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            sidebar.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+        }
+
+        openBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+        // بعد از انتخاب آیتم (HTMX)، منو در موبایل بسته شود
+        document.querySelectorAll('#dash-menu button.dash-item').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (window.innerWidth < 768) closeMenu();
+            });
+        });
+
+        // با بزرگ شدن صفحه به دسکتاپ، حالت منو ریست شود
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 768) closeMenu();
+        });
+    })();
 </script>
 {% endblock %}
