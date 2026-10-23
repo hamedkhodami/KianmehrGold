@@ -5,69 +5,115 @@
 
 {% block content %}
 
-<h1>{% trans "Withdraw Requests" %}</h1>
+<!-- عنوان صفحه -->
+<div class="mb-6 flex items-center gap-3">
+    <h1 class="text-lg font-bold text-gray-900">{% trans "Withdraw Requests" %}</h1>
+    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Admin Note" %}</th>
-        </tr>
-    </thead>
+<!-- کارت جدول -->
+<div class="overflow-hidden rounded-lg bg-gray-50">
 
-    <tbody>
-        {% for req in withdraw_requests %}
-        <tr>
-            <td>{{ req.amount|comma }}</td>
-            <td>{{ req.status }}</td>
-            <td>{{ req.admin_note|default:"-" }}</td>
-
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3">{% trans "No withdraw requests found." %}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-    <!-- Pagination -->
-    <div class="pagination">
-
-        {% if page_obj.has_previous %}
-
-            <a
-                hx-get="{% url 'wallet:withdraw_requests' %}?page={{ page_obj.previous_page_number }}"
-                hx-target="#dashboard-content"
-                hx-swap="innerHTML"
-            >
-                {% trans "Previous" %}
-            </a>
-
-        {% endif %}
-
-        <span>
-
-            {% trans "Page" %}
-            {{ page_obj.number }}
-            {% trans "of" %}
-            {{ page_obj.paginator.num_pages }}
-
-        </span>
-
-        {% if page_obj.has_next %}
-
-            <a
-                hx-get="{% url 'wallet:withdraw_requests' %}?page={{ page_obj.next_page_number }}"
-                hx-target="#dashboard-content"
-                hx-swap="innerHTML"
-            >
-                {% trans "Next" %}
-            </a>
-
-        {% endif %}
-
+    <div class="flex items-center justify-between px-5 py-5">
+        <h2 class="text-base font-semibold text-gray-700">{% trans "Withdraw Requests" %}</h2>
     </div>
+
+    <div class="overflow-x-auto bg-white">
+        <table class="w-full min-w-[480px] text-sm">
+            <thead>
+                <tr class="text-gray-500">
+                    <th class="px-5 py-4 text-right font-normal">{% trans "Amount" %}</th>
+                    <th class="px-5 py-4 text-right font-normal">{% trans "Date" %}</th>
+                    <th class="px-5 py-4 text-right font-normal">{% trans "Status" %}</th>
+                    <th class="px-5 py-4 text-right font-normal">{% trans "Admin Note" %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for req in withdraw_requests %}
+                <tr class="odd:bg-gray-50">
+                    <td class="px-5 py-3.5 text-right text-gray-900">
+                        {{ req.amount|comma }} <span class="text-xs">{% trans "Rial" %}</span>
+                    </td>
+                    <td class="px-5 py-3.5 text-right text-gray-900">
+                        {{ req.created_at }}
+                    </td>
+                    <td class="px-5 py-3.5 text-right">
+                        {% if req.status == "paid" or req.status == "approved" %}
+                        <span class="inline-block rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">{{ req.status }}</span>
+                        {% elif req.status == "rejected" %}
+                        <span class="inline-block rounded-full bg-red-50 px-3 py-1 text-xs text-red-500">{{ req.status }}</span>
+                        {% else %}
+                        <span class="inline-block rounded-full bg-yellow-50 px-3 py-1 text-xs text-yellow-600">{{ req.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-3.5 text-right text-gray-600">{{ req.admin_note|default:"-" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-5 py-10 text-center text-gray-500">
+                        {% trans "No withdraw requests found." %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="h-12 border-b border-gray-300"></div>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<div class="pagination mt-6 flex flex-wrap items-center justify-center gap-2 text-sm">
+
+    {% if page_obj.has_previous %}
+    <button type="button"
+        hx-get="{% url 'wallet:withdraw_requests' %}?page={{ page_obj.previous_page_number }}"
+        hx-target="#dashboard-content" hx-swap="innerHTML"
+        aria-label="{% trans 'Previous' %}"
+        class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-600 transition hover:bg-gray-200">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+    </button>
+    {% else %}
+    <span class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-300">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+    </span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+    {% if num == page_obj.number %}
+    <span class="flex h-8 w-8 items-center justify-center rounded-md bg-[#55000f] font-semibold text-white">{{ num }}</span>
+    {% else %}
+    <button type="button"
+        hx-get="{% url 'wallet:withdraw_requests' %}?page={{ num }}"
+        hx-target="#dashboard-content" hx-swap="innerHTML"
+        class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-50 text-gray-700 transition hover:bg-gray-200">{{ num }}</button>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <button type="button"
+        hx-get="{% url 'wallet:withdraw_requests' %}?page={{ page_obj.next_page_number }}"
+        hx-target="#dashboard-content" hx-swap="innerHTML"
+        aria-label="{% trans 'Next' %}"
+        class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-600 transition hover:bg-gray-200">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+    </button>
+    {% else %}
+    <span class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-300">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+    </span>
+    {% endif %}
+
+</div>
+{% endif %}
 
 {% endblock %}

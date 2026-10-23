@@ -1,89 +1,168 @@
+
 {% extends "base/base_dashboard.html" %}
 {% load i18n %}
 {% load static %}
 {% load jalali %}
 
-
 {% block title %}
     {% trans "Invoice Details" %}
 {% endblock %}
 
-
 {% block content %}
 
-<h2 class="text-xl font-bold mb-4">
-    {% trans "Invoice Details" %}
-</h2>
+<!-- عنوان صفحه -->
+<div class="mb-6 flex items-center gap-3">
+    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+    <h1 class="text-lg font-bold text-gray-900">
+        {% trans "Invoice Details" %}
+    </h1>
+</div>
 
+<!-- کارت جزئیات فاکتور -->
+<div class="overflow-hidden rounded-lg bg-gray-50">
 
-<div class="space-y-2">
+    <!-- سربرگ -->
+    <div class="flex items-center justify-between px-5 py-5">
+        <h2 class="text-base font-semibold text-gray-700">
+            {% trans "Invoice Details" %}
+        </h2>
+    </div>
 
-    <p>
-        <strong>{% trans "Invoice Number" %}:</strong>
-        {{ invoice.invoice_number }}
-    </p>
+    <!-- اطلاعات فاکتور -->
+    <div class="overflow-hidden bg-white">
 
-    <p>
-        <strong>{% trans "Title" %}:</strong>
-        {{ invoice.title }}
-    </p>
+        <div class="grid grid-cols-1 divide-y divide-gray-200 text-sm">
 
-    <p>
-        <strong>{% trans "Amount" %}:</strong>
-        {{ invoice.amount }}
-    </p>
+            <!-- شماره فاکتور -->
+            <div class="flex items-center justify-between gap-4 bg-gray-50 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Invoice Number" %} :
+                </span>
+                <span class="font-semibold text-gray-900">
+                    {{ invoice.invoice_number }}
+                </span>
+            </div>
 
-    <p>
-        <strong>{% trans "Tax Amount" %}:</strong>
-        {{ invoice.tax_amount }}
-    </p>
+            <!-- عنوان -->
+            <div class="flex items-center justify-between gap-4 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Title" %} :
+                </span>
+                <span class="font-medium text-gray-900">
+                    {{ invoice.title }}
+                </span>
+            </div>
 
-    <p>
-        <strong>{% trans "Wage Amount" %}:</strong>
-        {{ invoice.wage_amount }}
-    </p>
+            <!-- مبلغ -->
+            <div class="flex items-center justify-between gap-4 bg-gray-50 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Amount" %} :
+                </span>
+                <span class="font-semibold text-gray-900">
+                    {{ invoice.amount }}
+                    <span class="text-xs font-normal">{% trans "Rial" %}</span>
+                </span>
+            </div>
 
-    <p>
-        <strong>{% trans "Weight" %}:</strong>
-        {{ invoice.weight }}
-    </p>
+            <!-- مالیات -->
+            <div class="flex items-center justify-between gap-4 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Tax Amount" %} :
+                </span>
+                <span class="font-medium text-gray-900">
+                    {{ invoice.tax_amount }}
+                    <span class="text-xs">{% trans "Rial" %}</span>
+                </span>
+            </div>
 
-    <p>
-        <strong>{% trans "Status" %}:</strong>
+            <!-- اجرت -->
+            <div class="flex items-center justify-between gap-4 bg-gray-50 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Wage Amount" %} :
+                </span>
+                <span class="font-medium text-gray-900">
+                    {{ invoice.wage_amount }}
+                    <span class="text-xs">{% trans "Rial" %}</span>
+                </span>
+            </div>
 
-        {% if invoice.is_paid %}
-            <span class="text-green-600">
-                {% trans "Paid" %}
-            </span>
-        {% else %}
-            <span class="text-red-600">
-                {% trans "Not Paid" %}
-            </span>
-        {% endif %}
-    </p>
+            <!-- وزن -->
+            <div class="flex items-center justify-between gap-4 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Weight" %} :
+                </span>
+                <span class="font-medium text-gray-900">
+                    {{ invoice.weight }}
+                </span>
+            </div>
 
-    <p>
-        <strong>{% trans "Paid At" %}:</strong>
-        {{ invoice.paid_at|jalali }}
-    </p>
+            <!-- وضعیت -->
+            <div class="flex items-center justify-between gap-4 bg-gray-50 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Status" %} :
+                </span>
 
-    <p>
-        <strong>{% trans "Locked Price At" %}:</strong>
-        {{ invoice.order.locked_price_at|jalali }}
-    </p>
+                {% if invoice.is_paid %}
+                    <span class="inline-block rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">
+                        {% trans "Paid" %}
+                    </span>
+                {% else %}
+                    <span class="inline-block rounded-full bg-red-50 px-3 py-1 text-xs text-red-500">
+                        {% trans "Not Paid" %}
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- تاریخ پرداخت -->
+            <div class="flex items-center justify-between gap-4 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Paid At" %} :
+                </span>
+                <span class="font-medium text-gray-900">
+                    {{ invoice.paid_at|jalali }}
+                </span>
+            </div>
+
+            <!-- قیمت قفل شده -->
+            <div class="flex items-center justify-between gap-4 bg-gray-50 px-4 py-4">
+                <span class="text-gray-600">
+                    {% trans "Locked Price At" %} :
+                </span>
+                <span class="font-medium text-gray-900">
+                    {{ invoice.order.locked_price_at|jalali }}
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- فضای انتهای جدول -->
+    <div class="h-10 border-b border-gray-300"></div>
 
 </div>
 
+<!-- عملیات -->
+<div class="mt-6 flex flex-wrap justify-end gap-4 sm:justify-end">
 
-<hr class="my-4">
+    <a
+        href="{% url 'order:invoice_docx' invoice.id %}"
+        target="_blank"
+        class="flex w-full items-center justify-center gap-2 rounded-md bg-[#55000f] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#6d0014] sm:w-48"
+    >
+        <svg class="h-5 w-5" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <path d="m7 10 5 5 5-5M12 15V3" />
+        </svg>
 
+        <span>{% trans "Download" %} PDF</span>
+    </a>
 
-<a
-    href="{% url 'order:invoice_docx' invoice.id %}"
-    class="px-4 py-2 bg-blue-600 text-white rounded-sm"
-    target="_blank"
->
-    {% trans "Download" %}
-</a>
+</div>
 
 {% endblock %}

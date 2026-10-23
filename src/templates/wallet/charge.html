@@ -8,43 +8,67 @@
 
 {% block content %}
 
-<h2>{% trans "Charge Wallet" %}</h2>
+<div dir="rtl">
 
-<form method="post">
-
-    {% csrf_token %}
-
-    <div>
-
-        {{ form.amount }}
-
-        {% if form.amount.errors %}
-
-            <div>
-
-                {{ form.amount.errors }}
-
-            </div>
-
-        {% endif %}
-
+    <!-- عنوان صفحه -->
+    <div class="flex items-center gap-2 text-[#1f3a34]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+        <h2 class="text-base font-semibold">{% trans "Charge Wallet" %}</h2>
     </div>
 
-    <button type="submit">
+    <form method="post" class="mt-10 w-full max-w-xl px-2 md:px-6">
 
-        {% trans "Pay" %}
+        {% csrf_token %}
 
-    </button>
+        <!-- فیلد مبلغ -->
+        <div>
 
-</form>
+            <label for="{{ form.amount.id_for_label }}" class="mb-2 block text-sm text-gray-700">
+                {% trans "Charge Wallet" %}
+            </label>
 
-<a
+            <input type="number"
+                   name="{{ form.amount.html_name }}"
+                   id="{{ form.amount.id_for_label }}"
+                   value="{{ form.amount.value|default_if_none:'' }}"
+                   class="block h-11 w-full rounded-lg border border-gray-400 bg-white px-4 text-right text-sm text-gray-800 outline-none focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/15">
+
+            {% if form.amount.errors %}
+            <div class="mt-2 rounded-lg bg-amber-300 px-3 py-2 text-xs text-gray-800">
+                {{ form.amount.errors }}
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- دکمه -->
+        <div class="mt-16">
+            <button type="submit"
+                class="flex h-11 items-center gap-2 rounded-lg bg-[#55000f] px-6 text-sm text-white transition hover:bg-black">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="4" width="14" height="17" rx="2" />
+                    <path d="M9 4V3h6v1M9 13l2 2 4-4" />
+                </svg>
+                {% trans "Pay" %}
+            </button>
+        </div>
+
+    </form>
+
+    <!-- لینک کیف پول (HTMX) -->
+    <a
         hx-get="{% url 'wallet:wallet_dashboard' %}"
         hx-target="#dashboard-content"
         hx-swap="innerHTML"
-        class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
+        class="mt-10 inline-block cursor-pointer text-sm text-[#55000f] hover:underline"
     >
         {% trans "My Wallet" %}
-</a>
+    </a>
+
+</div>
 
 {% endblock %}

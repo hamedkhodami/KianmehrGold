@@ -6,119 +6,162 @@
 
 {% block content %}
 
-<h1>{% trans "Wallet" %}</h1>
-
-<!-- بخش موجودی کیف پول -->
-<div>
-    <p>
-        {% trans "Balance" %}: {{ wallet.balance|comma }}
-    </p>
+<!-- عنوان صفحه -->
+<div class="mb-6 flex items-center gap-3">
+    <h1 class="text-lg font-bold text-gray-900">{% trans "Wallet" %}</h1>
+    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
 </div>
 
-<hr>
+<!-- بخش موجودی کیف پول -->
+<div class="mb-6">
+    <p class="mb-2 text-sm text-gray-700">{% trans "Balance" %}</p>
+    <div class="rounded-md border border-gray-200 bg-gray-100 px-4 py-2 text-right text-xl font-semibold text-[#55000f]">
+        {{ wallet.balance|comma }} <span class="text-base font-normal">{% trans "Rial" %}</span>
+    </div>
+</div>
+
+<!-- لیست تراکنش‌ها -->
+<div class="overflow-hidden rounded-lg bg-gray-50">
+
+    <div class="flex items-center justify-between px-5 py-5">
+        <h2 class="text-base font-semibold text-gray-700">{% trans "Wallet Transactions" %}</h2>
+    </div>
+
+    <div class="overflow-x-auto bg-white">
+        <table class="w-full min-w-[640px] text-sm">
+            <thead>
+                <tr class="text-gray-500">
+                    <th class="px-4 py-4 text-right font-normal">{% trans "Type" %}</th>
+                    <th class="px-4 py-4 text-right font-normal">{% trans "Reference ID" %}</th>
+                    <th class="px-4 py-4 text-right font-normal">{% trans "Amount" %}</th>
+                    <th class="px-4 py-4 text-right font-normal">{% trans "Date" %}</th>
+                    <th class="px-4 py-4 text-right font-normal">{% trans "Status" %}</th>
+                    <th class="px-4 py-4 text-right font-normal">{% trans "Details" %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for tx in transactions %}
+                <tr class="odd:bg-gray-50">
+                    <td class="px-4 py-3.5 text-right font-medium text-gray-900">{{ tx.get_transaction_type_display }}</td>
+                    <td class="px-4 py-3.5 text-right text-gray-900">{{ tx.reference_id }}</td>
+                    <td class="px-4 py-3.5 text-right text-gray-900">
+                        {{ tx.amount|comma }} <span class="text-xs">{% trans "Rial" %}</span>
+                    </td>
+                    <td class="px-4 py-3.5 text-right text-gray-900">{{ tx.created_at }}</td>
+                    <td class="px-4 py-3.5 text-right">
+                        {% if tx.is_success %}
+                        <span class="inline-block rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">{% trans "Success" %}</span>
+                        {% else %}
+                        <span class="inline-block rounded-full bg-red-50 px-3 py-1 text-xs text-red-500">{% trans "Failed" %}</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3.5 text-right">
+                        <button type="button"
+                            hx-get="{% url 'wallet:wallet_transaction_detail' tx.pk %}"
+                            hx-target="#dashboard-content"
+                            hx-swap="innerHTML"
+                            class="text-xs text-[#55000f] underline-offset-2 hover:underline">
+                            {% trans "View" %}
+                        </button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-4 py-10 text-center text-gray-500">
+                        {% trans "No transactions found." %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="pagination flex flex-wrap items-center justify-center gap-2 border-b border-gray-300 px-4 py-4 text-sm">
+
+        {% if page_obj.has_previous %}
+        <button type="button"
+            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ page_obj.previous_page_number }}"
+            hx-target="#dashboard-content" hx-swap="innerHTML"
+            aria-label="{% trans 'Previous' %}"
+            class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-600 transition hover:bg-gray-200">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+        </button>
+        {% else %}
+        <span class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-300">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+        </span>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <span class="flex h-8 w-8 items-center justify-center rounded-md bg-[#55000f] font-semibold text-white">{{ num }}</span>
+        {% else %}
+        <button type="button"
+            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ num }}"
+            hx-target="#dashboard-content" hx-swap="innerHTML"
+            class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-50 text-gray-700 transition hover:bg-gray-200">{{ num }}</button>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <button type="button"
+            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#dashboard-content" hx-swap="innerHTML"
+            aria-label="{% trans 'Next' %}"
+            class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-600 transition hover:bg-gray-200">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+        </button>
+        {% else %}
+        <span class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-300">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+        </span>
+        {% endif %}
+
+    </div>
+    {% else %}
+    <div class="border-b border-gray-300"></div>
+    {% endif %}
+</div>
 
 <!-- دکمه‌های عملیات -->
-<div>
+<div class="mt-6 flex flex-wrap justify-center gap-4">
 
-    <a
+    <button type="button"
         hx-get="{% url 'wallet:charge' %}"
         hx-target="#dashboard-content"
         hx-swap="innerHTML"
-    >
-        + {% trans "Increase Wallet Balance" %}
-    </a>
+        class="flex w-full items-center justify-center gap-2 rounded-md bg-[#55000f] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#6d0014] sm:w-48">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
+            <path d="M20 4l-8 8M12 6v6h6" />
+        </svg>
+        <span class="text-[13px]">{% trans "Increase Wallet Balance" %}</span>
+    </button>
 
-    <a
+    <button type="button"
         hx-get="{% url 'wallet:withdraw_request' %}"
         hx-target="#dashboard-content"
         hx-swap="innerHTML"
-    >
-        - {% trans "Withdraw from Wallet" %}
-    </a>
+        class="flex w-full items-center justify-center gap-2 rounded-md bg-[#55000f] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#6d0014] sm:w-48">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
+            <path d="M14 4h6v6M20 4l-9 9" />
+        </svg>
+        <span class="text-[13px]">{% trans "Withdraw from Wallet" %}</span>
+    </button>
 
 </div>
 
-<hr>
-
-<!-- لیست تراکنش‌ها -->
-<h2>{% trans "Wallet Transactions" %}</h2>
-
-<table>
-    <thead>
-        <tr>
-            <th>{% trans "Amount" %}</th>
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Reference ID" %}</th>
-            <th>{% trans "Details" %}</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for tx in transactions %}
-        <tr>
-            <td>{{ tx.amount|comma }}</td>
-            <td>{{ tx.get_transaction_type_display }}</td>
-            <td>
-                {% if tx.is_success %}
-                    {% trans "Success" %}
-                {% else %}
-                    {% trans "Failed" %}
-                {% endif %}
-            </td>
-            <td>{{ tx.reference_id }}</td>
-            <td>
-                <a
-                    hx-get="{% url 'wallet:wallet_transaction_detail' tx.pk %}"
-                    hx-target="#dashboard-content"
-                    hx-swap="innerHTML"
-                >
-                    {% trans "View" %}
-                </a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4">{% trans "No transactions found." %}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<div class="pagination">
-
-    {% if page_obj.has_previous %}
-
-        <a
-            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ page_obj.previous_page_number }}"
-            hx-target="#dashboard-content"
-            hx-swap="innerHTML"
-        >
-            {% trans "Previous" %}
-        </a>
-
-    {% endif %}
-
-    <span>
-
-        {% trans "Page" %}
-        {{ page_obj.number }}
-        {% trans "of" %}
-        {{ page_obj.paginator.num_pages }}
-
-    </span>
-
-    {% if page_obj.has_next %}
-
-        <a
-            hx-get="{% url 'wallet:wallet_dashboard' %}?page={{ page_obj.next_page_number }}"
-            hx-target="#dashboard-content"
-            hx-swap="innerHTML"
-        >
-            {% trans "Next" %}
-        </a>
-
-    {% endif %}
-
-</div>
 {% endblock %}

@@ -8,40 +8,48 @@
 
 {% block content %}
 
-<section class="max-w-7xl mx-auto px-4 py-10">
+<section class="container mx-auto mt-10 mb-16 px-4" dir="rtl">
 
-    <!-- Title -->
-    <h1 class="text-2xl font-bold mb-6">
-        {% trans "Articles" %}
-    </h1>
+    <!-- عنوان + خط -->
+    <div class="mb-8 flex items-center gap-4">
+        <h1 class="whitespace-nowrap text-2xl font-normal text-[#5a0f1c]">
+            {% trans "Articles" %}
+        </h1>
+        <span class="h-px flex-1 bg-[#c9cccc]"></span>
+    </div>
 
-    <!-- Articles Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <!-- گرید مقالات -->
+    <div class="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
 
         {% for article in page_obj %}
-            <div class="border rounded-lg overflow-hidden bg-white shadow-xs hover:shadow-md transition">
+        <div class="relative pb-6">
 
-                <a href="{% url 'public:article_detail' article.id article.slug %}">
+            <a href="{% url 'public:article_detail' article.id article.slug %}"
+                class="flex h-full flex-col overflow-hidden rounded-[2.5rem] bg-[#dcdcdc]">
 
-                    {% if article.image %}
-                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-40 object-cover">
-                    {% endif %}
+                {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}"
+                    class="h-56 w-full object-cover">
+                {% endif %}
 
-                    <div class="p-4">
+                <div class="px-8 pb-16 pt-6">
+                    <h2 class="mb-2 text-base font-semibold text-[#55000f]">
+                        {{ article.title }}
+                    </h2>
+                    <p class="text-sm leading-7 text-gray-700">
+                        {{ article.content|striptags|truncatechars:100 }}
+                    </p>
+                </div>
 
-                        <h2 class="text-lg font-semibold mb-2">
-                            {{ article.title }}
-                        </h2>
+            </a>
 
-                        <p class="text-sm text-gray-600 leading-6">
-                            {{ article.content|striptags|truncatechars:100|safe }}
-                        </p>
+            <!-- دکمه نصفه بیرون از کارت -->
+            <a href="{% url 'public:article_detail' article.id article.slug %}"
+                class="absolute -bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#5a0010] px-10 py-3 text-white shadow-lg transition hover:bg-black">
+                {% trans "بیشتر بخوانید" %}
+            </a>
 
-                    </div>
-
-                </a>
-
-            </div>
+        </div>
         {% endfor %}
 
     </div>

@@ -4,35 +4,131 @@
 {% load price_filters %}
 {% load jalali %}
 
-
 {% block content %}
 
-<h1>{% trans "Transaction Details" %}</h1>
+<!-- عنوان صفحه -->
+<div class="mb-6 flex items-center gap-3">
+    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
 
-<div>
-    <p><strong>{% trans "Amount" %}:</strong> {{ transaction.amount|comma }}</p>
-    <p><strong>{% trans "Type" %}:</strong> {{ transaction.transaction_type }}</p>
-    <p><strong>{% trans "Status" %}:</strong>
-        {% if transaction.is_success %}
-            {% trans "Success" %}
-        {% else %}
-            {% trans "Failed" %}
-        {% endif %}
-    </p>
-    <p><strong>{% trans "Description" %}:</strong> {{ transaction.description|default:"-" }}</p>
-    <p><strong>{% trans "Reference ID" %}:</strong> {{ transaction.reference_id }}</p>
-    <p><strong>{% trans "Date" %}:</strong> {{ transaction.created_at|jalali }}</p>
+    <h1 class="text-lg font-bold text-gray-900">
+        {% trans "Transaction Details" %}
+    </h1>
 </div>
 
-<hr>
+<!-- کارت جزئیات تراکنش -->
+<div class="overflow-hidden rounded-lg bg-gray-50">
 
-<a
-        hx-get="{% url 'wallet:wallet_dashboard' %}"
-        hx-target="#dashboard-content"
-        hx-swap="innerHTML"
-        class="w-full text-right p-2 bg-white rounded-sm shadow-sm"
-    >
-        {% trans "My Wallet" %}
-</a>
+    <!-- سربرگ -->
+    <div class="flex items-center justify-between px-5 py-5">
+        <h2 class="text-base font-semibold text-gray-700">
+            {% trans "Transaction Details" %}
+        </h2>
+    </div>
+
+    <!-- اطلاعات تراکنش -->
+    <div class="bg-white px-5 py-6">
+
+        <div class="space-y-4">
+
+            <!-- مبلغ -->
+            <div class="flex flex-col gap-1 border-b border-gray-100 pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <span class="text-sm font-medium text-gray-600">
+                    {% trans "Amount" %}
+                </span>
+                <span class="text-sm font-bold text-[#55000f]">
+                    {{ transaction.amount|comma }}
+                </span>
+            </div>
+
+            <!-- نوع تراکنش -->
+            <div class="flex flex-col gap-1 border-b border-gray-100 pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <span class="text-sm font-medium text-gray-600">
+                    {% trans "Type" %}
+                </span>
+                <span class="text-sm text-gray-900">
+                    {{ transaction.transaction_type }}
+                </span>
+            </div>
+
+            <!-- وضعیت -->
+            <div class="flex flex-col gap-1 border-b border-gray-100 pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <span class="text-sm font-medium text-gray-600">
+                    {% trans "Status" %}
+                </span>
+
+                <span class="inline-flex w-fit items-center rounded-md px-3 py-1 text-xs font-semibold
+                    {% if transaction.is_success %}
+                        bg-green-50 text-green-700
+                    {% else %}
+                        bg-red-50 text-red-700
+                    {% endif %}">
+                    {% if transaction.is_success %}
+                        {% trans "Success" %}
+                    {% else %}
+                        {% trans "Failed" %}
+                    {% endif %}
+                </span>
+            </div>
+
+            <!-- توضیحات -->
+            <div class="flex flex-col gap-1 border-b border-gray-100 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                <span class="text-sm font-medium text-gray-600">
+                    {% trans "Description" %}
+                </span>
+                <span class="break-words text-sm leading-6 text-gray-900 sm:max-w-[70%] sm:text-left">
+                    {{ transaction.description|default:"-" }}
+                </span>
+            </div>
+
+            <!-- شناسه مرجع -->
+            <div class="flex flex-col gap-1 border-b border-gray-100 pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <span class="text-sm font-medium text-gray-600">
+                    {% trans "Reference ID" %}
+                </span>
+                <span class="break-all text-sm text-gray-900">
+                    {{ transaction.reference_id }}
+                </span>
+            </div>
+
+            <!-- تاریخ -->
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <span class="text-sm font-medium text-gray-600">
+                    {% trans "Date" %}
+                </span>
+                <span class="text-sm text-gray-900">
+                    {{ transaction.created_at|jalali }}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- بازگشت به کیف پول -->
+        <div class="mt-8 border-t border-gray-200 pt-6">
+            <a
+                hx-get="{% url 'wallet:wallet_dashboard' %}"
+                hx-target="#dashboard-content"
+                hx-swap="innerHTML"
+                class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-[#55000f] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#6d0014] sm:w-48"
+            >
+                <svg class="h-5 w-5" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+
+                <span>{% trans "My Wallet" %}</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- انتهای کارت -->
+    <div class="h-10 border-b border-gray-300"></div>
+
+</div>
 
 {% endblock %}
