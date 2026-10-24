@@ -1,11 +1,15 @@
 #!/bin/sh
 set -e
 
-echo "🎯 Running migrations..."
-python /app/src/manage.py migrate --noinput
+if [ "${RUN_MIGRATIONS:-0}" = "1" ]; then
+    echo "🎯 Running migrations..."
+    python /app/src/manage.py migrate --noinput
+fi
 
-echo "📦 Collecting static files..."
-python /app/src/manage.py collectstatic --noinput
+if [ "${COLLECT_STATIC:-0}" = "1" ]; then
+    echo "📦 Collecting static files..."
+    python /app/src/manage.py collectstatic --noinput
+fi
 
-echo "🚀 Starting Gunicorn..."
-exec gunicorn config.wsgi:application --bind 0.0.0.0:8080 --log-level info
+echo "🚀 Starting: $*"
+exec "$@"
