@@ -1,10 +1,16 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import include, path
 
 
+def health_check(request):
+    return HttpResponse("OK", status=200)
+
+
 urlpatterns = [
+    path("health/", health_check, name="health_check"),
     path("admin/", admin.site.urls),
     path("rosetta/", include("rosetta.urls")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
