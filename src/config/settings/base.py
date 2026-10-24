@@ -26,7 +26,8 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 # ---CSRF---------------------------------------------------------
 CSRF_TRUSTED_ORIGINS = os.getenv(
-    "CSRF_TRUSTED",
+    "CSRF_TRUSTED_ORIGINS",
+    "",
 ).split(",")
 # ----------------------------------------------------------------
 
@@ -166,17 +167,17 @@ SESSION_CACHE_ALIAS = "default"
 # ---------------------------------------------------------------
 
 
-# # ---Caches------------------------------------------------------
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}/{os.getenv('REDIS_CACHE_DB')}",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         },
-#     }
-# }
-# # ---------------------------------------------------------------
+# ---Caches------------------------------------------------------
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}/{os.getenv('REDIS_CACHE_DB')}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+# ---------------------------------------------------------------
 
 
 # ---CKEDITOR----------------------------------------------------
