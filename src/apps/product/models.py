@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -225,6 +225,7 @@ class CoinModel(BaseModel):
         from apps.product.service.price_cache_service import PriceCacheService
 
         latest = PriceCacheService.get_latest_price()
+
         if not latest:
             return None
 
@@ -235,14 +236,20 @@ class CoinModel(BaseModel):
                 CoinTypeEnum.HALF: latest.half_coin,
                 CoinTypeEnum.QUARTER: latest.quarter_coin,
             }
+
             base_price = mapping.get(self.coin_type)
+
             if base_price is None:
                 return None
 
-            return base_price * Decimal("1.01")
+            return (base_price * Decimal("1.01")).quantize(
+                Decimal("1"),
+                rounding=ROUND_HALF_UP,
+            )
 
         # PARSIAN
         if self.category == CoinCategoryEnum.PARSIAN:
+
             if not self.weight:
                 return None
 
@@ -254,6 +261,9 @@ class CoinModel(BaseModel):
                 gold_price_per_gram=latest.gold_melted,
                 percent_fee=percent_fee,
                 extra_fee=extra_fee,
+            ).quantize(
+                Decimal("1"),
+                rounding=ROUND_HALF_UP,
             )
 
         # MARKET
@@ -266,6 +276,9 @@ class CoinModel(BaseModel):
                 coin_type=self.coin_type,
                 extra_fee=extra,
                 percent_fee=percent,
+            ).quantize(
+                Decimal("1"),
+                rounding=ROUND_HALF_UP,
             )
 
         return None
