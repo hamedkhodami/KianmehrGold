@@ -58,10 +58,10 @@ class Notification(BaseModel):
         """
 
     def get_link(self):
-        try:
-            return self.kwargs["link"]
-        except KeyError:
+        if not isinstance(self.kwargs, dict):
             return ""
+
+        return self.kwargs.get("link", "")
 
     def get_image_url(self):
         return self.image.url if self.image else ""

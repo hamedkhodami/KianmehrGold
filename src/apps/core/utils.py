@@ -1,11 +1,9 @@
 from os.path import splitext
-from threading import Thread
 
 from django.contrib import messages
-from django.contrib.auth import settings
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from ippanel import Client
+from django_q.tasks import async_task
 
 
 def get_timesince_persian(time):
@@ -86,30 +84,24 @@ def toast_form_errors(request, form):
 
 # Get coded phone number(IR)
 def get_coded_phone_number(number):
-    try:
-        phone_number = str(number)
+    phone_number = str(number).strip()
+
+    if phone_number.startswith("+98"):
+        return phone_number
+
+    if phone_number.startswith("09"):
         return "+98" + phone_number[1:]
-    except (TypeError, IndexError):
-        return None
+
+    if phone_number.startswith("98"):
+        return "+" + phone_number
+
+    raise ValueError("Invalid Iranian phone number")
 
 
-# TODO: import djangoQ after test
-# Send SMS util
 def send_sms(phone_number, pattern, **kwargs):
-    phone_number = get_coded_phone_number(phone_number)
-    phone_number = phone_number.replace("+", "")
-
-    # Create client instance
-    sms = Client(settings.SMS_CONFIG["API_KEY"])
-
-    # Send sms via ippanel module
-    t1 = Thread(
-        target=sms.send_pattern,
-        args=(
-            pattern,  # pattern code
-            settings.SMS_CONFIG["ORIGINATOR"],  # originator
-            phone_number,  # recipient
-            kwargs,  # pattern values
-        ),
+    async_task(
+        "apps.core.task.send_sms_task",
+        phone_number,
+        pattern,
+        kwargs,
     )
-    t1.start()

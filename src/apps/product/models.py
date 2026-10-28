@@ -318,15 +318,10 @@ class CoinModel(BaseModel):
         super().save(*args, **kwargs)
 
 
-# TODO : complete final price in phase5
 class GoldPriceModel(BaseModel):
     # --- Gold ---
     gold_melted = models.DecimalField(
         _("Gold 18K Price"), max_digits=18, decimal_places=0
-    )
-    gold_24 = models.DecimalField(_("Gold 24K Price"), max_digits=18, decimal_places=0)
-    gold_mozanneh = models.DecimalField(
-        _("Muzanneh Price"), max_digits=18, decimal_places=0
     )
     internal_gold_17 = models.DecimalField(
         _("Internal Gold 17K Price"),

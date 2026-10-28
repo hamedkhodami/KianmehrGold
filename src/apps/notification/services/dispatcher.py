@@ -25,9 +25,7 @@ class NotificationDispatcher:
         handlers = {
             NotificationTypeEnum.MOBILE_VERIFICATION_CODE: SMSHandlers.mobile_verification,
             NotificationTypeEnum.ADMIN_ALERT: SMSHandlers.admin_alert,
-            NotificationTypeEnum.ORDER_CANCELED: SMSHandlers.order_canceled,
-            NotificationTypeEnum.ORDER_CARD_TO_CARD_CONFIRMED: SMSHandlers.order_card_to_card_confirmed,
-            NotificationTypeEnum.ORDER_GATEWAY_LINK: SMSHandlers.order_gateway_link,
+            NotificationTypeEnum.WALLET_TRANSACTION: SMSHandlers.wallet_transaction_handler,
         }
 
         handler = handlers.get(notification.type)

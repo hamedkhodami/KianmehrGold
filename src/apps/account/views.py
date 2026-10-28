@@ -1,5 +1,4 @@
 import random
-from random import randint
 
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -107,7 +106,7 @@ class SendCodeView(LogoutRequiredMixin, View):
 
             return redirect(self.get_redirect_url())
 
-        code = randint(100000, 999999)
+        code = str(random.randint(100000, 999999))
 
         OTPService.set_otp(user.phone_number, str(code))
 

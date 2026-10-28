@@ -155,7 +155,6 @@ class GoldPriceAdmin(admin.ModelAdmin):
         "id",
         "gold_melted",
         "internal_gold_17",
-        "gold_mozanneh",
         "gold_ounce",
         "silver_gram",
         "usd_price",
@@ -186,8 +185,6 @@ class GoldPriceAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "gold_melted",
-                    "gold_24",
-                    "gold_mozanneh",
                     "internal_gold_17",
                     "gold_ounce",
                 )

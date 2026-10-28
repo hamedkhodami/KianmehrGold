@@ -242,8 +242,11 @@ SMS_CONFIG = {
 # ---------------------------------------------------------------
 
 
-# ---GOLD API ---------------------------------------------------
-GOLD_API_KEY = os.getenv("GOLD_API_KEY")
+# ---GOLD API config --------------------------------------------
+TABAN_GOHAR_USERNAME = os.getenv("TABAN_GOHAR_USERNAME")
+TABAN_GOHAR_PASSWORD = os.getenv("TABAN_GOHAR_PASSWORD")
+TABAN_GOHAR_TIMEOUT = 5
+TABAN_GOHAR_CACHE_SECONDS = 5
 # ---------------------------------------------------------------
 
 
