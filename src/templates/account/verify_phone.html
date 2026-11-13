@@ -1,35 +1,80 @@
 {% extends "base/base_sign.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}
     {% trans "Verify Phone Number" %}
 {% endblock %}
 
+{% block extra_style %}
+<style>
+    .auth-bg {
+        background-image: url("{% static 'public/images/auth-bg.webp' %}");
+    }
+</style>
+{% endblock %}
+
 {% block body %}
 
-<div class="verify-container">
+<div class="auth-bg flex min-h-screen items-center justify-start bg-[#6b0015] bg-cover bg-left bg-no-repeat px-4 py-8 md:px-40">
 
-    <h1>{% trans "Enter verification code" %}</h1>
+    <div class="login-container w-full max-w-md rounded-[2rem] bg-white px-8 pt-10 pb-8 shadow-2xl md:px-12" dir="rtl">
 
-    <form method="post" novalidate>
-        {% csrf_token %}
+        <!-- لوگو -->
+        <a href="{% url 'public:index' %}"
+            class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-[#55000f]">
+            <img src="{% static 'public/images/logo.png' %}"
+                alt="{% trans 'کیان مهر' %}"
+                class="h-12 w-auto">
+        </a>
 
-        <div>
-            <label for="id_code">{% trans "Verification code" %}</label>
-            <input type="text" name="code" id="id_code">
+        <!-- عنوان -->
+        <h1 class="mt-6 text-center text-sm text-[#55000f]">
+            {% trans "تأیید شماره موبایل" %}
+        </h1>
+
+        <p class="mt-8 text-xs text-gray-600">
+            {% trans "کد تأیید ارسال‌شده به شماره موبایل خود را وارد نمایید." %}
+        </p>
+
+        <!-- فرم تأیید -->
+        <form method="post" novalidate class="mt-5 space-y-4">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_code" class="mb-1 block text-xs text-gray-700">
+                    {% trans "کد تأیید" %}
+                </label>
+
+                <input
+                    type="text"
+                    name="code"
+                    id="id_code"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    placeholder="{% trans 'کد تأیید را وارد کنید' %}"
+                    class="h-12 w-full rounded-xl border border-gray-300 bg-white px-4 text-center text-lg tracking-[0.3em] text-gray-800 outline-none placeholder:text-xs placeholder:tracking-normal placeholder:text-gray-400 focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/20"
+                >
+            </div>
+
+            <!-- دکمه تأیید -->
+            <div class="pt-3 text-center">
+                <button type="submit"
+                    class="rounded-lg bg-[#55000f] px-10 py-2.5 text-sm text-white transition hover:bg-black">
+                    {% trans "تأیید کد" %}
+                </button>
+            </div>
+        </form>
+
+        <!-- ارسال مجدد کد -->
+        <div class="mt-10 flex items-center justify-center border-t border-gray-100 pt-5">
+            <a href="{% url 'account:send_code' %}"
+                class="text-xs text-[#55000f] transition hover:text-black hover:underline">
+                {% trans "ارسال مجدد کد تأیید" %}
+            </a>
         </div>
 
-        <button type="submit">
-            {% trans "Verify" %}
-        </button>
-    </form>
-
-    <p>
-        <a href="{% url 'account:send_code' %}">
-            {% trans "Resend code" %}
-        </a>
-    </p>
-
+    </div>
 </div>
 
 {% endblock %}
