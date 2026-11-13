@@ -5,7 +5,7 @@ class SMSHandlers:
 
     @staticmethod
     def mobile_verification(notification, phone_number):
-        pattern = ""  # کد پترن OTP
+        pattern = "bbywg5sb96v6l1l"  # کد پترن OTP
         send_sms(
             phone_number,
             pattern,
@@ -14,7 +14,7 @@ class SMSHandlers:
 
     @staticmethod
     def admin_alert(notification, phone_number):
-        pattern = ""  # پترن پیامک ادمین
+        pattern = "arwharxdwubysrs"  # پترن پیامک ادمین
         send_sms(
             phone_number,
             pattern,
@@ -29,7 +29,7 @@ class SMSHandlers:
 
     @classmethod
     def wallet_transaction_handler(cls, notification, phone_number):
-        pattern = ""
+        pattern = "odexouhw06n4zi4"
         send_sms(
             phone_number,
             pattern,

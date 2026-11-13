@@ -1,20 +1,114 @@
+
 {% extends "base/base_sign.html" %}
+{% load static %}
 {% load i18n %}
+
+{% block title %}
+    {% trans "Set new password" %}
+{% endblock %}
+
+{% block extra_style %}
+<style>
+    .auth-bg {
+        background-image: url("{% static 'public/images/auth-bg.webp' %}");
+    }
+</style>
+{% endblock %}
 
 {% block body %}
 
-<h1>{% trans "Set new password" %}</h1>
+<div class="auth-bg flex min-h-screen items-center justify-start bg-[#6b0015] bg-cover bg-left bg-no-repeat px-4 py-8 md:px-40">
 
-<form method="post">
-    {% csrf_token %}
+    <div class="login-container w-full max-w-md rounded-[2rem] bg-white px-8 pt-10 pb-8 shadow-2xl md:px-12" dir="rtl">
 
-    <label>{% trans "New password" %}</label>
-    <input type="password" name="password">
+        <!-- لوگو -->
+        <a href="{% url 'public:index' %}"
+            class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-[#55000f]">
+            <img src="{% static 'public/images/logo.png' %}"
+                alt="{% trans 'کیان مهر' %}"
+                class="h-12 w-auto">
+        </a>
 
-    <label>{% trans "Repeat password" %}</label>
-    <input type="password" name="password2">
+        <!-- عنوان -->
+        <h1 class="mt-6 text-center text-sm text-[#55000f]">
+            {% trans "تعیین رمز عبور جدید" %}
+        </h1>
 
-    <button type="submit">{% trans "Change password" %}</button>
-</form>
+        <!-- توضیحات -->
+        <p class="mt-8 text-xs text-gray-600">
+            {% trans "لطفاً رمز عبور جدید خود را وارد نمایید." %}
+        </p>
+
+        <!-- فرم -->
+        <form method="post" novalidate class="mt-3 space-y-4">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <p class="text-xs text-red-600">
+                    {{ form.non_field_errors.0 }}
+                </p>
+            {% endif %}
+
+            <!-- رمز عبور جدید -->
+            <div class="form-group">
+                <label for="id_password" class="mb-1 block text-xs text-gray-700">
+                    {% trans "رمز عبور جدید" %}
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="id_password"
+                    autocomplete="new-password"
+                    placeholder="••• ••• •••"
+                    class="h-12 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/20">
+
+                {% if form.password.errors %}
+                    <p class="mt-1 text-xs text-red-600">
+                        {{ form.password.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- تکرار رمز عبور -->
+            <div class="form-group">
+                <label for="id_password2" class="mb-1 block text-xs text-gray-700">
+                    {% trans "تکرار رمز عبور جدید" %}
+                </label>
+
+                <input
+                    type="password"
+                    name="password2"
+                    id="id_password2"
+                    autocomplete="new-password"
+                    placeholder="••• ••• •••"
+                    class="h-12 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-[#55000f] focus:ring-2 focus:ring-[#55000f]/20">
+
+                {% if form.password2.errors %}
+                    <p class="mt-1 text-xs text-red-600">
+                        {{ form.password2.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- دکمه تغییر رمز -->
+            <div class="pt-2 text-center">
+                <button type="submit"
+                    class="rounded-lg bg-[#55000f] px-10 py-2.5 text-sm text-white transition hover:bg-black">
+                    {% trans "تغییر رمز عبور" %}
+                </button>
+            </div>
+        </form>
+
+        <!-- بازگشت به ورود -->
+        <div class="mt-12 flex items-start justify-center gap-10 text-xs">
+            <a href="{% url 'account:login' %}"
+                class="px-6 pt-2 text-gray-500 transition hover:text-[#55000f]">
+                {% trans "بازگشت به ورود" %}
+            </a>
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}
