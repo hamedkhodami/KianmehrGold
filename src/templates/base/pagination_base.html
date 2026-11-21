@@ -1,0 +1,59 @@
+
+{% if is_paginated %}
+<div class="flex items-center justify-center gap-2 mt-10" dir="rtl">
+
+    {# صفحه قبلی #}
+    {% if page_obj.has_previous %}
+        <a href="?{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.status %}status={{ request.GET.status }}&{% endif %}page={{ page_obj.previous_page_number }}"
+           class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-[#55000f] hover:text-white hover:border-[#55000f] transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18-6-6 6-6"/>
+            </svg>
+        </a>
+    {% else %}
+        <span class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 bg-gray-100 text-gray-300 cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18-6-6 6-6"/>
+            </svg>
+        </span>
+    {% endif %}
+
+
+    {# شماره صفحات #}
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <span class="flex items-center justify-center min-w-10 h-10 px-3 rounded-lg bg-[#55000f] text-white text-sm font-medium">
+                {{ num }}
+            </span>
+
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.status %}status={{ request.GET.status }}&{% endif %}page={{ num }}"
+               class="flex items-center justify-center min-w-10 h-10 px-3 rounded-lg border border-gray-300 bg-white text-gray-700 text-sm hover:bg-[#55000f] hover:text-white hover:border-[#55000f] transition">
+                {{ num }}
+            </a>
+        {% endif %}
+    {% endfor %}
+
+
+    {# صفحه بعدی #}
+    {% if page_obj.has_next %}
+        <a href="?{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}{% if request.GET.status %}status={{ request.GET.status }}&{% endif %}page={{ page_obj.next_page_number }}"
+           class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-[#55000f] hover:text-white hover:border-[#55000f] transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18 6-6-6-6"/>
+            </svg>
+        </a>
+    {% else %}
+        <span class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 bg-gray-100 text-gray-300 cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18 6-6-6-6"/>
+            </svg>
+        </span>
+    {% endif %}
+
+</div>
+
+<p class="text-center text-xs text-gray-400 mt-3">
+    صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+</p>
+{% endif %}
