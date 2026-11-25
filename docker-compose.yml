@@ -145,6 +145,7 @@ services:
       - /opt/kianmehr-data/ssl:/etc/nginx/ssl:ro
       - static_volume:/var/www/static:ro
       - /opt/kianmehr-data/media:/var/www/media:ro
+      - /opt/kianmehr-data/verification:/var/www/verification:ro
 
     depends_on:
       web:
